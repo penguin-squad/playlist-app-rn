@@ -26,7 +26,6 @@
    LearnMoreLinks,
    ReloadInstructions,
  } from 'react-native/Libraries/NewAppScreen';
- 
  import auth from '@react-native-firebase/auth';
 
  
