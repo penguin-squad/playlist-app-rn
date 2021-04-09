@@ -74,7 +74,7 @@ const initialState= {
  
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action:any) => {
     switch(action.type){
        case ActionTypes.ADD_PLAYLIST: //test, delete later
         return{

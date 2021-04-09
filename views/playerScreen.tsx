@@ -1,10 +1,12 @@
 import React, {FC} from "react";
 import { View, Text, StyleSheet,Dimensions } from "react-native";
 import {connect} from "react-redux";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import * as ActionTypes from "../store/actionTypes";
+import YoutubePlayer from "react-native-youtube-iframe";
+import {useState, useCallback} from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -12,7 +14,12 @@ const PlayerScreen = (props) => {
   
   const gotoSongList = () => {
     props.navigation.navigate("songList"); };
- 
+  
+    const [playing, setPlaying] = useState(false);
+    const togglePlaying = useCallback(() => {
+      setPlaying((prev) => !prev);
+    }, []);
+  
  
   /* Functionality: when audio files exist
 
@@ -53,10 +60,7 @@ const PlayerScreen = (props) => {
       const status = await pause(context.playbackObj);
       return context.updateState(context, {
         soundObj: status,
-        isPlaying: false,
-      });
-    }
-    // resume
+        isPlaying: falplaying
     if (context.soundObj && !context.soundObj.isPlaying) {
       const status = await resume(context.playbackObj);
       return context.updateState(context, {
@@ -76,6 +80,11 @@ const PlayerScreen = (props) => {
  
     return (
  <View style={styles.container}>
+   <YoutubePlayer
+        height={0}
+        play={playing}
+        videoId={"iee2TATGMyI"}
+      />
            {/* TODO: go back button */}
            <Components.PlayerBtn  iconType='BACK' onPress={()=>gotoSongList()} />
 
@@ -108,10 +117,9 @@ const PlayerScreen = (props) => {
             <Components.PlayerBtn iconType='PREV' onPress={()=>console.log("<<")}  />
             <Components.PlayerBtn 
               //onPress={handlePlayPause}
-              onPress={()=>console.log("Btn presed")}
+              onPress={togglePlaying}
               style={{ marginHorizontal: 25 }}
-              //iconType={context.isPlaying ? 'PLAY' : 'PAUSE'}
-              iconType='PAUSE'
+              iconType={playing ? 'PLAY' : 'PAUSE'}
             />
             <Components.PlayerBtn  iconType='NEXT' onPress={()=>console.log(">>")} />
 
@@ -125,7 +133,7 @@ const PlayerScreen = (props) => {
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ album: state.album});
+const mapStateToProps = (state) => ({ album: state.reducer.album});
 const mapDispatchToProps = (dispatch) => ({
 
 });

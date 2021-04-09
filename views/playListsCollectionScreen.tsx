@@ -19,7 +19,7 @@ const PlayListsCollectionScreen =(props) => {
     props.navigation.navigate("player"); 
 };
   
-
+console.log(props)
 const [inputShown, setInputShown] = useState<boolean>(false);
 const [albums, setAlbums] = useState <Album[] | null>(null);
 const [newAlbum, setNewAlbum] = useState<Album | null>(null);
@@ -70,7 +70,7 @@ useEffect(()=> {
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
 
-        <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
+        <Components.Header title= {"Playlists Collection: "/*+ props.firstPlaylist.name*/}/> 
 
         
         <FlatList style={{ marginVertical: 10}}
@@ -78,7 +78,7 @@ useEffect(()=> {
             renderItem={({item})=> (
 
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
-                    onPress={()=> console.log("onPress")}
+                    onPress={()=> props.navigation.navigate("songList")}
                     style={styles.listItem}>
             
             <Components.OneListItem id={item.id} name={item.name} />
@@ -130,7 +130,7 @@ useEffect(()=> {
 };
 
 // Redux code 
-const mapStateToProps = (state) => ({ firstPlaylist: state.firstPlaylist, playlists:state.playlists, pl:state.playlist });
+const mapStateToProps = (state) => ({ firstPlaylist: state.reducer.firstPlaylist, playlists:state.reducer.playlists, pl:state.reducer.playlist });
 
 const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
     addPlaylist: (albums) => 

@@ -12,7 +12,7 @@ const { width } = Dimensions.get('screen');
 const SongsScreen =(props) => { 
   
   const gotoPlayLists = () => {
-    props.navigation.navigate("playLists"); };
+    props.navigation.navigate("playlists"); };
   
   const goToPlayer = () => {
     props.navigation.navigate("player"); };
@@ -82,7 +82,7 @@ const SongsScreen =(props) => {
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ album: state.album, songslist: state.songslist});
+const mapStateToProps = (state) => ({ album: state.reducer.album, songslist: state.reducer.songslist});
 
 const mapDispatchToProps = (dispatch) => ({
     addAlbum: (albumname) => 

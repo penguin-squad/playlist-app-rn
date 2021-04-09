@@ -1,117 +1,98 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
 
- import React from 'react';
- import {
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
-   StyleSheet,
-   Text,
-   useColorScheme,
-   View,
- } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import {SongsScreen, PlayListsCollectionScreen, PlayerScreen} from "./views/index";
 
- import {
-   Colors,
-   DebugInstructions,
-   Header,
-   LearnMoreLinks,
-   ReloadInstructions,
- } from 'react-native/Libraries/NewAppScreen';
- import auth from '@react-native-firebase/auth';
+import {createStackNavigator} from "@react-navigation/stack"; //native
+import {NavigationContainer} from "@react-navigation/native";
+import {Provider, RootStateOrAny, useSelector} from "react-redux";
+import store from "./store/store";
+import {  Text } from "react-native";
+import LoginView from './views/LogInScreen';
+import SignupView from './views/SignUpScreen';
+import {useDispatch} from 'react-redux';
+import {USER_CHANGE} from './store/User/actionTypes';
+import {useEffect} from 'react';
+import auth from '@react-native-firebase/auth';
+const {Screen, Navigator} = createStackNavigator();
 
- 
- const Section: React.FC<{
-   title: string;
- }> = ({children, title}) => {
-   const isDarkMode = useColorScheme() === 'dark';
-   return (
-     <View style={styles.sectionContainer}>
-       <Text
-         style={[
-           styles.sectionTitle,
-           {
-             color: isDarkMode ? Colors.white : Colors.black,
-           },
-         ]}>
-         {title}
-       </Text>
-       <Text
-         style={[
-           styles.sectionDescription,
-           {
-             color: isDarkMode ? Colors.light : Colors.dark,
-           },
-         ]}>
-         {children}
-       </Text>
-     </View>
-   );
- };
 
- const App = () => {
-   const isDarkMode = useColorScheme() === 'dark';
 
-   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-   };
 
-   return (
-     <SafeAreaView style={backgroundStyle}>
-       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-       <ScrollView
-         contentInsetAdjustmentBehavior="automatic"
-         style={backgroundStyle}>
-         <Header />
-         <View
-           style={{
-             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-           }}>
-           <Section title="Step One">
-             Edit <Text style={styles.highlight}>App.js</Text> to change this
-             screen and then come back to see your edits.
-           </Section>
-           <Section title="See Your Changes">
-             <ReloadInstructions />
-           </Section>
-           <Section title="Debug">
-             <DebugInstructions />
-           </Section>
-           <Section title="Learn More">
-             Read the docs to discover what to do next:
-           </Section>
-           <LearnMoreLinks />
-         </View>
-       </ScrollView>
-     </SafeAreaView>
-   );
- };
+const App =() =>{
+  
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootStateOrAny) => state.user)
 
- const styles = StyleSheet.create({
-   sectionContainer: {
-     marginTop: 32,
-     paddingHorizontal: 24,
-   },
-   sectionTitle: {
-     fontSize: 24,
-     fontWeight: '600',
-   },
-   sectionDescription: {
-     marginTop: 8,
-     fontSize: 18,
-     fontWeight: '400',
-   },
-   highlight: {
-     fontWeight: '700',
-   },
- });
+  useEffect(() => {
+    auth().onAuthStateChanged(userState => {
+      console.log(userState);
+      dispatch({type: USER_CHANGE,payload: userState});
+      console.log(user)
+    });
+  }, []);
 
- export default App;
+
+  return(  
+    <NavigationContainer>
+      <Navigator screenOptions={{
+        headerShown: false,
+      }}>
+        <Screen name="Login" component={LoginView}></Screen>
+        <Screen name="Signup" component={SignupView}></Screen>
+        <Screen name= "playlists" component={PlayListsCollectionScreen}/>
+        <Screen name= "songList" component={SongsScreen}/>
+        <Screen name= "player" component={PlayerScreen}/>
+
+      </Navigator>
+    </NavigationContainer> 
+ )
+}
+
+const WrapperApp = () => {
+  return (
+    <Provider store={store}>
+      <App/>
+    </Provider>
+
+  );
+}
+export default WrapperApp;
+
+const styles = StyleSheet.create({
+ container: {
+   flex: 1,
+   //justifyContent: "center",
+   paddingVertical: 10,
+   alignItems: "center",
+ },
+
+ title: {
+   fontSize: 17,
+   fontWeight: 'bold',
+},
+});
+
+//  export default function App() {
+//   const isLoadingComplete = useCachedResources();
+//   const colorScheme = useColorScheme();
+
+//   if (!isLoadingComplete) {
+//     return null;
+//   } else {
+//     return (
+//       <SafeAreaProvider>
+//         <Navigation colorScheme={colorScheme} />
+//         <StatusBar />
+//       </SafeAreaProvider>
+//     );
+//   }
+// }
+
+/*   {<Screen name="txt" component={Hello}/>
+   
+   /* <Screen name= "playLists" component={PlayListsCollectionScreen}/>
+   <Screen name= "songList" component={SongsScreen}/>
+   <Screen name= "player" component={Screens.PlayerScreen}/> 
+
+   */

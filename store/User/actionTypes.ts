@@ -1,0 +1,1 @@
+export const USER_CHANGE = "USER_CHANGE"; //since we only need to have a single method for when to update our user
