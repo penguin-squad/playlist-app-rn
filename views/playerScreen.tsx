@@ -81,7 +81,7 @@ const PlayerScreen = (props) => {
     return (
  <View style={styles.container}>
    <YoutubePlayer
-        height={0}
+        height={300}
         play={playing}
         videoId={"iee2TATGMyI"}
       />
