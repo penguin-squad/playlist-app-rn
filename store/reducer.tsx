@@ -1,6 +1,16 @@
 // Updates Store
 import * as ActionTypes from "./actionTypes";
 
+/*
+
+currentPlaylist: Playlist //the currently selected album
+Playlists: Playlist[] //all playlists Local View based changes are fine however larger store
+Playlist: Song[]
+
+
+
+*/
+
 const initialState= {
     album: { //test for songScreen 
         albumname:"Happy Coding",
@@ -18,7 +28,6 @@ const initialState= {
         activeSong: false,
         isPlaying: false,
     },
-
     songslist: [
         { 
             title:"Rivers",

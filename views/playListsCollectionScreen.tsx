@@ -15,9 +15,9 @@ const PlayListsCollectionScreen =(props) => {
 //   const [id, setID] =useState("");
 // const [searchquery, setSearchQuery] = useState <string>(""); 
 
-  const goToPlayer = () => {
-    props.navigation.navigate("player"); 
-};
+const goToPlayer = () => {
+  props.navigation.navigate("player"); 
+};  
   
 console.log(props)
 const [inputShown, setInputShown] = useState<boolean>(false);
@@ -70,7 +70,7 @@ useEffect(()=> {
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
 
-        <Components.Header title= {"Playlists Collection: "/*+ props.firstPlaylist.name*/}/> 
+        <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
 
         
         <FlatList style={{ marginVertical: 10}}

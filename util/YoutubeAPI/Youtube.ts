@@ -1,26 +1,27 @@
-const BaseURL: string ="https://www.googleapis.com/youtube/v3/";
-const APIKey: string = "AIzaSyBnDAA_ckRrMOTFvOU6fQY7PymRnot7VgU";
+//Add Types if you deem it neccasry
+// @ts-ignore
+import {BASE_URL, API_KEY} from 'react-native-dotenv'
+
 
 
 const Youtube = {
-    async apiCall(params: string){
-        return fetch(BaseURL+params + `&key=${APIKey}`,{
+    apiCall(params: string){
+        return fetch(BASE_URL+params + `&key=${API_KEY}`,{
             method: "GET"
         })
         .then(response => {
-            if(!response.statusText.includes("OK")) throw response;
-            else return response;
-        })
+            //response.json().then(r => console.log("line13",r))
+            if(response.status!==200) throw response;
+            else return response.json();
+        }).catch(e => console.log("wow err", e))
     },
-    async searchYoutubeVideo(query: string, maxResults: string){
-        return this.apiCall(`search?${
+    searchYoutubeVideo(query: string, maxResults: string = '5'){
+        return this.apiCall(`search?part=snippet&${
             new URLSearchParams({
                 q: query === undefined ? "" : query,
                 maxResults: maxResults === undefined? "": maxResults
             })}`)
-            .then(data => data.json())
-            .then(dataJSON => dataJSON.results)
-            .catch(err => console.log(err))
+            .catch(e => console.log("err", e))
     }
 
 };
