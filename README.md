@@ -39,10 +39,31 @@ The application will be a playlist application where you will be able to share a
 code here
 ```
 
+## Project Structure
+Currently, the project is a bit disorganized and we hope to improve it. The main idea is that we leverage Model-View-Presenter strucutre with an added components folder where you can find individual components and where the views represent multiple components to fill out a screen.
+
+In the view folder you can see the Views for our application.
+
+In the components you can see smaller components which are used to build up a view
+
+In the model folder you can see some Typescript typing used to define some objects that we use. 
+
+In the store we describe our current redux store which contains mock data and how we leverage redux in our application.
+
+We also have a presenter folder which is currently not utilized.
+
+We also have a util folder that describes our api connection. 
+
+In the android folder is the actual android project which is built and used for testing
+
+In the IOS folder is the actual IOS project which is built and used for testing
+
 ## Screenshots
 
 ## Usage
-The application is very simple to use..
+You install the app by going to our dropbox link: WILL BE ADDED SOON
+
+Currently there only exists an android version for the application. You will need to change you android settings to allow unknown sources to install third party apps. You will then install the APK in the dropbox link.
 
 ## Contribution
 Please send issues and pull requests with your ideas or bugs 
