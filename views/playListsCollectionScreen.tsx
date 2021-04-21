@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/Playlist/actionTypes";
@@ -52,7 +52,7 @@ useEffect(()=> {
         }, []);   
 
 
-    
+    const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
   return (
     <View style={styles.container}>
 
@@ -72,7 +72,10 @@ useEffect(()=> {
             data={props.playlists} 
             renderItem={({item})=> (
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
-                    onPress={()=> props.navigation.navigate("songList")}
+                    onPress={()=> {
+                      props.changePlaylistID(item.id)
+                      props.navigation.navigate("songList")
+                    }}
                     style={styles.listItem}>
             
             <Components.OneListItem id={item.id} name={item.name} />
@@ -118,7 +121,14 @@ useEffect(()=> {
  {/* for future Player*/}
             <Components.ButtonFullScreen
               title="Player" 
-              onPress={()=>goToPlayer()}/>
+              onPress={()=>{
+                if(props.playlists === undefined || props.playlists.length === 0){
+                  ShowToast("Create and Select a Playlist")
+                }else {
+                  goToPlayer()
+                }
+                
+                }}/>
             </View> 
 
     );
@@ -128,7 +138,8 @@ useEffect(()=> {
 const mapStateToProps = (state) => ({ 
   firstPlaylist: state.reducer.firstPlaylist,
   playlists: state.playlistReducer.playlists,
-  pl: state.reducer.playlist
+  pl: state.reducer.playlist,
+  playlistID: state.playlistReducer.playlistID
 
 });
 
@@ -137,9 +148,14 @@ const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
       dispatch({
           type: ActionTypes.PLAYLIST.CREATE, 
           payload: playlist
+        }),
+        changePlaylistID: (playlistID: string) => 
+        dispatch({
+          type: ActionTypes.PLAYLIST.UPDATE_PLAYLIST_ID,
+          payload: playlistID
         })
     });
-const connectComponent= connect (mapStateToProps, mapDispatchToProps);
+const connectComponent = connect (mapStateToProps, mapDispatchToProps);
 export default connectComponent(PlayListsCollectionScreen);
 
 
