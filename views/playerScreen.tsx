@@ -6,12 +6,16 @@ import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import * as ActionTypes from "../store/actionTypes";
 import YoutubePlayer from "react-native-youtube-iframe";
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
+import Playlist from "../models/Playlist";
+import Song from "../models/Song";
 
 const { width } = Dimensions.get('window');
 
 const PlayerScreen = (props) => {
   
+
+  //const [currentSong, setCurrentSong] = useState<Song>();
   const gotoSongList = () => {
     props.navigation.navigate("songList"); };
   
@@ -74,17 +78,17 @@ const PlayerScreen = (props) => {
  
  
  */
- 
- 
- 
+
  
     return (
  <View style={styles.container}>
+   <View style = {styles.youtubeVideo}>
    <YoutubePlayer
-        height={300}
+        height={1}
         play={playing}
         videoId={"iee2TATGMyI"}
       />
+    </View>
            {/* TODO: go back button */}
            <Components.PlayerBtn  iconType='BACK' onPress={()=>gotoSongList()} />
 
@@ -96,7 +100,7 @@ const PlayerScreen = (props) => {
             size={300}
             /*color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} */ />
             
-        <Text style={styles.audioTitle}> {props.album.albumname} </Text>
+        <Text style={styles.audioTitle}> {""} </Text>
         {/* <Text numberOfLines={1} style={styles.audioTitle}>
         {context.currentAudio.filename} </Text>  */}
 
@@ -111,7 +115,7 @@ const PlayerScreen = (props) => {
            // minimumTrackTintColor={color.FONT_MEDIUM}
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
-
+ 
 <View style={styles.audioBtn}>
 
             <Components.PlayerBtn iconType='PREV' onPress={()=>console.log("<<")}  />
@@ -121,7 +125,7 @@ const PlayerScreen = (props) => {
               style={{ marginHorizontal: 25 }}
               iconType={playing ? 'PLAY' : 'PAUSE'}
             />
-            <Components.PlayerBtn  iconType='NEXT' onPress={()=>console.log(">>")} />
+            <Components.PlayerBtn  iconType='NEXT' onPress={()=>console.log("<<")} />
 
 
 
@@ -133,12 +137,13 @@ const PlayerScreen = (props) => {
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ album: state.reducer.album});
-const mapDispatchToProps = (dispatch) => ({
-
+const mapStateToProps = (state) => ({ 
+  album: state.reducer.album,
+  //playlists: state.playlistReducer.playlists,
+  //playlistID: state.playlistReducer.playlistID
 });
 
-const connectComponent= connect (mapStateToProps, mapDispatchToProps);
+const connectComponent= connect (mapStateToProps);
 export default connectComponent(PlayerScreen);
 // Redux code ends
 
@@ -171,5 +176,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 20,
 
-    } 
+    },
+    youtubeVideo: {
+      height:0,
+      opacity: 0.99
+    }
 });

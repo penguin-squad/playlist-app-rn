@@ -2,8 +2,8 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
-import * as ActionTypes from "../store/actionTypes";
-import {Album} from "../store/album";
+import * as ActionTypes from "../store/Playlist/actionTypes";
+import Playlist from '../models/Playlist'
 
 const { width } = Dimensions.get('screen');
 
@@ -21,27 +21,22 @@ const goToPlayer = () => {
   
 console.log(props)
 const [inputShown, setInputShown] = useState<boolean>(false);
-const [albums, setAlbums] = useState <Album[] | null>(null);
-const [newAlbum, setNewAlbum] = useState<Album | null>(null);
+const [newPlaylist, setNewPlaylist] = useState<Playlist | null>(null);
+const [Playlists, setPlaylists] = useState<Playlist[] | null>(null);
 
-
-const handleSearch = (text) => { //instead of handle input
-   const albums: [] = props.pl.filter((album)=> album.name.includes(text) );
-   
-    setAlbums(albums); }; 
+const handleSearch = (text: string) => { //instead of handle input
+   const playlists: Playlist[] = props.playlists.filter((playlist: Playlist)=> playlist.name.includes(text) ); 
+   setPlaylists(playlists); 
+  }; 
     
 
-const handleAddAlbum =()=> {
-    if (newAlbum !==null && albums!==null)
-    { 
-        //console.log("1: "+albums + "-->"+ newAlbum);
-        setAlbums([...albums, newAlbum]);
-        props.addPlaylist(albums); 
+const handleAddPlaylist =()=> {
+    if (newPlaylist !==null && Playlists!==null)
+    {
+        props.addPlaylist(newPlaylist); 
     }
-    else if(newAlbum !==null && albums ==null) {
-        setAlbums([newAlbum]);
-        props.addPlaylist(albums); 
-        //console.log("2: "+albums);
+    else if(newPlaylist !==null && Playlists == null) {
+        props.addPlaylist(newPlaylist); 
      }
 
 };
@@ -49,8 +44,8 @@ const handleAddAlbum =()=> {
 
 useEffect(()=> {
     (()=>{
-      setAlbums(
-        props.pl.sort((a: Album, b: Album) =>{   
+      setPlaylists(
+        props.playlists.sort((a: Playlist, b: Playlist) =>{   
            return a.name > b.name ? 1 : b.name > a.name? -1 :0;
               }));
           }) ();
@@ -74,9 +69,8 @@ useEffect(()=> {
 
         
         <FlatList style={{ marginVertical: 10}}
-            data={albums} 
+            data={props.playlists} 
             renderItem={({item})=> (
-
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={()=> props.navigation.navigate("songList")}
                     style={styles.listItem}>
@@ -98,24 +92,25 @@ useEffect(()=> {
             
         <Components.Iteminput icon="ios-add-circle-outline" placeholder="Album Name" 
             onChangeText={(text)=>{
-              if(newAlbum !==null){
-                setNewAlbum({...newAlbum, name: text})
+              if(newPlaylist !== null){
+                setNewPlaylist({...newPlaylist, name: text})
               } else{
-                setNewAlbum({name: text, id: "0"}); }
+                setNewPlaylist({name: text, id: '0', Songs:[]}); 
+              }
             }}/>
         </View>
 
         <View style={{flexDirection:"row", borderBottomWidth: 1}}>             
         <Components.Iteminput icon="ios-add-circle-outline" placeholder="Album ID" 
             onChangeText={(text)=>{
-                if(newAlbum !==null){
-                  setNewAlbum({...newAlbum, id: text})
+                if(newPlaylist !==null){
+                  setNewPlaylist({...newPlaylist, id: text})
                 } else{
-                   setNewAlbum({name: "", id: text}); }
+                  setNewPlaylist({name: "", id: text, Songs: []}); }
                  }}/>
         </View>
         
-        <Components.Button onPress={()=>handleAddAlbum()} title="Add New Album"/>
+        <Components.Button onPress={()=>handleAddPlaylist()} title="Add New Album"/>
 
         </View>     
             
@@ -130,14 +125,18 @@ useEffect(()=> {
 };
 
 // Redux code 
-const mapStateToProps = (state) => ({ firstPlaylist: state.reducer.firstPlaylist, playlists:state.reducer.playlists, pl:state.reducer.playlist });
+const mapStateToProps = (state) => ({ 
+  firstPlaylist: state.reducer.firstPlaylist,
+  playlists: state.playlistReducer.playlists,
+  pl: state.reducer.playlist
+
+});
 
 const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
-    addPlaylist: (albums) => 
+    addPlaylist: (playlist: Playlist) => 
       dispatch({
-          type: ActionTypes.NEW_PLAYLIST, 
-          
-          payload: {albums}
+          type: ActionTypes.PLAYLIST.CREATE, 
+          payload: playlist
         })
     });
 const connectComponent= connect (mapStateToProps, mapDispatchToProps);
