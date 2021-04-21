@@ -37,12 +37,13 @@ const App =() =>{
     <NavigationContainer>
       <Navigator screenOptions={{
         headerShown: false,
+        
       }}>
         <Screen name="Login" component={LoginView}></Screen>
         <Screen name="Signup" component={SignupView}></Screen>
         <Screen name= "playlists" component={PlayListsCollectionScreen}/>
         <Screen name= "songList" component={SongsScreen}/>
-        <Screen name= "player" component={PlayerScreen}/>
+        <Screen  name= "player" component={PlayerScreen}/>
 
       </Navigator>
     </NavigationContainer> 

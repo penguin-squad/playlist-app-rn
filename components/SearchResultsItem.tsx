@@ -15,6 +15,7 @@ interface Props{
 
 }
 const SearchResultsItem = (props: Props) => {
+  console.log(props)
   const {title, thumbnail, duration,videoid} = props.Song;
 
   const addToPlaylist = () => {
@@ -25,7 +26,7 @@ const SearchResultsItem = (props: Props) => {
   }
 
   return (
-  <TouchableOpacity style = {styles.container} onPress = {() => props.setShowResults(false)}>
+  <TouchableOpacity style = {styles.container} onPress = {addToPlaylist}>
       <Image source = {{uri: thumbnail}}
       style = {styles.image}/>
       <Text style = {styles.title}>{title.length > 35 ? title.substr(0,35)+'...': title}</Text>
@@ -35,13 +36,13 @@ const SearchResultsItem = (props: Props) => {
 };
 
 
-const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlist });
+const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlistID });
 
 const mapDispatchToProps = (dispatch) => ({
     addSongToPlaylist: (Song: Song, PlaylistID: string) =>
     dispatch({
       type: PLAYLIST.ADD_SONG,
-      playload: {
+      payload: {
         id: PlaylistID,
         Song: Song
       }
