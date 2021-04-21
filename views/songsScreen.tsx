@@ -204,7 +204,7 @@ const SongsScreen =(props) => {
   const goToPlayer = () => {
     props.navigation.navigate("player"); };
 
-  const[songs, setSongs]= useState<[]| null> (null);  //TODO: define type of songs : Song
+  //const[songs, setSongs]= useState<[]| null> (null);  //TODO: define type of songs : Song
   const firstRender = useRef(true);
   
   //Gets data from APi
@@ -225,7 +225,7 @@ const SongsScreen =(props) => {
     }
     
     const Search = setTimeout(() => {
-      Youtube.searchYoutubeVideo(newSongSearch)
+      /*Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items.map((item: any) => {
         return {
@@ -239,8 +239,8 @@ const SongsScreen =(props) => {
         setShowSearchResults(true);
       })
       .catch(e => console.log(e))
-      /*setSearchResults(res)
-      /* const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
+      /*setSearchResults(res)*/
+       const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
         return {
           videoid: item.id.videoId,
           title: item.snippet.title, 
@@ -249,19 +249,19 @@ const SongsScreen =(props) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true); */
+      setShowSearchResults(true);
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
   
-  useEffect(()=> {
+  /*useEffect(()=> {
     (()=>{
       setSongs(
         props.songslist.sort((a:any, b:any) =>{    //TODO: type Song
            return a.name > b.name ? 1 : b.name > a.name? -1 :0;
               }));
           }) ();
-        }, []);  
+        }, []);  */
 
 
   return (
@@ -272,7 +272,7 @@ const SongsScreen =(props) => {
         <Components.Header title= {"Playlist: "+ props.album.albumname}/>
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={songs} 
+            data={props.playlists.find((item: Playlist) => item.id === props.playlistID).Songs} 
             renderItem={({item})=> (
 
               <Components.SongHolder
@@ -307,7 +307,12 @@ const SongsScreen =(props) => {
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ album: state.reducer.album, songslist: state.reducer.songslist});
+const mapStateToProps = (state) => ({ 
+  album: state.reducer.album, 
+  songslist: state.reducer.songslist, 
+  playlistID: state.playlistReducer.playlistID,
+  playlists: state.playlistReducer.playlists
+});
 
 const mapDispatchToProps = (dispatch) => ({
     /*addAlbum: (albumname) => 

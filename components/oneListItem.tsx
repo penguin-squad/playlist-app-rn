@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Playlist from '../models/Playlist';
 import {Album} from "../store/album";
 
-const OneListItem: FC<Album>=(props) =>{
+const OneListItem: FC<any>=(props) =>{
+    console.log(props)
     return (
    
    <View style={styles.container}> 
