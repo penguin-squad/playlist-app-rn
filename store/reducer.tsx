@@ -6,7 +6,7 @@ import * as ActionTypes from "./actionTypes";
 currentPlaylist: Playlist //the currently selected album
 Playlists: Playlist[] //all playlists Local View based changes are fine however larger store
 Playlist: Song[]
-
+User
 
 
 */
