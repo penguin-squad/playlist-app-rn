@@ -62,7 +62,7 @@ const SignupView=(props:SignupProps) =>{
   return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}> Username:</Text>
+                <Text style={styles.title}> Email:</Text>
                 <TextInput
                     style={{ height: 60 , fontSize:20}}
                     placeholder="Enter Username"

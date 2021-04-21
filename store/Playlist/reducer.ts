@@ -30,8 +30,15 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
                 }
             })
         };
+        case ActionTypes.PLAYLIST.UPDATE_PLAYLIST_ID:
+            return {
+                ...state,
+                playlistID: action.payload
+            };
+
         default:
             return state;
+        
 
     }
 };
