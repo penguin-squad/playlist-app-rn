@@ -61,7 +61,7 @@ In the IOS folder is the actual IOS project which is built and used for testing
 ## Screenshots
 
 ## Usage
-You install the app by going to our dropbox link: WILL BE ADDED SOON
+You install the app by going to our dropbox link: https://www.dropbox.com/s/i08puelqdbii0h4/app-release.apk?dl=0
 
 Currently there only exists an android version for the application. You will need to change you android settings to allow unknown sources to install third party apps. You will then install the APK in the dropbox link.
 
