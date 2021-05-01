@@ -62,9 +62,12 @@ In the IOS folder is the actual IOS project which is built and used for testing
 
 ## Usage
 ### DISCLAIMER: THIS APP ONLY WORKS ON ANDROID (since some of the dev team do not have macBooks and cant run virtual machine of iOS)
-You install the app by going to our dropbox link: https://www.dropbox.com/s/hqfdi7m6g8eds0y/app-release.apk?dl=0
+#### If you have a previous version uninstall it first 
+You install the app by going to our dropbox link: https://www.dropbox.com/s/ld1sktshh0fs9eh/app-release.apk?dl=0
 
 Currently there only exists an android version for the application. You will need to change you android settings to allow unknown sources to install third party apps. You will then install the APK in the dropbox link. You can follow this tutorial for how to install it on Android https://www.youtube.com/watch?v=r9aikSC5rw8.
+
+
 
 1. Download the APK from the dropbox link provided above.
 2. You need a way to traverse the file system on Android. I recommend the App My Files which most likely some of you have. I use https://play.google.com/store/apps/details?id=com.sec.android.app.myfiles&hl=en&gl=US
