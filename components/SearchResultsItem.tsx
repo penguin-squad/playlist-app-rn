@@ -5,6 +5,7 @@ import Song from '../models/Song'
 import SongSearchResult from "../models/SongSearchResult";
 import { PLAYLIST } from "../store/Playlist/actionTypes";
 import Playlist from '../models/Playlist'
+import { addSong } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get("screen");
 
 interface Props{
@@ -39,14 +40,7 @@ const SearchResultsItem = (props: Props) => {
 const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlistID });
 
 const mapDispatchToProps = (dispatch) => ({
-    addSongToPlaylist: (Song: Song, PlaylistID: string) =>
-    dispatch({
-      type: PLAYLIST.ADD_SONG,
-      payload: {
-        id: PlaylistID,
-        Song: Song
-      }
-    })
+    addSongToPlaylist: (Song: Song, PlaylistID: string) => dispatch(addSong(PlaylistID,Song))
 });
 const connectComponent = connect (mapStateToProps, mapDispatchToProps);
 export default connectComponent(SearchResultsItem);

@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import {USER_CHANGE} from './store/User/actionTypes';
 import {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
+import startPage from './presenters/startPagePresenter';
 const {Screen, Navigator} = createStackNavigator();
 
 
@@ -39,6 +40,7 @@ const App =() =>{
         headerShown: false,
         
       }}>
+        <Screen name="Home" component={startPage}></Screen>
         <Screen name="Login" component={LoginView}></Screen>
         <Screen name="Signup" component={SignupView}></Screen>
         <Screen name= "playlists" component={PlayListsCollectionScreen}/>

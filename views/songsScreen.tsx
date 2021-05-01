@@ -9,6 +9,7 @@ import Song from '../models/Song'
 import SongSearchResult from "../models/SongSearchResult";
 import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
+import { addSong } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get('screen');
 
 const fakedata = {
@@ -196,7 +197,8 @@ const fakedata = {
 
 
 
-const SongsScreen =(props) => { 
+const SongsScreen =(props) => {
+  console.log("Songs Screen",props)
   
   const gotoPlayLists = () => {
     props.navigation.navigate("playlists"); };
@@ -225,7 +227,7 @@ const SongsScreen =(props) => {
     }
     
     const Search = setTimeout(() => {
-      Youtube.searchYoutubeVideo(newSongSearch)
+      /*Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items.map((item: any) => {
         return {
@@ -239,7 +241,7 @@ const SongsScreen =(props) => {
         setShowSearchResults(true);
       })
       .catch(e => console.log(e))
-      /*setSearchResults(res)
+      setSearchResults(res)*/
        const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
         return {
           videoid: item.id.videoId,
@@ -249,7 +251,7 @@ const SongsScreen =(props) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true);*/
+      setShowSearchResults(true);
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
@@ -272,7 +274,7 @@ const SongsScreen =(props) => {
         <Components.Header title= {"Playlist: "+ props.album.albumname}/>
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={props.playlists.find((item: Playlist) => item.id === props.playlistID).Songs} 
+            data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
 
               <Components.SongHolder
@@ -311,7 +313,8 @@ const mapStateToProps = (state) => ({
   album: state.reducer.album, 
   songslist: state.reducer.songslist, 
   playlistID: state.playlistReducer.playlistID,
-  playlists: state.playlistReducer.playlists
+  playlists: state.playlistReducer.playlists,
+  currPlaylist: state.playlistReducer.currPlaylist   
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -321,15 +324,6 @@ const mapDispatchToProps = (dispatch) => ({
           payload: {
           albumname,
     }}),*/
-
-    addSongToPlaylist: (Song: Song, Playlist: Playlist) =>
-    dispatch({
-      type: PLAYLIST.ADD_SONG,
-      playload: {
-        id: Playlist.id,
-        Song: Song
-      }
-    })
 });
 const connectComponent= connect (mapStateToProps, mapDispatchToProps);
 export default connectComponent(SongsScreen);

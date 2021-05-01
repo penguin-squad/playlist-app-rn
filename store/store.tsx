@@ -1,8 +1,9 @@
 // Updates State
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { reducer } from "./reducer";
 import {userReducer} from "./User/reducer"
 import {playlistReducer} from './Playlist/reducer'
-const store = createStore(combineReducers({playlistReducer,reducer,userReducer}));
+import thunk from 'redux-thunk';
+const store = createStore(combineReducers({playlistReducer,reducer,userReducer}),applyMiddleware(thunk));
 
 export default store;
