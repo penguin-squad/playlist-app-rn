@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect,useRef} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/actionTypes";
@@ -219,9 +219,17 @@ const SongsScreen =(props) => {
     //props.addAlbum(newSongSearch); //unpdates title with name
     props.navigation.navigate("player");
   }; 
+  const [loading, setLoading] = useState(false);
+  const startLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 50);
+  };
 
   useEffect(() => {
     if(firstRender.current == true){
+      startLoading();
       firstRender.current = false
       return
     }
@@ -250,6 +258,7 @@ const SongsScreen =(props) => {
           thumbnail: item.snippet.thumbnails.default.url 
           }
       })
+      startLoading();
       setSearchResults(SearchResults)
       setShowSearchResults(true);
     }, 1000)
@@ -273,6 +282,8 @@ const SongsScreen =(props) => {
 
         <Components.Header title= {"Playlist: "+ props.album.albumname}/>
         
+      {loading ? (<ActivityIndicator size="large" color="#0000ff"/>):(
+          <>
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
@@ -285,9 +296,12 @@ const SongsScreen =(props) => {
               activeSong={item.activeSong}
               isPlaying={item.isPlaying}/>
               )} />
+          </>
+      )}
         <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
         </View>
+        
             <Components.PlainInput 
               onChangeText={(text) => setNewSongSearch(text)} 
               placeholder="Add new song here"/>  

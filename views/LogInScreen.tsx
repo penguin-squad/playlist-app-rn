@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import { Text, View, TextInput,TouchableOpacity} from '../components/Themed';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types';
 import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-// import EditScreenInfo from '../components/EditScreenInfo';
-
+import {showToast} from '../components/toasts';
 
 export type LoginProps={
     username:string;
@@ -15,37 +14,62 @@ export type LoginProps={
 }
 
 
-/* sign button for firebase auth*/
-
-
-
 const LoginView = (props:LoginProps) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    
-    const handleSign=() => {
+
+    const [loading, setLoading] = useState(false);
+    const startLoading = () => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    };
+
+
+    const handleSign=() => { 
+      if (username.length === 0){
+          showToast("Please enter username!");
+          return;
+      }
+      else if (password.length === 0){
+          showToast("Please enter password!");
+          return;
+      }
+      else{
         auth()
-        .signInWithEmailAndPassword(username, password)
-        .then(() => {
-          console.log('signed in!');
-          props.navigation.navigate("playlists");
-        })
-        .catch(error => {
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-          console.error(error);
-        });
+          .signInWithEmailAndPassword(username, password)
+          .then(() => { 
+            startLoading();
+            showToast("You have login successfully!");
+            props.navigation.navigate("playlists");
+          })
+          .catch(error => {
+            if (error.code === 'auth/invalid-email') {
+              showToast("Your email is invalid!");
+            }
+            if(error.code === 'auth/wrong-password'){
+              showToast("Your password is wrong!")
+            }
+            if(error.code === 'auth/user-not-found'){
+              showToast("User not found!");
+            }
+            // console.error(error);
+          });
+        }
         
     }
       
   return (
         <View style={styles.container}>
+            {loading? (
+            <ActivityIndicator size="large" color="#0000ff"/>):(
+            <>
             <View>
                 <Text style={styles.title}> Username:</Text>
                 <TextInput
                     style={{ height: 60, fontSize:20 }}
-                    placeholder="Enter Username"
+                    placeholder="YourEmail@xxx.xxx"
                     value={username}
                     onChangeText={setUsername}
                 />
@@ -64,9 +88,8 @@ const LoginView = (props:LoginProps) =>{
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate('Signup')}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("playlists")}>
-              <Text style={styles.buttonText}>Loggin As Test</Text>
-            </TouchableOpacity>
+            </>
+            )}
         </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet,Dimensions } from "react-native";
+import { View, Text, StyleSheet,Dimensions,Alert} from "react-native";
 import {connect} from "react-redux";
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
@@ -9,7 +9,6 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
-import { Alert } from "react-native";
 
 const { width } = Dimensions.get('window');
 
