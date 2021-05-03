@@ -9,6 +9,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
+import { Alert } from "react-native";
 
 const { width } = Dimensions.get('window');
 
@@ -18,11 +19,16 @@ const PlayerScreen = (props) => {
   const [currentSong, setCurrentSong] = useState<Song>();
   const gotoSongList = () => {
     props.navigation.navigate("songList"); };
-  
-    const [playing, setPlaying] = useState(false);
+
+    const [playingButton, setPlayingButton] = useState(true);
+    const [playing, setPlaying] = useState(true);
     const togglePlaying = useCallback(() => {
-      setPlaying((prev) => !prev);
+      setPlayingButton((prev) => !prev);
+      setPlaying((prev) => !prev)
+
     }, []);
+
+    
   
  
   /* Functionality: when audio files exist
@@ -78,26 +84,36 @@ const PlayerScreen = (props) => {
  
  
  */
+   const onStateChange = useCallback((state) => {
+    console.log(state)
+    if (state === "ended") {
+      nextSong()
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
 
-   const findPlaylist = () : Playlist =>  {
-     return props.playlists.find((playlist: Playlist) => playlist.id === props.playlistID)
-   }
+
    useEffect(() => {
-     const playlist : Playlist = findPlaylist();
+     const playlist : Playlist = props.currPlaylist
      setCurrentSong(playlist.Songs[0])
 
    }, [])
 
    const nextSong = () => {
-     const playlist: Playlist = findPlaylist();
+     const playlist: Playlist = props.currPlaylist
      const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
      setCurrentSong(playlist.Songs[SongIndex+1])
+     setPlaying(false)
+     setTimeout(() => setPlaying(true), 1000)
 
    } 
    const prevSong = () => {
-    const playlist: Playlist = findPlaylist();
+    const playlist: Playlist = props.currPlaylist;
     const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
     setCurrentSong(playlist.Songs[SongIndex-1])
+    setPlaying(false)
+    setTimeout(() => setPlaying(true), 1000)
+    
      
   } 
  
@@ -107,6 +123,7 @@ const PlayerScreen = (props) => {
    <YoutubePlayer
         height={1}
         play={playing}
+        onChangeState = {onStateChange}
         videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid}
       />
     </View>
@@ -144,7 +161,7 @@ const PlayerScreen = (props) => {
               //onPress={handlePlayPause}
               onPress={togglePlaying}
               style={{ marginHorizontal: 25 }}
-              iconType={playing ? 'PLAY' : 'PAUSE'}
+              iconType={playingButton ? 'PLAY' : 'PAUSE'}
             />
             <Components.PlayerBtn  iconType='NEXT' onPress={()=> nextSong()} />
 
@@ -161,7 +178,8 @@ const PlayerScreen = (props) => {
 const mapStateToProps = (state) => ({ 
   album: state.reducer.album,
   playlists: state.playlistReducer.playlists,
-  playlistID: state.playlistReducer.playlistID
+  playlistID: state.playlistReducer.playlistID,
+  currPlaylist: state.playlistReducer.currPlaylist
 });
 
 const connectComponent= connect (mapStateToProps);

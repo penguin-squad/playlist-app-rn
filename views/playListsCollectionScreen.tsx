@@ -4,7 +4,7 @@ import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/Playlist/actionTypes";
 import Playlist from '../models/Playlist'
-
+import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
 const { width } = Dimensions.get('screen');
 
 
@@ -49,7 +49,11 @@ useEffect(()=> {
            return a.name > b.name ? 1 : b.name > a.name? -1 :0;
               }));
           }) ();
-        }, []);   
+        }, []);
+    
+    useEffect(() => {
+      props.getPlaylists(props.user.uid);
+    },[]) 
 
 
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
@@ -72,7 +76,7 @@ useEffect(()=> {
             data={props.playlists} 
             renderItem={({item})=> (
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
-                    onPress={()=> {
+                    onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
                     }}
@@ -98,19 +102,9 @@ useEffect(()=> {
               if(newPlaylist !== null){
                 setNewPlaylist({...newPlaylist, name: text})
               } else{
-                setNewPlaylist({name: text, id: '0', Songs:[]}); 
+                setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
               }
             }}/>
-        </View>
-
-        <View style={{flexDirection:"row", borderBottomWidth: 1}}>             
-        <Components.Iteminput icon="ios-add-circle-outline" placeholder="Album ID" 
-            onChangeText={(text)=>{
-                if(newPlaylist !==null){
-                  setNewPlaylist({...newPlaylist, id: text})
-                } else{
-                  setNewPlaylist({name: "", id: text, Songs: []}); }
-                 }}/>
         </View>
         
         <Components.Button onPress={()=>handleAddPlaylist()} title="Add New Album"/>
@@ -139,21 +133,15 @@ const mapStateToProps = (state) => ({
   firstPlaylist: state.reducer.firstPlaylist,
   playlists: state.playlistReducer.playlists,
   pl: state.reducer.playlist,
-  playlistID: state.playlistReducer.playlistID
+  playlistID: state.playlistReducer.playlistID,
+  user: state.userReducer.user
 
 });
 
 const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
-    addPlaylist: (playlist: Playlist) => 
-      dispatch({
-          type: ActionTypes.PLAYLIST.CREATE, 
-          payload: playlist
-        }),
-        changePlaylistID: (playlistID: string) => 
-        dispatch({
-          type: ActionTypes.PLAYLIST.UPDATE_PLAYLIST_ID,
-          payload: playlistID
-        })
+    addPlaylist: (playlist: Playlist) => dispatch(createPlaylist(playlist)),
+    changePlaylistID: (playlistID: string) => dispatch(changePlaylistID(playlistID)),
+    getPlaylists: (userId: string) => dispatch(getPlaylists(userId))
     });
 const connectComponent = connect (mapStateToProps, mapDispatchToProps);
 export default connectComponent(PlayListsCollectionScreen);
