@@ -4,7 +4,8 @@ export enum PLAYLIST{
     UPDATE,
     ADD_SONG,
     GET,
-    UPDATE_PLAYLIST_ID
+    UPDATE_PLAYLIST_ID,
+    UPDATE_CURR_PLAYLIST
 }
 
 
