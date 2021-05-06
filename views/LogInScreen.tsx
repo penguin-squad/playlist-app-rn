@@ -88,6 +88,9 @@ const LoginView = (props:LoginProps) =>{
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate('Signup')}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
+            <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.goBack()}>
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
             </>
             )}
         </View>

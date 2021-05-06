@@ -11,6 +11,7 @@ import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get('screen');
+import auth from '@react-native-firebase/auth';
 
 const fakedata = {
   "kind": "youtube#searchListResponse",
@@ -278,7 +279,7 @@ const SongsScreen =(props) => {
   return (
         <View style={styles.container}>
 
-        <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
+        <Components.PlayerBtn iconType='BACK' onPress={()=>props.navigation.goBack()} />
 
         <Components.Header title= {"Playlist: "+ props.album.albumname}/>
         
@@ -314,7 +315,9 @@ const SongsScreen =(props) => {
 
             <Components.ButtonFullScreen
               title="Player" 
-              onPress={()=>goToPlayer()}/>
+              onPress={()=>goToPlayer()}
+              disabled={auth().currentUser == null}
+              />
            
 
             </View> 

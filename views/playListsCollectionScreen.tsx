@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import * as ActionTypes from "../store/Playlist/actionTypes";
 import Playlist from '../models/Playlist'
 import {showToast} from '../components/toasts'
+import auth from '@react-native-firebase/auth';
 import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
 const { width } = Dimensions.get('screen');
 
@@ -29,7 +30,7 @@ const startLoading = () => {
   setLoading(true);
   setTimeout(() => {
     setLoading(false);
-  }, 100);
+  }, 5000);
 };
 
 const handleSearch = (text: string) => { //instead of handle input
@@ -76,6 +77,11 @@ useEffect(()=> {
             icon="md-search" 
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
+
+        <Components.Button title="Signout" onPress={()=> auth().signOut().then(() => {
+          showToast("Sign out successfully");
+          props.navigation.navigate("Login");
+        }).catch((e)=>showToast(e))}/>  
 
         <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
 

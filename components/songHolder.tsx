@@ -1,5 +1,6 @@
-import React, {FC} from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
+import React, {FC,useState} from "react";
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback,Modal} from "react-native";
+import { TouchableOpacity } from "../components/Themed";
 import  Entypo  from 'react-native-vector-icons/Entypo';
 
 const { width } = Dimensions.get('window');
@@ -25,6 +26,7 @@ const choseIcon = (isPlaying: boolean)=>{
 //const Songs =(props:Props) => { 
 const SongHolder =(props) => {     
 const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } = props;
+const [modalVisible, setModalVisible] = useState<boolean>(false);
 
 
  return (
@@ -56,13 +58,40 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
     <Entypo
         // onPress={props.song.onOptionPress}
         //onPress={onOptionPress}
-        onPress={()=>{console.log("on Options Push"),
-            onOptionPress===true;}} //samething is to be done + set on press to false
+        onPress={() => setModalVisible(true)
+            // ()=>{console.log("on Options Push"),
+            // onOptionPress===true;}
+        } //samething is to be done + set on press to false
         name='dots-three-vertical'
         size={20}
         //color={color.FONT_MEDIUM}
         style={{ padding: 10 }}
     />
+    <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 </View>
 </View>
 <View style={styles.separator}> 
@@ -83,6 +112,12 @@ const styles = StyleSheet.create({
         width: width - 80,
        // backgroundColor: "red",
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
     leftContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -132,4 +167,42 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
     },
+    modalView: {
+        margin: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        height:200,
+        width: 300,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 15
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+        height:50,
+        width: 150,
+        margin: 15
+      },
+      buttonClose: {
+        backgroundColor: "#2196F3",
+      },
 });
