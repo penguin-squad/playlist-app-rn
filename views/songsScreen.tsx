@@ -316,7 +316,7 @@ const SongsScreen =(props) => {
             <Components.ButtonFullScreen
               title="Player" 
               onPress={()=>goToPlayer()}
-              disabled={auth().currentUser == null}
+              disabled={auth().currentUser !== props.currPlaylist.userId}
               />
            
 
