@@ -10,8 +10,6 @@ import auth from '@react-native-firebase/auth';
 //import Navigation from '../navigation';
 
 
-// import EditScreenInfo from '../components/EditScreenInfo';
-
 
 export type SignupProps={
     username:string;

@@ -271,7 +271,7 @@ const SongsScreen =(props) => {
 
         <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
 
-        <Components.Header title= {"Playlist: "+ props.album.albumname}/>
+        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/>
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
@@ -310,8 +310,6 @@ const SongsScreen =(props) => {
 
 // Redux code starts
 const mapStateToProps = (state) => ({ 
-  album: state.reducer.album, 
-  songslist: state.reducer.songslist, 
   playlistID: state.playlistReducer.playlistID,
   playlists: state.playlistReducer.playlists,
   currPlaylist: state.playlistReducer.currPlaylist   

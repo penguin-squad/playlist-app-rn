@@ -69,7 +69,7 @@ useEffect(()=> {
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
 
-        <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
+        <Components.Header title= {"Playlists Collection for: "+ props.user.email}/> 
 
         
         <FlatList style={{ marginVertical: 10}}
@@ -129,22 +129,8 @@ useEffect(()=> {
 };
 
 // Redux code 
-const mapStateToProps = (state) => ({ 
-  firstPlaylist: state.reducer.firstPlaylist,
-  playlists: state.playlistReducer.playlists,
-  pl: state.reducer.playlist,
-  playlistID: state.playlistReducer.playlistID,
-  user: state.userReducer.user
 
-});
-
-const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
-    addPlaylist: (playlist: Playlist) => dispatch(createPlaylist(playlist)),
-    changePlaylistID: (playlistID: string) => dispatch(changePlaylistID(playlistID)),
-    getPlaylists: (userId: string) => dispatch(getPlaylists(userId))
-    });
-const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(PlayListsCollectionScreen);
+export default PlayListsCollectionScreen;
 
 
 
