@@ -2,7 +2,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import {SongsScreen, PlayListsCollectionScreen, PlayerScreen} from "./views/index";
-
+import PlaylistCollectionScreenPresenter from './presenters/playListsCollectionScreenPresenter';
+import PlayerScreenPresenter from './presenters/PlayScreenPresenter';
+import SongsScreenPresenter from './presenters/songsScreenPresenter';
 import {createStackNavigator} from "@react-navigation/stack"; //native
 import {NavigationContainer} from "@react-navigation/native";
 import {Provider, RootStateOrAny, useSelector} from "react-redux";
@@ -14,7 +16,7 @@ import {useDispatch} from 'react-redux';
 import {USER_CHANGE} from './store/User/actionTypes';
 import {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
-import startPage from './presenters/startPagePresenter';
+import startPagePresenter from './presenters/startPagePresenter';
 const {Screen, Navigator} = createStackNavigator();
 
 
@@ -40,12 +42,12 @@ const App =() =>{
         headerShown: false,
         
       }}>
-        <Screen name="Home" component={startPage}></Screen>
+        <Screen name="Home" component={startPagePresenter}></Screen>
         <Screen name="Login" component={LoginView}></Screen>
         <Screen name="Signup" component={SignupView}></Screen>
-        <Screen name= "playlists" component={PlayListsCollectionScreen}/>
-        <Screen name= "songList" component={SongsScreen}/>
-        <Screen  name= "player" component={PlayerScreen}/>
+        <Screen name= "playlists" component={PlaylistCollectionScreenPresenter}/>
+        <Screen name= "songList" component={SongsScreenPresenter}/>
+        <Screen  name= "player" component={PlayerScreenPresenter}/>
 
       </Navigator>
     </NavigationContainer> 

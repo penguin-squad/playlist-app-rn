@@ -6,7 +6,7 @@ import Song from "../../models/Song";
 let unsubscribe: () => void;
 
 export const createPlaylist = (Playlist: Playlist) => {
-    return async (dispatch, getState) => {
+    return async (dispatch: any, getState: any) => {
         try{
         const playlist = await firestore()
         .collection('Playlists')
@@ -19,7 +19,7 @@ export const createPlaylist = (Playlist: Playlist) => {
 }
 
 export const changePlaylistID = (playlistID: string) => {
-    return async (dispatch, getState) => {
+    return async (dispatch: any, getState: any) => { 
         //if(unsubscribe !== null) unsubscribe()
         dispatch({type: PLAYLIST.UPDATE_PLAYLIST_ID, payload: playlistID })
         try{
@@ -39,7 +39,7 @@ export const changePlaylistID = (playlistID: string) => {
 }
 
 export const getPlaylists = (userId: string) => {
-    return async (dispatch, getState) => {
+    return async (dispatch: any, getState: any) => { //TODO: If playlist does not exist send a toast r something
         try{  
             const playlistsForAUser = await firestore()
             .collection('Playlists')

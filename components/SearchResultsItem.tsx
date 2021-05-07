@@ -37,9 +37,9 @@ const SearchResultsItem = (props: Props) => {
 };
 
 
-const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlistID });
+const mapStateToProps = (state: any) => ({ playlistID: state.playlistReducer.playlistID }); //TODO: Presenter
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     addSongToPlaylist: (Song: Song, PlaylistID: string) => dispatch(addSong(PlaylistID,Song))
 });
 const connectComponent = connect (mapStateToProps, mapDispatchToProps);
