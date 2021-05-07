@@ -1,5 +1,6 @@
 import React from 'react';
 import  AntDesign  from 'react-native-vector-icons/AntDesign';
+
 //import color from '../misc/color';
 
 // interface Props{

@@ -1,8 +1,12 @@
 import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import * as Components from '../components/index';
-import Playlist from '../models/Playlist'
+import Playlist from '../models/Playlist';
+import {Icon, Left, Button} from "native-base";
+
 const { width } = Dimensions.get('screen');
+import BackButton from "../components/BackButton";
+
 
 
 const PlayListsCollectionScreen =(props: any) => { 
@@ -49,11 +53,15 @@ useEffect(() => {
         {/* <Components.PlainInput 
            onChangeText={(text) => setName(text)} 
             placeholder="Enter name for your Playlist"/>  */}
+ 
+
+      <BackButton onPress = {()=>""} />
 
         <Components.Search
             icon="md-search" 
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
+
 
         <Components.Header title= {"Playlists Collection for: "+ props.user.email}/> 
 
