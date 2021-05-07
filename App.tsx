@@ -49,6 +49,7 @@ const App =() =>{
  )
 }
 
+
 const WrapperApp = () => {
   return (
     <Provider store={store}>
@@ -72,4 +73,5 @@ const styles = StyleSheet.create({
    fontWeight: 'bold',
 },
 });
+
 
