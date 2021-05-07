@@ -20,7 +20,7 @@ export const createPlaylist = (Playlist: Playlist) => {
 
 export const changePlaylistID = (playlistID: string) => {
     return async (dispatch, getState) => {
-        if(unsubscribe !== null) unsubscribe
+        //if(unsubscribe !== null) unsubscribe()
         dispatch({type: PLAYLIST.UPDATE_PLAYLIST_ID, payload: playlistID })
         try{
         unsubscribe = await firestore()
