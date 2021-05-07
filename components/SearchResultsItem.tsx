@@ -37,13 +37,8 @@ const SearchResultsItem = (props: Props) => {
 };
 
 
-const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlistID });
 
-const mapDispatchToProps = (dispatch) => ({
-    addSongToPlaylist: (Song: Song, PlaylistID: string) => dispatch(addSong(PlaylistID,Song))
-});
-const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(SearchResultsItem);
+export default SearchResultsItem;
 
 const styles = StyleSheet.create({
   container: {

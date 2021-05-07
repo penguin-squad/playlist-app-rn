@@ -23,7 +23,7 @@ const choseIcon = (isPlaying: boolean)=>{
 // }
 
 //const Songs =(props:Props) => { 
-const SongHolder =(props) => {     
+const SongHolder =(props: any) => {     
 const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } = props;
 
 
