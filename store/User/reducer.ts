@@ -1,15 +1,23 @@
 // Updates Store
-import * as ActionTypes from "./actionTypes";
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-const initialState: FirebaseAuthTypes.User | null = auth().currentUser;
+import * as USER from "./actionTypes";
+const initialState = {
+    user: {
+        email: ""
+    }
+}
 
 const userReducer = (state = initialState, action:any) => {
     switch(action.type){
-       case ActionTypes.USER_CHANGE: //test, delete later
+       case USER.LOGIN: //test, delete later
         return{
             ...state, 
             user: action.payload,
         };
+        case USER.CHANGE_STATE:
+        return {
+            ...state,
+            user: action.payload
+        }; 
         default:
             return state;
 

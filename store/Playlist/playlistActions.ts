@@ -60,7 +60,7 @@ export const getPlaylists = (userId: string) => {
 
 
 export const addSong = (playlistId: string, Song: Song) => {
-    return async (dispatch, getState) => {
+    return async (dispatch: any, getState: any) => {
         try{
             firestore()
             .collection('Playlists')

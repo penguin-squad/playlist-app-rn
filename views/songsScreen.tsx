@@ -255,15 +255,6 @@ const SongsScreen =(props) => {
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
-  
-  /*useEffect(()=> {
-    (()=>{
-      setSongs(
-        props.songslist.sort((a:any, b:any) =>{    //TODO: type Song
-           return a.name > b.name ? 1 : b.name > a.name? -1 :0;
-              }));
-          }) ();
-        }, []);  */
 
 
   return (
@@ -309,22 +300,7 @@ const SongsScreen =(props) => {
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ 
-  playlistID: state.playlistReducer.playlistID,
-  playlists: state.playlistReducer.playlists,
-  currPlaylist: state.playlistReducer.currPlaylist   
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    /*addAlbum: (albumname) => 
-      dispatch({
-          type: ActionTypes.ADD_PLAYLIST, 
-          payload: {
-          albumname,
-    }}),*/
-});
-const connectComponent= connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(SongsScreen);
+export default SongsScreen;
 // Redux code ends
 
 

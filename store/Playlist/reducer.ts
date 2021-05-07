@@ -1,6 +1,5 @@
 // Updates Store
 import * as ActionTypes from "./actionTypes";
-import IAppState from '../IAppState'
 import Playlist from "../../models/Playlist";
 
 const INTIAL_STATE = {
