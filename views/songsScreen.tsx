@@ -227,7 +227,7 @@ const SongsScreen =(props) => {
     }
     
     const Search = setTimeout(() => {
-      /*Youtube.searchYoutubeVideo(newSongSearch)
+      Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items.map((item: any) => {
         return {
@@ -241,7 +241,7 @@ const SongsScreen =(props) => {
         setShowSearchResults(true);
       })
       .catch(e => console.log(e))
-      setSearchResults(res)*/
+      /*setSearchResults(res)
        const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
         return {
           videoid: item.id.videoId,
@@ -251,7 +251,7 @@ const SongsScreen =(props) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true);
+      setShowSearchResults(true);*/
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
