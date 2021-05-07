@@ -5,38 +5,32 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types';
 import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-// import EditScreenInfo from '../components/EditScreenInfo';
 
 
-export type LoginProps={
-    username:string;
-    password:string;
-    navigation:StackNavigationProp<RootStackParamList,"NotFound">
-}
+
 
 
 /* sign button for firebase auth*/
 
 
 
-const LoginView = (props:LoginProps) =>{
+const LoginView = (props: any) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     
-    const handleSign=() => {
-        auth()
-        .signInWithEmailAndPassword(username, password)
-        .then(() => {
-          console.log('signed in!');
-          props.navigation.navigate("playlists");
-        })
-        .catch(error => {
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-          console.error(error);
-        });
-        
+    const handleSign= async () => {
+      try{
+        await props.Login(username,password);
+        props.navigation.navigate('playlists')
+      
+      }catch(e){
+
+        console.log(e);
+
+      }
+      
+
+
     }
       
   return (

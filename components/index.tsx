@@ -6,7 +6,7 @@ import ButtonFullScreen from "./buttonFullScreen";
 import OneListItem from "./oneListItem";
 import Search from "./search";
 import PlayerBtn from "./playerBtn";
-import SongsListHolder from "./CHANGE_NAME_songsListHolder";
+
 import SongHolder from "./songHolder";
 
-export {Button, Iteminput, Header,PlainInput, ButtonFullScreen,OneListItem, Search, PlayerBtn, SongsListHolder, SongHolder};
+export {Button, Iteminput, Header,PlainInput, ButtonFullScreen,OneListItem, Search, PlayerBtn, SongHolder};

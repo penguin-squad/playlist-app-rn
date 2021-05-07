@@ -1,25 +1,18 @@
 import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import * as Components from '../components/index';
-import {connect} from "react-redux";
-import * as ActionTypes from "../store/Playlist/actionTypes";
 import Playlist from '../models/Playlist'
-import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
 const { width } = Dimensions.get('screen');
 
 
-const PlayListsCollectionScreen =(props) => { 
+const PlayListsCollectionScreen =(props: any) => { 
 
-//TODO   
-//   const [name, setName] =useState("");
-//   const [id, setID] =useState("");
-// const [searchquery, setSearchQuery] = useState <string>(""); 
 
 const goToPlayer = () => {
   props.navigation.navigate("player"); 
 };  
   
-console.log(props)
+console.log("Playlist Collections:", props)
 const [inputShown, setInputShown] = useState<boolean>(false);
 const [newPlaylist, setNewPlaylist] = useState<Playlist | null>(null);
 const [Playlists, setPlaylists] = useState<Playlist[] | null>(null);
@@ -41,19 +34,12 @@ const handleAddPlaylist =()=> {
 
 };
 
+useEffect(() => {
+  props.getPlaylists(props.user.uid);
+},[]);
 
-useEffect(()=> {
-    (()=>{
-      setPlaylists(
-        props.playlists.sort((a: Playlist, b: Playlist) =>{   
-           return a.name > b.name ? 1 : b.name > a.name? -1 :0;
-              }));
-          }) ();
-        }, []);
     
-    useEffect(() => {
-      props.getPlaylists(props.user.uid);
-    },[]) 
+
 
 
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
@@ -69,7 +55,7 @@ useEffect(()=> {
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
 
-        <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
+        <Components.Header title= {"Playlists Collection for: "+ props.user.email}/> 
 
         
         <FlatList style={{ marginVertical: 10}}
@@ -129,22 +115,8 @@ useEffect(()=> {
 };
 
 // Redux code 
-const mapStateToProps = (state) => ({ 
-  firstPlaylist: state.reducer.firstPlaylist,
-  playlists: state.playlistReducer.playlists,
-  pl: state.reducer.playlist,
-  playlistID: state.playlistReducer.playlistID,
-  user: state.userReducer.user
 
-});
-
-const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
-    addPlaylist: (playlist: Playlist) => dispatch(createPlaylist(playlist)),
-    changePlaylistID: (playlistID: string) => dispatch(changePlaylistID(playlistID)),
-    getPlaylists: (userId: string) => dispatch(getPlaylists(userId))
-    });
-const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(PlayListsCollectionScreen);
+export default PlayListsCollectionScreen;
 
 
 
