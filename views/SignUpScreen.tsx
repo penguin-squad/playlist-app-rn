@@ -11,18 +11,11 @@ import auth from '@react-native-firebase/auth';
 
 
 
-export type SignupProps={
-    username:string;
-    password:string;
-    confirmpassword:string;
-    navigation:StackNavigationProp<RootStackParamList,"NotFound">
-}
-
 /* signup button upload to firebase*/
 
 
 
-const SignupView=(props:SignupProps) =>{
+const SignupView=(props: any) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfrimPassword] = useState<string>("");
@@ -35,25 +28,8 @@ const SignupView=(props:SignupProps) =>{
           props.navigation.navigate("Login");
           //return;
           /* upload firebase */
-        }
-        auth()
-          .createUserWithEmailAndPassword(username, password)
-          .then(() => {
-            console.log('User account created & signed in!');
-          })
-          .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-              console.log('That email address is already in use!');
-            }
-        
-            if (error.code === 'auth/invalid-email') {
-              console.log('That email address is invalid!');
-            }
-            console.error(error);
-          });
-          
-
-        }
+        } 
+    }
 
 
 
