@@ -92,11 +92,3 @@ const styles = StyleSheet.create({
 //     );
 //   }
 // }
-
-/*   {<Screen name="txt" component={Hello}/>
-   
-   /* <Screen name= "playLists" component={PlayListsCollectionScreen}/>
-   <Screen name= "songList" component={SongsScreen}/>
-   <Screen name= "player" component={Screens.PlayerScreen}/> 
-
-   */
