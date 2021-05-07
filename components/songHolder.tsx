@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
 import  Entypo  from 'react-native-vector-icons/Entypo';
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window'); 
 
 
 const choseIcon = (isPlaying: boolean)=>{
@@ -53,6 +53,7 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
 </TouchableWithoutFeedback>
 
 <View style={styles.rightContainer}>
+
     <Entypo
         // onPress={props.song.onOptionPress}
         //onPress={onOptionPress}

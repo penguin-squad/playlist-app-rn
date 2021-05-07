@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import { View, Text, StyleSheet,Dimensions } from "react-native";
 import {connect} from "react-redux";
-import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
+//import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import * as ActionTypes from "../store/actionTypes";
@@ -10,6 +10,7 @@ import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
 import { Alert } from "react-native";
+import BackButton from "../components/BackButton";
 
 const { width } = Dimensions.get('window');
 
@@ -127,16 +128,15 @@ const PlayerScreen = (props) => {
         videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid}
       />
     </View>
-           {/* TODO: go back button */}
-           <Components.PlayerBtn  iconType='BACK' onPress={()=>gotoSongList()} />
+           <BackButton  onPress = {()=>gotoSongList()} />
 
 <View style={styles.midContainer}>
 
             
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
             name='music-circle'
             size={300}
-            /*color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} */ />
+            color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} /> */}
             
         <Text style={styles.audioTitle}> {currentSong?.title} </Text>
         {/* <Text numberOfLines={1} style={styles.audioTitle}>

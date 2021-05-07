@@ -10,7 +10,11 @@ import SongSearchResult from "../models/SongSearchResult";
 import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
+import BackButton from "../components/BackButton";
+
+
 const { width } = Dimensions.get('screen');
+
 
 const fakedata = {
   "kind": "youtube#searchListResponse",
@@ -260,8 +264,8 @@ const SongsScreen =(props) => {
   return (
         <View style={styles.container}>
 
-        <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
-
+        {/* <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} /> */}
+        <BackButton  onPress = {()=>gotoPlayLists()} />
         <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/>
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
