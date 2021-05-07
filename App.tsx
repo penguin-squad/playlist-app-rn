@@ -52,6 +52,7 @@ const App =() =>{
  )
 }
 
+
 const WrapperApp = () => {
   return (
     <Provider store={store}>
