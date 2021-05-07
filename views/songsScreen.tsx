@@ -13,7 +13,7 @@ import { addSong } from "../store/Playlist/playlistActions";
 import BackButton from "../components/BackButton";
 
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 
 const fakedata = {
@@ -265,8 +265,11 @@ const SongsScreen =(props) => {
         <View style={styles.container}>
 
         {/* <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} /> */}
+      <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>gotoPlayLists()} />
-        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/>
+      </View>
+      
+         <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
@@ -280,6 +283,8 @@ const SongsScreen =(props) => {
               activeSong={item.activeSong}
               isPlaying={item.isPlaying}/>
               )} />
+       
+       
         <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
         </View>
@@ -296,8 +301,6 @@ const SongsScreen =(props) => {
             <Components.ButtonFullScreen
               title="Player" 
               onPress={()=>goToPlayer()}/>
-           
-
             </View> 
 
     );
@@ -310,10 +313,21 @@ export default SongsScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flexDirection: "column" 
+     // flexDirection: "column", 
+      flex: 1,
+      //justifyContent: "center",
+      paddingVertical: 10,
+      alignItems: "center",
     },
-    backbutton: {
-      
-    }
+    backBtn: {
+      width: width /1,
+      height: 50,
+      marginTop: height/30, 
+    },
+    header: {
+      width: width /1,
+      height: 100,
+      marginTop: height/30, 
+    },
 
 });

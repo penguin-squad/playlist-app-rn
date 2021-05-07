@@ -5,7 +5,6 @@ import {View, Button, Modal } from "react-native";
 import { Text, TextInput } from "../components/Themed";
 
 
-
 const startPage = (props) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [playlistId, setPlaylistId] = useState<string>("");
@@ -16,7 +15,7 @@ const startPage = (props) => {
     }
  return (
   <View style = {styles.container}>
-     
+
       <Text>Playlist App</Text>
       <Text>
           An Application for People Share and Contribute Playlist from multiple Source. 
