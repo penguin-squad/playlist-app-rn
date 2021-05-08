@@ -14,9 +14,10 @@ const goToPlayer = () => {
 };  
   
 console.log("Playlist Collections:", props)
-const [inputShown, setInputShown] = useState<boolean>(false);
-const [newPlaylist, setNewPlaylist] = useState<Playlist | null>(null);
-const [Playlists, setPlaylists] = useState<Playlist[] | null>(null);
+const [ inputShown, setInputShown ] = useState<boolean>(false);
+const [ newPlaylist, setNewPlaylist ] = useState<Playlist | null>(null);
+const [ Playlists, setPlaylists ] = useState<Playlist[] | null>(null);
+const [ addAlbumInput, setAddAlbumInput ] =useState<string>("Enter name for new Playlist");
 
 const handleSearch = (text: string) => { //instead of handle input
    const playlists: Playlist[] = props.playlists.filter((playlist: Playlist)=> playlist.name.includes(text) ); 
@@ -26,32 +27,28 @@ const handleSearch = (text: string) => { //instead of handle input
 
 const handleAddPlaylist =()=> {
     if (newPlaylist !==null && Playlists!==null)
-    {
+    props.addPlaylist(newPlaylist); 
+    else if(newPlaylist !==null && Playlists == null) 
         props.addPlaylist(newPlaylist); 
-    }
-    else if(newPlaylist !==null && Playlists == null) {
-        props.addPlaylist(newPlaylist); 
-     }
+  
+
+   setInputShown(false); 
+   
+  // clean input field 
 
 };
 
 useEffect(() => {
   props.getPlaylists(props.user.uid);
 },[]);
-
-    
+   
 
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
-  return (
+  
+    return (
     
-  //1   
     <View style={styles.container}>
 
-        {/* <Components.PlainInput 
-           onChangeText={(text) => setName(text)} 
-            placeholder="Enter name for your Playlist"/>  */}
- 
-{/* 2 */}
       <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>""} />
       </View>
@@ -61,14 +58,13 @@ useEffect(() => {
             icon="md-search" 
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>  
-
       </View>
 
       <View style ={styles.header}>
-      <Components.Header title= {"Your playlists "+ props.user.email}/> 
+        <Components.Header title= {"Your playlists "+ props.user.email}/> 
       </View>
 
-        
+      <View style={styles.list}>  
         <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
             renderItem={({item})=> (
@@ -76,24 +72,34 @@ useEffect(() => {
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
-                    }}
-                    style={styles.listItem}>
+                    }} >
             
             <Components.OneListItem id={item.id} name={item.name} />
-                  
-                    </TouchableOpacity>
-
-
+                   </TouchableOpacity>
          )} /> 
                   
+      </View>
 
-        <View  style={{display: inputShown == false ? "flex" : "none"}}>    
-        <Components.Button onPress={()=>setInputShown(true)} title="Add"/> 
-        </View> 
+      <View style={{display: inputShown == false ? "flex" : "none"}}>    
+        <Components.Button onPress={()=>setInputShown(true)} title="New album"/> 
+      </View> 
     
-        <View  style={{display: inputShown == true ? "flex" : "none"}}>    
-        <View style={{flexDirection:"row", borderBottomWidth: 1}}>
-            
+      <View style={{display: inputShown == true ? "flex" : "none"}}>
+      
+              <Components.PlainInput 
+           onChangeText={(text) => {
+            if(newPlaylist !== null){
+              setNewPlaylist({...newPlaylist, name: text})
+            } else{
+              setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
+            }
+          }}
+            placeholder={addAlbumInput}
+            blurOnSubmit={true}
+            /> 
+      
+      {/* <View style={{flexDirection:"row", borderBottomWidth: 1}}>
+       <View>    
         <Components.Iteminput icon="ios-add-circle-outline" placeholder="Album Name" 
             onChangeText={(text)=>{
               if(newPlaylist !== null){
@@ -103,14 +109,16 @@ useEffect(() => {
               }
             }}/>
         </View>
-        
-        <Components.Button onPress={()=>handleAddPlaylist()} title="Add New Album"/>
-
-        </View>     
+        </View>  */}
+        <View style={styles.leftBtn}>
+          <Components.Button onPress={()=>handleAddPlaylist()} title="Add"/>
+        </View>
+      </View>     
             
             
- {/* for future Player*/}
-            <Components.ButtonFullScreen
+ {/* only visible if current song is not null*/}
+          
+            {/* <Components.ButtonFullScreen
               title="Player" 
               onPress={()=>{
                 if(props.playlists === undefined || props.playlists.length === 0){
@@ -119,13 +127,13 @@ useEffect(() => {
                   goToPlayer()
                 }
                 
-                }}/>
+                }}/> */}
+
             </View> 
 
     );
 };
 
-// Redux code 
 
 export default PlayListsCollectionScreen;
 
@@ -137,11 +145,12 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       alignItems: "center",     
     },
-    listItem: {
+    list: {
         padding: 5,
         backgroundColor: 'rgb(230, 230, 250)',
         width: width / 1.2,
-        marginVertical: 2 
+        marginTop: height/50,
+        marginBottom : height/60,
     },    
     backBtn: {
       width: width /1,
@@ -156,5 +165,9 @@ const styles = StyleSheet.create({
     search:{
       width: width /1,
       height: height/14,
+    },
+    leftBtn:{
+     // width: width /1,
+    
     }
   });

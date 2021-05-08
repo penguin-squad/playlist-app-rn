@@ -6,6 +6,7 @@ const { width } = Dimensions.get("screen");
 interface Props {
     placeholder: string;
     onChangeText: (text: string) => void;
+    blurOnSubmit: boolean;
 }
 
 
@@ -14,7 +15,9 @@ const PlainInput = (props: Props) => (
     <View  style={{marginVertical:10, alignItems: "center"}}>
       <TextInput style={styles.input}
           placeholder={props.placeholder} 
-          onChangeText={props.onChangeText}/>
+          onChangeText={props.onChangeText}
+          blurOnSubmit ={props.blurOnSubmit}
+          />
        </View>            
     );
 
