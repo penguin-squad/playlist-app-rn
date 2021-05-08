@@ -2,15 +2,12 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
-import {Icon, Left, Button} from "native-base";
-
-const { width } = Dimensions.get('screen');
 import BackButton from "../components/BackButton";
 
+const { width, height } = Dimensions.get('screen');
 
 
 const PlayListsCollectionScreen =(props: any) => { 
-
 
 const goToPlayer = () => {
   props.navigation.navigate("player"); 
@@ -44,26 +41,32 @@ useEffect(() => {
 
     
 
-
-
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
   return (
+    
+  //1   
     <View style={styles.container}>
 
         {/* <Components.PlainInput 
            onChangeText={(text) => setName(text)} 
             placeholder="Enter name for your Playlist"/>  */}
  
+{/* 2 */}
+      <View style ={styles.backBtn}>
+        <BackButton  onPress = {()=>""} />
+      </View>
 
-      <BackButton onPress = {()=>""} />
-
+      <View style ={styles.search}>
         <Components.Search
             icon="md-search" 
             placeholder="Search" 
-            onChangeText={(text) => handleSearch(text)}/>   
+            onChangeText={(text) => handleSearch(text)}/>  
 
+      </View>
 
-        <Components.Header title= {"Playlists Collection for: "+ props.user.email}/> 
+      <View style ={styles.header}>
+      <Components.Header title= {"Your playlists "+ props.user.email}/> 
+      </View>
 
         
         <FlatList style={{ marginVertical: 10}}
@@ -131,15 +134,27 @@ export default PlayListsCollectionScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      //justifyContent: "center",
       paddingVertical: 10,
-      alignItems: "center",
+      alignItems: "center",     
     },
-
     listItem: {
         padding: 5,
         backgroundColor: 'rgb(230, 230, 250)',
         width: width / 1.2,
         marginVertical: 2 
+    },    
+    backBtn: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/30, 
     },
+    header: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/90, 
+    },
+    search:{
+      width: width /1,
+      height: height/14,
+    }
   });

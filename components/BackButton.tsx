@@ -1,7 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text, View ,StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
-//import styles from './styles';
+import { TouchableOpacity, Image, Dimensions ,StyleSheet} from 'react-native';
+
+const { width, height } = Dimensions.get("screen");
 
 interface Props{
     onPress:() =>void;
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
       elevation: 3
     },
     btnIcon: {
-      height: 19,
-      width: 19
+      height: height/40,
+      width: width/40,
     }
   });
 

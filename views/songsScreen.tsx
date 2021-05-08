@@ -269,13 +269,14 @@ const SongsScreen =(props) => {
         <BackButton  onPress = {()=>gotoPlayLists()} />
       </View>
       
-         <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
+        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
 
               <Components.SongHolder
+              key={item.title} 
               title={item.title}
               duration={item.duration}
               onOptionPress={item.onOptionPress}
@@ -324,10 +325,10 @@ const styles = StyleSheet.create({
       height: 50,
       marginTop: height/30, 
     },
-    header: {
-      width: width /1,
-      height: 100,
-      marginTop: height/30, 
-    },
+    // header: {
+    //   width: width /1,
+    //   height: 100,
+    //   marginTop: height/30, 
+    // },
 
 });
