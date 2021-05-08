@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
+import PlayerScreen  from "../views/playerScreen";
 
 
-const mapStateToProps = (state) => ({ 
-    album: state.reducer.album,
+const mapStateToProps = (state: any) => ({ 
     playlists: state.playlistReducer.playlists,
     playlistID: state.playlistReducer.playlistID,
     currPlaylist: state.playlistReducer.currPlaylist
