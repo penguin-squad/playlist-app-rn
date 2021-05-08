@@ -10,7 +10,11 @@ import SongSearchResult from "../models/SongSearchResult";
 import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
-const { width } = Dimensions.get('screen');
+import BackButton from "../components/BackButton";
+
+
+const { width, height } = Dimensions.get('screen');
+
 
 const fakedata = {
   "kind": "youtube#searchListResponse",
@@ -227,7 +231,7 @@ const SongsScreen =(props) => {
     }
     
     const Search = setTimeout(() => {
-      /*Youtube.searchYoutubeVideo(newSongSearch)
+      Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items.map((item: any) => {
         return {
@@ -241,7 +245,7 @@ const SongsScreen =(props) => {
         setShowSearchResults(true);
       })
       .catch(e => console.log(e))
-      setSearchResults(res)*/
+      /*setSearchResults(res)
        const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
         return {
           videoid: item.id.videoId,
@@ -251,33 +255,28 @@ const SongsScreen =(props) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true);
+      setShowSearchResults(true);*/
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
-  
-  /*useEffect(()=> {
-    (()=>{
-      setSongs(
-        props.songslist.sort((a:any, b:any) =>{    //TODO: type Song
-           return a.name > b.name ? 1 : b.name > a.name? -1 :0;
-              }));
-          }) ();
-        }, []);  */
 
 
   return (
         <View style={styles.container}>
 
-        <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
-
-        <Components.Header title= {"Playlist: "+ props.album.albumname}/>
+        {/* <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} /> */}
+      <View style ={styles.backBtn}>
+        <BackButton  onPress = {()=>gotoPlayLists()} />
+      </View>
+      
+        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
 
               <Components.SongHolder
+              key={item.title} 
               title={item.title}
               duration={item.duration}
               onOptionPress={item.onOptionPress}
@@ -285,6 +284,8 @@ const SongsScreen =(props) => {
               activeSong={item.activeSong}
               isPlaying={item.isPlaying}/>
               )} />
+       
+       
         <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
         </View>
@@ -301,41 +302,33 @@ const SongsScreen =(props) => {
             <Components.ButtonFullScreen
               title="Player" 
               onPress={()=>goToPlayer()}/>
-           
-
             </View> 
 
     );
 };
 
 // Redux code starts
-const mapStateToProps = (state) => ({ 
-  album: state.reducer.album, 
-  songslist: state.reducer.songslist, 
-  playlistID: state.playlistReducer.playlistID,
-  playlists: state.playlistReducer.playlists,
-  currPlaylist: state.playlistReducer.currPlaylist   
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    /*addAlbum: (albumname) => 
-      dispatch({
-          type: ActionTypes.ADD_PLAYLIST, 
-          payload: {
-          albumname,
-    }}),*/
-});
-const connectComponent= connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(SongsScreen);
+export default SongsScreen;
 // Redux code ends
 
 
 const styles = StyleSheet.create({
     container: {
-      flexDirection: "column" 
+     // flexDirection: "column", 
+      flex: 1,
+      //justifyContent: "center",
+      paddingVertical: 10,
+      alignItems: "center",
     },
-    backbutton: {
-      
-    }
+    backBtn: {
+      width: width /1,
+      height: 50,
+      marginTop: height/30, 
+    },
+    // header: {
+    //   width: width /1,
+    //   height: 100,
+    //   marginTop: height/30, 
+    // },
 
 });

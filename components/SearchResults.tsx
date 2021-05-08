@@ -2,8 +2,8 @@ import React, { FC , useState } from "react";
 import {View, StyleSheet, Dimensions, FlatList } from "react-native";
 import Song from '../models/Song';
 import '../components/SearchResultsItem'
-import SearchResultsItem from "../components/SearchResultsItem";
 import SongSearchResult from "../models/SongSearchResult";
+import SearchResultsItemPresenter from "../presenters/SearchResultsItemPresenter";
 const { width } = Dimensions.get("screen");
 
 interface Props{
@@ -18,7 +18,7 @@ console.log(Songs)
   <View>
       <FlatList data = {Songs} 
       keyExtractor = {(Song => Song.videoid)}
-      renderItem = {({item}) => <SearchResultsItem Song = {item} setShowResults = {setShowResults}/>} />
+      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>} />
 
   </View>
     );

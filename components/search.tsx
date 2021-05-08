@@ -2,7 +2,7 @@ import React, { FC , useState } from "react";
 import { Text, View, TextInput, StyleSheet, Dimensions } from "react-native";
 import  Ionicons  from "react-native-vector-icons/Ionicons";
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 interface Props {
     icon: string;
@@ -12,17 +12,16 @@ interface Props {
 
 const Search= (props: Props) => {
  return (
-  <View >
     <View  style={styles.container}>
 
-       <View style={{flexDirection:"row"}}>
-        <Ionicons style={{ padding: 5 }} name={props.icon} size={28} color="#555" />                 
-        <TextInput style={styles.holder}
+       <View style={styles.holder}>
+        <Ionicons style={styles.icon} name={props.icon} size={height/50}/>                 
+        <TextInput 
           placeholder={props.placeholder} 
           onChangeText={props.onChangeText} />
        </View>            
     </View>
- </View>
+
     );
 };
 
@@ -30,28 +29,32 @@ export default Search;
 
 const styles = StyleSheet.create({
     container: {
-        width: width/1.1,
-        paddingVertical: 10,
-        //justifyContent: "space-around",
-       // height: 50,
-       // borderBottomColor: '#aaa',
-        flex: 0.2,
-        //justifyContent: "center",
-        backgroundColor: "#ddd",
- 
+        flex: 1,
+        alignItems: "center",
+        borderRadius: 180,
+        paddingLeft: width/30,
+        paddingTop: height/160,
+        margin: 5,
+        backgroundColor: 'white',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 3,
+        flexDirection:"row", //TODO: use other way to align to left
     },
     holder: {
-        //borderBottomColor: '#aaa',
-     
-        //justifyContent: "center",
-        flex: 1.1,
-        alignItems: "center",
-        //backgroundColor: "#ddd",
-        //padding: 5,
-        //placeholderTextColor:"#555", 
-        //color:"#555", 
-       // borderRadius: 5,
+        flexDirection:"row"
     },
+    icon: {
+        height: height/30,
+        width: width/15,
+
+  }
     
 });
+
 

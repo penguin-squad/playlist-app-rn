@@ -5,6 +5,6 @@ export default interface Song{
     videoid: string;
     onOptionPress?: boolean;
     onAudioPress?: boolean;
-    activeSong?: true,
+    activeSong?: false,
     isPlaying?: false,
 }
