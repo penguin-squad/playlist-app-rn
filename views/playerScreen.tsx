@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet,Dimensions } from "react-native";
+import { View, Text, StyleSheet,Dimensions, Image } from "react-native";
 import {connect} from "react-redux";
 //import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
@@ -138,6 +138,9 @@ const PlayerScreen = (props) => {
             size={300}
             color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} /> */}
             
+        <Image source = {{uri:currentSong?.thumbnail}}
+         style={styles.image} />   
+
         <Text style={styles.audioTitle}> {currentSong?.title} </Text>
         {/* <Text numberOfLines={1} style={styles.audioTitle}>
         {context.currentAudio.filename} </Text>  */}
@@ -212,5 +215,11 @@ const styles = StyleSheet.create({
     youtubeVideo: {
       height:0,
       opacity: 0.99
-    }
+    },
+    image: {
+      margin: 15,
+      width: 200, 
+      height: 200,
+      borderRadius: 10
+    },
 });
