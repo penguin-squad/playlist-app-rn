@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
        // borderBottomColor: '#aaa',
         flex: 0.2,
         //justifyContent: "center",
-       // backgroundColor: "#ddd",
+      //  backgroundColor: "#ddd",
  
     },
     holder: {

@@ -1,7 +1,6 @@
 import React, { FC , useState } from "react";
-import { Pressable } from "react-native";
-import { StyleSheet } from "react-native";
-import {View, Button, Modal } from "react-native";
+import { Pressable, StyleSheet, View, Button, Modal, ImageBackground  } from "react-native";
+
 import { Text, TextInput } from "../components/Themed";
 
 
@@ -13,14 +12,22 @@ const startPage = (props) => {
         props.changePlaylistID(playlistId);
         props.navigation.navigate("songList");
     }
+    
+    const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
+
  return (
   <View style = {styles.container}>
 
       <Text>Playlist App</Text>
+      {/* <ImageBackground source={image} style={styles.image}> */}
+     
       <Text>
           An Application for People Share and Contribute Playlist from multiple Source. 
           Currently We Support Youtube and SoundCloud
         </Text>
+
+      {/* </ImageBackground> */}
+ 
         <Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
         <Button onPress = {()=>""} title = "Search For Playlist"/>
         <Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
@@ -108,6 +115,11 @@ const styles = StyleSheet.create({
           height: 40,
           borderWidth: 2,
           borderRadius: 15
-      }
+      },
+      image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
+      },
 });
 

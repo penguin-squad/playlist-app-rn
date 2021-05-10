@@ -32,10 +32,12 @@ const styles = StyleSheet.create({
     listItem: {
         flex: 0.5,
         justifyContent: "center",
+        
     },
     item: {
         padding: 5,
         fontWeight: "600",
         fontSize: 16,
+        
     }
 });
