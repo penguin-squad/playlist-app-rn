@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Image } from "react-native";
 import  Entypo  from 'react-native-vector-icons/Entypo';
 
 const { width } = Dimensions.get('window'); 
@@ -24,7 +24,7 @@ const choseIcon = (isPlaying: boolean)=>{
 
 //const Songs =(props:Props) => { 
 const SongHolder =(props: any) => {     
-const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } = props;
+const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPlaying   } = props;
 
 
  return (
@@ -39,10 +39,14 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
    
     }, ]} >
 
-    <Text style={styles.smallPicText}>
+    {/* <Text style={styles.smallPicText}>
     {activeSong ? choseIcon(isPlaying) : (title.[0])} 
-   
-    </Text>
+    </Text> */}
+
+    <Image source = {{uri: thumbnail}}
+      style={styles.image}
+      />
+
  </View>  
 
 <View style={styles.titleContainer}>
@@ -128,4 +132,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
     },
+    image: {
+        margin: 5,
+        width: 40, 
+        height: 40,
+        borderRadius: 50
+      },
 });
