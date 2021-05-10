@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingVertical: 10,
-      alignItems: "center",
-      backgroundColor:'rgb(34, 39, 63)',     
+      alignItems: "center",   
+      backgroundColor: 'rgb(34, 39, 63)'
     },
     list: {
         padding: 5,

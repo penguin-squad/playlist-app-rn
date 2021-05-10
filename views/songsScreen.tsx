@@ -272,9 +272,9 @@ const SongsScreen =(props) => {
         <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={props.currPlaylist.Songs} 
+            data={props.currPlaylist.Songs}
             renderItem={({item})=> (
-
+              
               <Components.SongHolder
               key={item.title} 
               title={item.title}
@@ -319,11 +319,23 @@ const styles = StyleSheet.create({
       //justifyContent: "center",
       paddingVertical: 10,
       alignItems: "center",
+      backgroundColor: 'rgb(34, 39, 63)' 
+
     },
     backBtn: {
       width: width /1,
       height: 50,
       marginTop: height/30, 
+    },
+    button: {
+      width: '50%',
+      height: 50,
+      alignItems: 'center',
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
+    },
+    buttonText: {
+      color: '#FFF',
     },
     // header: {
     //   width: width /1,
