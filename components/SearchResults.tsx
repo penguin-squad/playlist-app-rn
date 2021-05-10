@@ -4,7 +4,8 @@ import Song from '../models/Song';
 import '../components/SearchResultsItem'
 import SongSearchResult from "../models/SongSearchResult";
 import SearchResultsItemPresenter from "../presenters/SearchResultsItemPresenter";
-const { width } = Dimensions.get("screen");
+
+const { width, height } = Dimensions.get('screen');
 
 interface Props{
     Songs: SongSearchResult[];
@@ -15,8 +16,9 @@ interface Props{
 const SearchResults = ({Songs, setShowResults}: Props) => {
 console.log(Songs)
  return (
-  <View>
-      <FlatList data = {Songs} 
+  <View style={styles.list}>
+      <FlatList
+      data = {Songs} 
       keyExtractor = {(Song => Song.videoid)}
       renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>} />
 
@@ -26,5 +28,15 @@ console.log(Songs)
 
 export default SearchResults;
 
-const styles = StyleSheet.create({});
+//const styles = StyleSheet.create({});
 
+const styles = StyleSheet.create({
+    list: {
+        // padding: 5,
+         backgroundColor: 'rgb(48,56,87)',
+        // width: width / 1.2,
+        // marginBottom : height/60,
+         height:height/2.3,
+         
+    },  
+});    
