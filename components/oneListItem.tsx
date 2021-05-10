@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
     },
     listItem: {
         flex: 0.5,
-        justifyContent: "center",
-        
+        justifyContent: "center",       
         
     },
     item: {
