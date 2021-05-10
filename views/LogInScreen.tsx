@@ -44,10 +44,10 @@ const LoginView = (props: any) =>{
       </ImageBackground> */}
 
             <View>
-                <Text style={styles.title}> Username:</Text>
+                <Text style={styles.title}> Email:</Text>
                 <TextInput
                     style={{ height: 60, fontSize:20,  backgroundColor:'rgb(34, 39, 63)'}}
-                    placeholder="Enter Username"
+                    placeholder="Enter Email"
                     value={username}
                     onChangeText={setUsername}
                     placeholderTextColor={'rgb(205, 206, 207)' }
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor:'rgb(34, 39, 63)',
-      //color: "rgb(255, 255, 255)",
     },
     title: {
       fontSize: 17,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
       backgroundColor:'rgb(241, 126, 58)',
     },
     buttonText: {
-      color: 'rgb(205, 206, 207)',
+      color: '#FFF',
     },
     image: {
       flex: 1,

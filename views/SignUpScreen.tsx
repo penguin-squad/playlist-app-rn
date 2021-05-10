@@ -38,14 +38,16 @@ const SignupView=(props: any) =>{
             <View>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
-                    placeholder="Enter Username"
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)'}
+                    placeholder="Enter Email"
                     value = {username}
                     onChangeText={setUsername}
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)'}
                     secureTextEntry={true}
                     placeholder="Enter Password"
                     value={password}
@@ -53,11 +55,13 @@ const SignupView=(props: any) =>{
                 />
                 <Text style={styles.title}> Confirm Password:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)' }
                     secureTextEntry={true}
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChangeText={setConfrimPassword}
+
                 />
             </View>
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>confirmSignup()}>
@@ -77,21 +81,26 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor:'rgb(34, 39, 63)',
     },
     title: {
       fontSize: 17,
       fontWeight: 'bold',
+      backgroundColor:'rgb(34, 39, 63)',
+      color: 'rgb(205, 206, 207)',
     },
     separator: {
       marginVertical: 30,
       height: 1,
       width: '80%',
+      
     },
     button: {
       width: '50%',
       height: 50,
       alignItems: 'center',
-      marginBottom: 15
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
     },
     buttonText: {
       color: '#FFF'
