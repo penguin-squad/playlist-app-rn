@@ -262,47 +262,45 @@ const SongsScreen =(props) => {
 
 
   return (
-        <View style={styles.container}>
-
-        {/* <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} /> */}
+    <View style={styles.container}>
       <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>gotoPlayLists()} />
       </View>
       
-        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
+      <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
-        <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={props.currPlaylist.Songs} 
-            renderItem={({item})=> (
-
-              <Components.SongHolder
-              key={item.title} 
-              title={item.title}
-              duration={item.duration}
-              onOptionPress={item.onOptionPress}
-              onAudioPress={item.onAudioPress}
-              activeSong={item.activeSong}
-              isPlaying={item.isPlaying}/>
-              )} />
-       
-       
-        <View style={{display: showSearchResults == true ? "flex": "none"}}>
+      <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
+        data={props.currPlaylist.Songs}
+        renderItem={({item})=> (
+      
+      <Components.SongHolder
+        key={item.title} 
+        title={item.title}
+        duration={item.duration}
+        onOptionPress={item.onOptionPress}
+        onAudioPress={item.onAudioPress}
+        activeSong={item.activeSong}
+        isPlaying={item.isPlaying}
+        thumbnail={item.thumbnail}
+        />
+      )} />
+             
+      <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
-        </View>
-            <Components.PlainInput 
-              onChangeText={(text) => setNewSongSearch(text)} 
-              placeholder="Add new song here"/>  
+      </View>
+
+      <Components.PlainInput 
+        onChangeText={(text) => setNewSongSearch(text)} 
+        placeholder="Add new song here"/>  
             
             
             {/* <Components.ButtonFullScreen
               title="Enter" 
               onPress={()=>handleInput()}/> */}
-            
-
-            <Components.ButtonFullScreen
-              title="Player" 
-              onPress={()=>goToPlayer()}/>
-            </View> 
+      <Components.ButtonFullScreen
+        title="Player" 
+        onPress={()=>goToPlayer()}/>
+   </View> 
 
     );
 };
@@ -319,11 +317,23 @@ const styles = StyleSheet.create({
       //justifyContent: "center",
       paddingVertical: 10,
       alignItems: "center",
+      backgroundColor: 'rgb(34, 39, 63)' 
+
     },
     backBtn: {
       width: width /1,
       height: 50,
       marginTop: height/30, 
+    },
+    button: {
+      width: '50%',
+      height: 50,
+      alignItems: 'center',
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
+    },
+    buttonText: {
+      color: '#FFF',
     },
     // header: {
     //   width: width /1,

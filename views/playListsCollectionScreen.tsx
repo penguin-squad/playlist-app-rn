@@ -61,14 +61,15 @@ useEffect(() => {
       </View>
 
       <View style ={styles.header}>
-        <Components.Header title= {"Your playlists "+ props.user.email}/> 
+        <Components.Header title= {"Playlists for "+ props.user.email}/> 
+        {/* TODO: chnge to username */}
       </View>
 
       <View style={styles.list}>  
         <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
             renderItem={({item})=> (
-                <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
+                <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
@@ -110,7 +111,7 @@ useEffect(() => {
             }}/>
         </View>
         </View>  */}
-        <View style={styles.leftBtn}>
+        <View >
           <Components.Button onPress={()=>handleAddPlaylist()} title="Add"/>
         </View>
       </View>     
@@ -143,11 +144,12 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingVertical: 10,
-      alignItems: "center",     
+      alignItems: "center",   
+      backgroundColor: 'rgb(34, 39, 63)'
     },
     list: {
         padding: 5,
-        backgroundColor: 'rgb(230, 230, 250)',
+        backgroundColor: 'rgb(48,56,87)',
         width: width / 1.2,
         marginTop: height/50,
         marginBottom : height/60,
@@ -166,8 +168,17 @@ const styles = StyleSheet.create({
       width: width /1,
       height: height/14,
     },
-    leftBtn:{
-     // width: width /1,
-    
+    button: {
+      width: '50%',
+      height: 50,
+      alignItems: 'center',
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
+    },
+    buttonText: {
+      color: '#FFF',
+    },
+    listItem:{
+  //    borderRadius: 15,
     }
   });
