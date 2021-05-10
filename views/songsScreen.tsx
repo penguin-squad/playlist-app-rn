@@ -280,7 +280,9 @@ const SongsScreen =(props) => {
         onOptionPress={item.onOptionPress}
         onAudioPress={item.onAudioPress}
         activeSong={item.activeSong}
-        isPlaying={item.isPlaying}/>
+        isPlaying={item.isPlaying}
+        thumbnail={item.thumbnail}
+        />
       )} />
              
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
