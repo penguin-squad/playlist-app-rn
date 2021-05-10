@@ -8,4 +8,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     addSongToPlaylist: (Song: Song, PlaylistID: string) => dispatch(addSong(PlaylistID,Song))
 });
 const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(SearchResultsItem);
+export default connectComponent(SearchResultsItem); 

@@ -8,7 +8,8 @@ const { width } = Dimensions.get('screen');
 const mapStateToProps = (state: any) => ({ 
     playlistID: state.playlistReducer.playlistID,
     playlists: state.playlistReducer.playlists,
-    currPlaylist: state.playlistReducer.currPlaylist   
+    currPlaylist: state.playlistReducer.currPlaylist 
+
   });
   
   const mapDispatchToProps = (dispatch: any) => ({
@@ -22,3 +23,4 @@ const mapStateToProps = (state: any) => ({
   const connectComponent= connect (mapStateToProps, mapDispatchToProps);
 
   export default connectComponent(SongsScreen);
+ 

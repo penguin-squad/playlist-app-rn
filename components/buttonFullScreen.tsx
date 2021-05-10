@@ -13,7 +13,7 @@ const { width } = Dimensions.get("screen");
 const ButtonFullScreen = (props:Props) => (
    <TouchableOpacity style={styles.button}
             onPress={props.onPress} >
-    <Text style={{fontSize: 18, color: "white", fontWeight: "600"}} >{props.title} </Text>  
+    <Text style={styles.buttonText} >{props.title} </Text>  
    </TouchableOpacity>
     );
 
@@ -21,7 +21,7 @@ export default ButtonFullScreen;
 
 const styles = StyleSheet.create({
     button: {      
-        backgroundColor: "rgba(81,135,200,1)",
+        backgroundColor: 'rgb(241, 126, 58)',
         padding: 10,
         borderWidth:0,
         width: width/1.1, //how much of the screen it takes
@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
                
         transform: [{ scaleX: 1}, { scaleY: 1 }]   
-    },
+    }, buttonText: {
+        fontSize: 18,
+        color: "white", 
+        fontWeight: "600"
+    }
   });
-
