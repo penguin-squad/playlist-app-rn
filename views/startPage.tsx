@@ -1,5 +1,6 @@
 import React, { FC , useState } from "react";
-import { Pressable, StyleSheet, View, Button, Modal, ImageBackground  } from "react-native";
+import { Pressable, StyleSheet, View, Modal, ImageBackground  } from "react-native";
+import * as Components from '../components/index';
 
 import { Text, TextInput } from "../components/Themed";
 
@@ -13,7 +14,7 @@ const startPage = (props) => {
         props.navigation.navigate("songList");
     }
     
-    const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
+   // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
 
  return (
   <View style = {styles.container}>
@@ -28,9 +29,10 @@ const startPage = (props) => {
 
       {/* </ImageBackground> */}
  
-        <Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
-        <Button onPress = {()=>""} title = "Search For Playlist"/>
-        <Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
+        <Components.Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
+        <Components.Button onPress = {()=>""} title = "Search For Playlist"/>
+        <Components.Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
+        
         <Modal
         animationType="slide"
         transparent={true}
