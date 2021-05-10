@@ -20,6 +20,7 @@
     "@types/react-addons-update": "^0.14.20",
     "@types/react-native-dotenv": "^0.2.0",
     "cocoapods": "^0.0.0",
+    "native-base": "^2.15.2",
     "react": "17.0.1",
     "react-addons-update": "^15.6.3",
     "react-native": "^0.64.0",

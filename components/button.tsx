@@ -30,18 +30,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 25,
     },
+
     button: {
         padding: 10,
         paddingHorizontal: 20,
         borderRadius: 15,
-
         alignItems: "center",
+        backgroundColor:'rgb(241, 126, 58)',
+         // height: 50,
       },
-    text: {
-        color: "#fff",
+      text: {
+        color: '#FFF',
         fontSize: 18,
         fontWeight: "600",
-    },
+      },
   });
 
 
