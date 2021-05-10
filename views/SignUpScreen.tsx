@@ -10,21 +10,12 @@ import auth from '@react-native-firebase/auth';
 //import Navigation from '../navigation';
 
 
-// import EditScreenInfo from '../components/EditScreenInfo';
-
-
-export type SignupProps={
-    username:string;
-    password:string;
-    confirmpassword:string;
-    navigation:StackNavigationProp<RootStackParamList,"NotFound">
-}
 
 /* signup button upload to firebase*/
 
 
 
-const SignupView=(props:SignupProps) =>{
+const SignupView=(props: any) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfrimPassword] = useState<string>("");
@@ -37,25 +28,8 @@ const SignupView=(props:SignupProps) =>{
           props.navigation.navigate("Login");
           //return;
           /* upload firebase */
-        }
-        auth()
-          .createUserWithEmailAndPassword(username, password)
-          .then(() => {
-            console.log('User account created & signed in!');
-          })
-          .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-              console.log('That email address is already in use!');
-            }
-        
-            if (error.code === 'auth/invalid-email') {
-              console.log('That email address is invalid!');
-            }
-            console.error(error);
-          });
-          
-
-        }
+        } 
+    }
 
 
 
@@ -64,14 +38,16 @@ const SignupView=(props:SignupProps) =>{
             <View>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
-                    placeholder="Enter Username"
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)'}
+                    placeholder="Enter Email"
                     value = {username}
                     onChangeText={setUsername}
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)'}
                     secureTextEntry={true}
                     placeholder="Enter Password"
                     value={password}
@@ -79,11 +55,13 @@ const SignupView=(props:SignupProps) =>{
                 />
                 <Text style={styles.title}> Confirm Password:</Text>
                 <TextInput
-                    style={{ height: 60 , fontSize:20}}
+                    style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
+                    placeholderTextColor={'rgb(205, 206, 207)' }
                     secureTextEntry={true}
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChangeText={setConfrimPassword}
+
                 />
             </View>
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>confirmSignup()}>
@@ -103,21 +81,26 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor:'rgb(34, 39, 63)',
     },
     title: {
       fontSize: 17,
       fontWeight: 'bold',
+      backgroundColor:'rgb(34, 39, 63)',
+      color: 'rgb(205, 206, 207)',
     },
     separator: {
       marginVertical: 30,
       height: 1,
       width: '80%',
+      
     },
     button: {
       width: '50%',
       height: 50,
       alignItems: 'center',
-      marginBottom: 15
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
     },
     buttonText: {
       color: '#FFF'

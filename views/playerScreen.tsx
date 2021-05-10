@@ -1,7 +1,7 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet,Dimensions } from "react-native";
+import { View, Text, StyleSheet,Dimensions, Image } from "react-native";
 import {connect} from "react-redux";
-import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
+//import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import * as ActionTypes from "../store/actionTypes";
@@ -10,6 +10,7 @@ import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
 import { Alert } from "react-native";
+import BackButton from "../components/BackButton";
 
 const { width } = Dimensions.get('window');
 
@@ -122,22 +123,24 @@ const PlayerScreen = (props) => {
    <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         height={1}
-        play={playing}
+        play={playing} 
         onChangeState = {onStateChange}
         videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid}
       />
     </View>
-           {/* TODO: go back button */}
-           <Components.PlayerBtn  iconType='BACK' onPress={()=>gotoSongList()} />
+           <BackButton  onPress = {()=>gotoSongList()} />
 
 <View style={styles.midContainer}>
 
             
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
             name='music-circle'
             size={300}
-            /*color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} */ />
+            color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} /> */}
             
+        <Image source = {{uri:currentSong?.thumbnail}}
+         style={styles.image} />   
+
         <Text style={styles.audioTitle}> {currentSong?.title} </Text>
         {/* <Text numberOfLines={1} style={styles.audioTitle}>
         {context.currentAudio.filename} </Text>  */}
@@ -146,11 +149,14 @@ const PlayerScreen = (props) => {
 <View style={styles.audioPlayer}>
     
         <Slider
-            style={{ width: width, height: 40 }}
+            style={{ width: width, height: 40, }}
+            thumbTintColor="rgb(241, 126, 58)"
+            maximumTrackTintColor="rgb(241, 126, 58)"
+            minimumTrackTintColor="rgb(241, 126, 58)"
             minimumValue={0}
             maximumValue={1}
            // value={calculateSeebBar()}
-           // minimumTrackTintColor={color.FONT_MEDIUM}
+           // minimumTrackTintColor={color.FONT_MEDIUM} 
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
  
@@ -174,25 +180,16 @@ const PlayerScreen = (props) => {
     );
 };
 
-// Redux code starts
-const mapStateToProps = (state) => ({ 
-  album: state.reducer.album,
-  playlists: state.playlistReducer.playlists,
-  playlistID: state.playlistReducer.playlistID,
-  currPlaylist: state.playlistReducer.currPlaylist
-});
 
-const connectComponent= connect (mapStateToProps);
-export default connectComponent(PlayerScreen);
-// Redux code ends
+
+export default PlayerScreen;
 
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //justifyContent: "center",
-        //alignItems: "center",
+        backgroundColor: 'rgb(34, 39, 63)',
     },
     midContainer: {
         flex: 1,
@@ -204,20 +201,25 @@ const styles = StyleSheet.create({
     },
     audioTitle: {
         //padding: 15,
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: 'bold',
-        color: "rgb(0, 0, 0)"
+        color: '#FFF'
       }, 
     audioBtn: {
         width:width,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
         paddingBottom: 20,
 
     },
     youtubeVideo: {
       height:0,
       opacity: 0.99
-    }
+    },
+    image: {
+      margin: 15,
+      width: 200, 
+      height: 200,
+      borderRadius: 10
+    },
 });

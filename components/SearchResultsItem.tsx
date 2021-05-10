@@ -13,7 +13,7 @@ interface Props{
   setShowResults: (value: boolean) => void;
   addSongToPlaylist: (Song: Song, playlistID: string) => void;
   playlistID: string;
-
+ 
 }
 const SearchResultsItem = (props: Props) => {
   console.log(props)
@@ -37,13 +37,8 @@ const SearchResultsItem = (props: Props) => {
 };
 
 
-const mapStateToProps = (state) => ({ playlistID: state.playlistReducer.playlistID });
 
-const mapDispatchToProps = (dispatch) => ({
-    addSongToPlaylist: (Song: Song, PlaylistID: string) => dispatch(addSong(PlaylistID,Song))
-});
-const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(SearchResultsItem);
+export default SearchResultsItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +57,8 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   title: {
-    alignSelf:"center"
+    alignSelf:"center",
+    color: '#FFF'
   }
 });
 
