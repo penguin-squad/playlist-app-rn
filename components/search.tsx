@@ -1,5 +1,5 @@
 import React, { FC , useState } from "react";
-import { Text, View, TextInput, StyleSheet, Dimensions } from "react-native";
+import {View, TextInput, StyleSheet, Dimensions } from "react-native";
 import  Ionicons  from "react-native-vector-icons/Ionicons";
 
 const { width, height } = Dimensions.get("screen");
@@ -18,7 +18,7 @@ const Search= (props: Props) => {
         <Ionicons style={styles.icon} name={props.icon} size={height/50} color={"rgb(205, 206, 207)"}/>                 
         <TextInput 
           placeholder={props.placeholder}
-        //  placeholderTextColor={'rgb(205, 206, 207)' } 
+          placeholderTextColor={'rgb(105,110,131)' }       
           onChangeText={props.onChangeText} />
        </View>            
     </View>
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 3,
-        flexDirection:"row", //TODO: use other way to align to left
     },
     holder: {
         flexDirection:"row"
