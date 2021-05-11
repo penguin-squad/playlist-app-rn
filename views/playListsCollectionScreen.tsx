@@ -2,6 +2,7 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist'
+import { changePlaylistID } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get('screen');
 
 
@@ -26,7 +27,7 @@ const handleSearch = (text: string) => { //instead of handle input
 const handleAddPlaylist =()=> {
     if (newPlaylist !==null && Playlists!==null)
     {
-        props.addPlaylist(newPlaylist); 
+      props.addPlaylist(newPlaylist); 
     }
     else if(newPlaylist !==null && Playlists == null) {
         props.addPlaylist(newPlaylist); 
@@ -60,6 +61,7 @@ useEffect(() => {
         
         <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
+            keyExtractor={(item) => item.id}
             renderItem={({item})=> (
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
@@ -90,7 +92,8 @@ useEffect(() => {
               } else{
                 setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
               }
-            }}/>
+            }}
+            value = {newPlaylist?.name}/>
         </View>
         
         <Components.Button onPress={()=>handleAddPlaylist()} title="Add New Album"/>
@@ -99,16 +102,11 @@ useEffect(() => {
             
             
  {/* for future Player*/}
+            {props.playlistID !== "1" ? 
             <Components.ButtonFullScreen
               title="Player" 
-              onPress={()=>{
-                if(props.playlists === undefined || props.playlists.length === 0){
-                  ShowToast("Create and Select a Playlist")
-                }else {
-                  goToPlayer()
-                }
-                
-                }}/>
+              onPress={()=>{ goToPlayer() }}/> : null
+            }
             </View> 
 
     );

@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet,Dimensions } from "react-native";
+import { View, Text, StyleSheet,Dimensions, ActivityIndicator } from "react-native";
 import {connect} from "react-redux";
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
@@ -17,6 +17,7 @@ const PlayerScreen = (props) => {
   
 
   const [currentSong, setCurrentSong] = useState<Song>();
+  const [isLoadingVideo,setIsLoadingVideo] = useState<boolean>(false);
   const gotoSongList = () => {
     props.navigation.navigate("songList"); };
 
@@ -62,14 +63,7 @@ const PlayerScreen = (props) => {
         soundObj: status,
         currentAudio: audio,
         isPlaying: true,
-        currentAudioIndex: context.currentAudioIndex,
-      });
-    }
-    // pause
-    if (context.soundObj && context.soundObj.isPlaying) {
-      const status = await pause(context.playbackObj);
-      return context.updateState(context, {
-        soundObj: status,
+        currlaylist.Songs[0]ndObj: status,
         isPlaying: falplaying
     if (context.soundObj && !context.soundObj.isPlaying) {
       const status = await resume(context.playbackObj);
@@ -103,28 +97,39 @@ const PlayerScreen = (props) => {
      const playlist: Playlist = props.currPlaylist
      const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
      setCurrentSong(playlist.Songs[SongIndex+1])
-     setPlaying(false)
-     setTimeout(() => setPlaying(true), 1000)
-
+     setPlaying(false);
+     setIsLoadingVideo(true);
+     setTimeout(() => {
+       setPlaying(true);
+       setIsLoadingVideo(false);
+     }, 1000)
+     //togglePlaying();
+     //togglePlaying();
    } 
    const prevSong = () => {
     const playlist: Playlist = props.currPlaylist;
     const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
     setCurrentSong(playlist.Songs[SongIndex-1])
-    setPlaying(false)
-    setTimeout(() => setPlaying(true), 1000)
-    
+    setPlaying(false);
+    setIsLoadingVideo(true);
+    setTimeout(() => {
+      setPlaying(true);
+      setIsLoadingVideo(false);
+    }, 1000)
+    //togglePlaying();
+    //togglePlaying();
      
-  } 
+  }
+
  
     return (
  <View style={styles.container}>
    <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         height={1}
-        play={playing}
+        play={playing} //true
         onChangeState = {onStateChange}
-        videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid}
+        videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid} //new video
       />
     </View>
            {/* TODO: go back button */}
@@ -149,20 +154,21 @@ const PlayerScreen = (props) => {
             style={{ width: width, height: 40 }}
             minimumValue={0}
             maximumValue={1}
-           // value={calculateSeebBar()}
+           value={0.5}
            // minimumTrackTintColor={color.FONT_MEDIUM}
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
- 
+ <ActivityIndicator /> 
 <View style={styles.audioBtn}>
 
             <Components.PlayerBtn iconType='PREV' onPress={()=> prevSong()}  />
+            {isLoadingVideo ? <ActivityIndicator  size="large" color="#000000"/> :
             <Components.PlayerBtn 
               //onPress={handlePlayPause}
               onPress={togglePlaying}
               style={{ marginHorizontal: 25 }}
               iconType={playingButton ? 'PLAY' : 'PAUSE'}
-            />
+            />}
             <Components.PlayerBtn  iconType='NEXT' onPress={()=> nextSong()} />
 
 

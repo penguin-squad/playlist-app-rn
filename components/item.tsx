@@ -8,6 +8,7 @@ interface Props {
     icon: string;
     placeholder: string;
     onChangeText: (text: string) => void;
+    value: string | undefined;
 }
 
 
@@ -20,7 +21,8 @@ const Iteminput = (props: Props) => {
         <Ionicons style={{ padding: 5 }} name={props.icon} size={22} color="#555" />                 
         <TextInput style={styles.holder}
           placeholder={props.placeholder} 
-          onChangeText={props.onChangeText} />
+          onChangeText={props.onChangeText}
+          value = {props.value} />
        </View>            
     </View>
  </View>
