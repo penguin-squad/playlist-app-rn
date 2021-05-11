@@ -1,9 +1,9 @@
+notes.txt
+
 # OSX
 #
 .DS_Store
 
-#notes
-notes.txt
 
 # Xcode
 #
@@ -23,6 +23,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+ios/playlistAppRN/GoogleService-info.plist
 
 # Android/IntelliJ
 #

@@ -1,6 +1,6 @@
 import React, { FC , useState } from "react";
 import { Text, View, TextInput, StyleSheet, Dimensions } from "react-native";
-import  Ionicons  from "react-native-vector-icons/Ionicons";
+//import  Ionicons  from "react-native-vector-icons/Ionicons";
 
 const { width } = Dimensions.get("screen");
 
@@ -18,7 +18,7 @@ const Iteminput = (props: Props) => {
     <View style={styles.container}>
 
        <View style={{flexDirection:"row"}}>
-        <Ionicons style={{ padding: 5 }} name={props.icon} size={22} color="#555" />                 
+        {/* <Ionicons style={{ padding: 5 }} name={props.icon} size={22} color="#555" />                  */}
         <TextInput style={styles.holder}
           placeholder={props.placeholder} 
           onChangeText={props.onChangeText}
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
        // borderBottomColor: '#aaa',
         flex: 0.2,
         //justifyContent: "center",
-       // backgroundColor: "#ddd",
+      //  backgroundColor: "#ddd",
  
     },
     holder: {

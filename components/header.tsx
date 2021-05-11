@@ -21,21 +21,21 @@ export default Header;
 const styles = StyleSheet.create({
     container: {
         width: width /1,
-        //height: 50,
-        borderBottomColor: '#aaa',
+        height: 50,
+        //borderBottomColor: '#aaa',
         flex: 0.9,
         justifyContent: "center",
         alignItems: "center",
         //padding: 5,
         marginVertical: 5, 
-        backgroundColor: "#ddd",
+        backgroundColor:'rgb(34, 39, 63)',  
     },
 
     title: {
         fontSize: 22,
         fontWeight: 'bold',
-        backgroundColor: "#ddd",
-        color: "rgb(0, 0, 0)"
+        backgroundColor: 'rgb(34, 39, 63)',
+        color: '#FFF'
 
     },
 });
