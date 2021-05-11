@@ -271,10 +271,10 @@ const SongsScreen =(props) => {
         
       <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
         data={props.currPlaylist.Songs}
+        keyExtractor={(item)=>item.title}
         renderItem={({item})=> (
       
       <Components.SongHolder
-        key={item.title} 
         title={item.title}
         duration={item.duration}
         onOptionPress={item.onOptionPress}

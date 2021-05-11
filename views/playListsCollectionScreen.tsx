@@ -68,6 +68,7 @@ useEffect(() => {
       <View style={styles.list}>  
         <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
+            keyExtractor={(item)=>item.id}
             renderItem={({item})=> (
                 <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
