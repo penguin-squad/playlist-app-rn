@@ -12,7 +12,7 @@ import Song from "../models/Song";
 import { Alert } from "react-native";
 import BackButton from "../components/BackButton";
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const PlayerScreen = (props) => {
   
@@ -128,7 +128,9 @@ const PlayerScreen = (props) => {
         videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid}
       />
     </View>
+     <View style ={styles.backBtn}>
            <BackButton  onPress = {()=>gotoSongList()} />
+    </View>      
 
 <View style={styles.midContainer}>
 
@@ -221,5 +223,10 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 200,
       borderRadius: 10
+    },
+    backBtn: {
+      width: width /1,
+      height: 50,
+      marginTop: height/30, 
     },
 });
