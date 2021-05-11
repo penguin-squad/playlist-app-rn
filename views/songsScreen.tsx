@@ -13,6 +13,7 @@ import { addSong } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get('screen');
 import auth from '@react-native-firebase/auth';
 
+
 const fakedata = {
   "kind": "youtube#searchListResponse",
   "etag": "82HG6jmjBB-sjVT_2loLezG1mWY",
@@ -197,7 +198,6 @@ const fakedata = {
 }
 
 
-
 const SongsScreen =(props) => {
   console.log("Songs Screen",props)
   
@@ -214,6 +214,7 @@ const SongsScreen =(props) => {
   const [newSongSearch, setNewSongSearch]= useState <string>(""); 
   const [searchResults, setSearchResults] = useState<SongSearchResult[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<Boolean>(false);
+
   // old code 
   //const [name, setName] =useState("");    
   const handleInput = async () => {
@@ -288,7 +289,7 @@ const SongsScreen =(props) => {
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
-
+              <View>
               <Components.SongHolder
               title={item.title}
               duration={item.duration}
@@ -296,7 +297,25 @@ const SongsScreen =(props) => {
               onAudioPress={item.onAudioPress}
               activeSong={item.activeSong}
               isPlaying={item.isPlaying}/>
-              )} />
+
+                {/* <Provider>
+                  <View>
+                    <Menu
+                      visible={Visible}
+                      onDismiss={closeMenu}
+                      style={styles.menuView}
+                      anchor={ 
+                            item.onOptionPress==true ? openMenu:closeMenu
+                        }>
+                      <Menu.Item onPress={() => {}} title="Remove" />
+                      <Divider />
+                      <Menu.Item onPress={() => {}} title="Cancel" />
+                    </Menu>
+                  </View>
+                </Provider>  */}
+           </View>
+            )
+} />
           </>
       )}
         <View style={{display: showSearchResults == true ? "flex": "none"}}>
@@ -353,6 +372,23 @@ const styles = StyleSheet.create({
     },
     backbutton: {
       
-    }
+    },
+
+    menuView:{
+      marginLeft:-130,
+      backgroundColor: "white",
+      height:5000,
+      width:5000,
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      // shadowColor: "#000",
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2
+      // },
+      // shadowOpacity: 0.25,
+      // shadowRadius: 4,
+      // elevation: 5
+    },
 
 });
