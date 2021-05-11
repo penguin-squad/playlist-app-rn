@@ -265,7 +265,8 @@ const SongsScreen =(props) => {
         <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/>
         
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={props.currPlaylist.Songs} 
+            data={props.currPlaylist.Songs}
+            keyExtractor = {(item) => item.videoid} 
             renderItem={({item})=> (
 
               <Components.SongHolder
