@@ -1,9 +1,11 @@
 import React, {FC, useState, useEffect} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView,ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/Playlist/actionTypes";
 import Playlist from '../models/Playlist'
+import {showToast} from '../components/toasts'
+import auth from '@react-native-firebase/auth';
 import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
 const { width } = Dimensions.get('screen');
 
@@ -23,6 +25,13 @@ console.log(props)
 const [inputShown, setInputShown] = useState<boolean>(false);
 const [newPlaylist, setNewPlaylist] = useState<Playlist | null>(null);
 const [Playlists, setPlaylists] = useState<Playlist[] | null>(null);
+const [loading, setLoading] = useState(false);
+const startLoading = () => {
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 5000);
+};
 
 const handleSearch = (text: string) => { //instead of handle input
    const playlists: Playlist[] = props.playlists.filter((playlist: Playlist)=> playlist.name.includes(text) ); 
@@ -50,13 +59,13 @@ useEffect(()=> {
               }));
           }) ();
         }, []);
-    
+
     useEffect(() => {
+      startLoading();
       props.getPlaylists(props.user.uid);
     },[]) 
 
 
-    const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
   return (
     <View style={styles.container}>
 
@@ -69,10 +78,16 @@ useEffect(()=> {
             placeholder="Search" 
             onChangeText={(text) => handleSearch(text)}/>   
 
+        <Components.Button title="Signout" onPress={()=> auth().signOut().then(() => {
+          showToast("Sign out successfully");
+          props.navigation.navigate("Login");
+        }).catch((e)=>showToast(e))}/>  
+
         <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
 
-        
-        <FlatList style={{ marginVertical: 10}}
+        {loading?(<ActivityIndicator size="large" color="#0000ff"/>):(
+          <>
+          <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
             renderItem={({item})=> (
                 <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
@@ -81,13 +96,14 @@ useEffect(()=> {
                       props.navigation.navigate("songList")
                     }}
                     style={styles.listItem}>
-            
-            <Components.OneListItem id={item.id} name={item.name} />
+        <Components.OneListItem id={item.id} name={item.name} />
                   
                     </TouchableOpacity>
 
 
          )} /> 
+         </>
+            )}
                   
 
         <View  style={{display: inputShown == false ? "flex" : "none"}}>    
@@ -117,7 +133,7 @@ useEffect(()=> {
               title="Player" 
               onPress={()=>{
                 if(props.playlists === undefined || props.playlists.length === 0){
-                  ShowToast("Create and Select a Playlist")
+                  showToast("Create and Select a Playlist")
                 }else {
                   goToPlayer()
                 }

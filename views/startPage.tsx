@@ -1,8 +1,7 @@
 import React, { FC , useState } from "react";
-import { Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 import {View, Button, Modal } from "react-native";
-import { Text, TextInput } from "../components/Themed";
+import { Text, TextInput,TouchableOpacity } from "../components/Themed";
 
 
 
@@ -13,6 +12,7 @@ const startPage = (props) => {
 
     const handleInputPlaylistId = () => {
         props.changePlaylistID(playlistId);
+        setModalVisible(false);
         props.navigation.navigate("songList");
     }
  return (
@@ -22,9 +22,18 @@ const startPage = (props) => {
           An Application for People Share and Contribute Playlist from multiple Source. 
           Currently We Support Youtube and SoundCloud
         </Text>
-        <Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
+        <TouchableOpacity btnType="primary" style={styles.button} onPress={() => props.navigation.navigate("Login")}>
+          <Text style={styles.textStyle}>Login To Access</Text>
+        </TouchableOpacity>
+        <TouchableOpacity btnType="primary" style={styles.button} onPress = {()=>""}>
+          <Text style={styles.textStyle}>Search For Playlist</Text>
+        </TouchableOpacity>
+        <TouchableOpacity btnType="primary" style={styles.button} onPress = {() => setModalVisible(true)}>
+          <Text style={styles.textStyle}>Contribute</Text>
+        </TouchableOpacity>
+        {/* <Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
         <Button onPress = {()=>""} title = "Search For Playlist"/>
-        <Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
+        <Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/> */}
         <Modal
         animationType="slide"
         transparent={true}
@@ -37,12 +46,18 @@ const startPage = (props) => {
           <View style={styles.modalView}>
               <Text>Playlist ID:</Text>
             <TextInput style ={styles.playlistIdInput} onChangeText = {setPlaylistId} value={playlistId}/>
-            <Pressable
+            <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               onPress={handleInputPlaylistId}
             >
               <Text style={styles.textStyle}>Contribute</Text>
-            </Pressable>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: "white",
         borderRadius: 20,
-        height:150,
+        height:300,
         width: 300,
         justifyContent: "center",
         alignItems: "center",
@@ -96,7 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        height:40,
+        height:50,
         width: 150,
         margin: 15
       },

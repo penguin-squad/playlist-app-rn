@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect,useRef} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/actionTypes";
@@ -11,6 +11,8 @@ import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
 const { width } = Dimensions.get('screen');
+import auth from '@react-native-firebase/auth';
+
 
 const fakedata = {
   "kind": "youtube#searchListResponse",
@@ -196,7 +198,6 @@ const fakedata = {
 }
 
 
-
 const SongsScreen =(props) => {
   console.log("Songs Screen",props)
   
@@ -213,15 +214,24 @@ const SongsScreen =(props) => {
   const [newSongSearch, setNewSongSearch]= useState <string>(""); 
   const [searchResults, setSearchResults] = useState<SongSearchResult[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<Boolean>(false);
+
   // old code 
   //const [name, setName] =useState("");    
   const handleInput = async () => {
     //props.addAlbum(newSongSearch); //unpdates title with name
     props.navigation.navigate("player");
   }; 
+  const [loading, setLoading] = useState(false);
+  const startLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 50);
+  };
 
   useEffect(() => {
     if(firstRender.current == true){
+      startLoading();
       firstRender.current = false
       return
     }
@@ -250,6 +260,7 @@ const SongsScreen =(props) => {
           thumbnail: item.snippet.thumbnails.default.url 
           }
       })
+      startLoading();
       setSearchResults(SearchResults)
       setShowSearchResults(true);
     }, 1000)
@@ -269,14 +280,16 @@ const SongsScreen =(props) => {
   return (
         <View style={styles.container}>
 
-        <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
+        <Components.PlayerBtn iconType='BACK' onPress={()=>props.navigation.goBack()} />
 
         <Components.Header title= {"Playlist: "+ props.album.albumname}/>
         
+      {loading ? (<ActivityIndicator size="large" color="#0000ff"/>):(
+          <>
         <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
             data={props.currPlaylist.Songs} 
             renderItem={({item})=> (
-
+              <View>
               <Components.SongHolder
               title={item.title}
               duration={item.duration}
@@ -284,10 +297,31 @@ const SongsScreen =(props) => {
               onAudioPress={item.onAudioPress}
               activeSong={item.activeSong}
               isPlaying={item.isPlaying}/>
-              )} />
+
+                {/* <Provider>
+                  <View>
+                    <Menu
+                      visible={Visible}
+                      onDismiss={closeMenu}
+                      style={styles.menuView}
+                      anchor={ 
+                            item.onOptionPress==true ? openMenu:closeMenu
+                        }>
+                      <Menu.Item onPress={() => {}} title="Remove" />
+                      <Divider />
+                      <Menu.Item onPress={() => {}} title="Cancel" />
+                    </Menu>
+                  </View>
+                </Provider>  */}
+           </View>
+            )
+} />
+          </>
+      )}
         <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
         </View>
+        
             <Components.PlainInput 
               onChangeText={(text) => setNewSongSearch(text)} 
               placeholder="Add new song here"/>  
@@ -300,7 +334,9 @@ const SongsScreen =(props) => {
 
             <Components.ButtonFullScreen
               title="Player" 
-              onPress={()=>goToPlayer()}/>
+              onPress={()=>goToPlayer()}
+              disabled={auth().currentUser?.uid !== props.currPlaylist.userId}
+              />
            
 
             </View> 
@@ -336,6 +372,23 @@ const styles = StyleSheet.create({
     },
     backbutton: {
       
-    }
+    },
+
+    menuView:{
+      marginLeft:-130,
+      backgroundColor: "white",
+      height:5000,
+      width:5000,
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      // shadowColor: "#000",
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2
+      // },
+      // shadowOpacity: 0.25,
+      // shadowRadius: 4,
+      // elevation: 5
+    },
 
 });
