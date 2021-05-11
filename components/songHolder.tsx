@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Image } from "react-native";
 import  Entypo  from 'react-native-vector-icons/Entypo';
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window'); 
 
 
 const choseIcon = (isPlaying: boolean)=>{
@@ -24,14 +24,14 @@ const choseIcon = (isPlaying: boolean)=>{
 
 //const Songs =(props:Props) => { 
 const SongHolder =(props: any) => {     
-const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } = props;
+const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPlaying   } = props;
 
 
  return (
 <>
 <View style={styles.container}>
 {/* <TouchableWithoutFeedback onPress={()=>onAudioPress}>     */}
-<TouchableWithoutFeedback onPress={()=>{console.log("Audio is pushed, take me to the player") //TODO: go to player + set me to false
+<TouchableWithoutFeedback key={title}  onPress={()=>{console.log("Audio is pushed, take me to the player") //TODO: go to player + set me to false
                         onAudioPress===true}}>                      
 <View style={styles.leftContainer}>
   <View style={[ styles.smallPic, {
@@ -39,10 +39,14 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
    
     }, ]} >
 
-    <Text style={styles.smallPicText}>
+    {/* <Text style={styles.smallPicText}>
     {activeSong ? choseIcon(isPlaying) : (title.[0])} 
-   
-    </Text>
+    </Text> */}
+
+    <Image source = {{uri: thumbnail}}
+      style={styles.image}
+      />
+
  </View>  
 
 <View style={styles.titleContainer}>
@@ -53,6 +57,7 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
 </TouchableWithoutFeedback>
 
 <View style={styles.rightContainer}>
+
     <Entypo
         // onPress={props.song.onOptionPress}
         //onPress={onOptionPress}
@@ -60,7 +65,7 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,isPlaying   } =
             onOptionPress===true;}} //samething is to be done + set on press to false
         name='dots-three-vertical'
         size={20}
-        //color={color.FONT_MEDIUM}
+        color={"white"}
         style={{ padding: 10 }}
     />
 </View>
@@ -75,33 +80,28 @@ export default SongHolder;
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         // justifyContent: "center",
-        // alignItems: "center",
+        //alignItems: "center",
         flexDirection: 'row',
         alignSelf: 'center',
-        width: width - 80,
-       // backgroundColor: "red",
+        width: width /1.1 ,
+        backgroundColor: 'rgb(48,56,87)',
     },
     leftContainer: {
         flexDirection: "row",
         alignItems: "center",
         flex:1,
-        //backgroundColor: "red",
-
     },
     rightContainer: {
         flexBasis: 50,
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        //backgroundColor: "red",
-
     },
     smallPic:{ //Tumbnail
         height: 50,
         flexBasis: 50,
-        backgroundColor: "black", //color.FONT_LIGHT
+        backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 25,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     smallPicText: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "white", //color.FONT
+        color: "white", 
  
     },
     titleContainer: {
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 16,
-        color: "black", //color.FONT
+        color: "white", 
     },
     timeText: {
         fontSize: 14,
-        color: "grey", //color.LIGHT
+        color: "white", //TODO: is not visible. shorten the name
     },
     separator:{
         width: width - 80,
@@ -132,4 +132,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
     },
+    image: {
+        margin: 5,
+        width: 40, 
+        height: 40,
+        borderRadius: 50
+      },
 });

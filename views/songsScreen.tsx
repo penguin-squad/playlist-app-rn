@@ -10,7 +10,11 @@ import SongSearchResult from "../models/SongSearchResult";
 import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
-const { width } = Dimensions.get('screen');
+import BackButton from "../components/BackButton";
+
+
+const { width, height } = Dimensions.get('screen');
+
 
 const fakedata = {
   "kind": "youtube#searchListResponse",
@@ -258,44 +262,46 @@ const SongsScreen =(props) => {
 
 
   return (
-        <View style={styles.container}>
-
-        <Components.PlayerBtn iconType='BACK' onPress={()=>gotoPlayLists()} />
-
-        <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/>
+    <View style={styles.container}>
+      <View style ={styles.backBtn}>
+        <BackButton  onPress = {()=>gotoPlayLists()} />
+      </View>
+      
+      <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
         
-        <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
-            data={props.currPlaylist.Songs}
-            keyExtractor = {(item) => item.videoid} 
-            renderItem={({item})=> (
-
-              <Components.SongHolder
-              title={item.title}
-              duration={item.duration}
-              onOptionPress={item.onOptionPress}
-              onAudioPress={item.onAudioPress}
-              activeSong={item.activeSong}
-              isPlaying={item.isPlaying}/>
-              )} />
-        <View style={{display: showSearchResults == true ? "flex": "none"}}>
+      <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
+        data={props.currPlaylist.Songs}
+        keyExtractor = {(item) => item.videoid} 
+        renderItem={({item})=> (
+      
+      <Components.SongHolder
+        key={item.title} 
+        title={item.title}
+        duration={item.duration}
+        onOptionPress={item.onOptionPress}
+        onAudioPress={item.onAudioPress}
+        activeSong={item.activeSong}
+        isPlaying={item.isPlaying}
+        thumbnail={item.thumbnail}
+        />
+      )} />
+             
+      <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
-        </View>
-            <Components.PlainInput 
-              onChangeText={(text) => setNewSongSearch(text)} 
-              placeholder="Add new song here"/>  
+      </View>
+
+      <Components.PlainInput 
+        onChangeText={(text) => setNewSongSearch(text)} 
+        placeholder="Add new song here"/>  
             
             
             {/* <Components.ButtonFullScreen
               title="Enter" 
               onPress={()=>handleInput()}/> */}
-            
-
-            <Components.ButtonFullScreen
-              title="Player" 
-              onPress={()=>goToPlayer()}/>
-           
-
-            </View> 
+      <Components.ButtonFullScreen
+        title="Player" 
+        onPress={()=>goToPlayer()}/>
+   </View> 
 
     );
 };
@@ -307,10 +313,33 @@ export default SongsScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flexDirection: "column" 
+     // flexDirection: "column", 
+      flex: 1,
+      //justifyContent: "center",
+      paddingVertical: 10,
+      alignItems: "center",
+      backgroundColor: 'rgb(34, 39, 63)' 
+
     },
-    backbutton: {
-      
-    }
+    backBtn: {
+      width: width /1,
+      height: 50,
+      marginTop: height/30, 
+    },
+    button: {
+      width: '50%',
+      height: 50,
+      alignItems: 'center',
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
+    },
+    buttonText: {
+      color: '#FFF',
+    },
+    // header: {
+    //   width: width /1,
+    //   height: 100,
+    //   marginTop: height/30, 
+    // },
 
 });

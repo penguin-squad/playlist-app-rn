@@ -13,7 +13,7 @@ interface Props{
   setShowResults: (value: boolean) => void;
   addSongToPlaylist: (Song: Song, playlistID: string) => void;
   playlistID: string;
-
+ 
 }
 const SearchResultsItem = (props: Props) => {
   console.log(props)
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   title: {
-    alignSelf:"center"
+    alignSelf:"center",
+    color: '#FFF'
   }
 });
 

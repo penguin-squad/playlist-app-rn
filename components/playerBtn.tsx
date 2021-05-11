@@ -1,5 +1,6 @@
 import React from 'react';
 import  AntDesign  from 'react-native-vector-icons/AntDesign';
+
 //import color from '../misc/color';
 
 // interface Props{
@@ -12,8 +13,7 @@ import  AntDesign  from 'react-native-vector-icons/AntDesign';
 
 const PlayerBtn =(props) => {
   
-    const { iconType, size = 40, onPress } = props;
-    //iconColor = color.FONT,
+  const { iconType, size = 40, onPress } = props;
   
   const getIconName = (type:string) => {
     switch (type) {
@@ -38,7 +38,7 @@ const PlayerBtn =(props) => {
       onPress={onPress}
       name={getIconName(iconType)}
       size={size}
-      //color={iconColor}
+      color={"white"} //TODO: softer color
     />
   );
 };

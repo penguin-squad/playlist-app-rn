@@ -35,6 +35,7 @@ const App =() =>{
     <NavigationContainer>
       <Navigator screenOptions={{
         headerShown: false,
+         
         
       }}>
         <Screen name="Home" component={startPagePresenter}></Screen>
