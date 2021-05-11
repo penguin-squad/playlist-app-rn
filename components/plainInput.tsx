@@ -7,6 +7,7 @@ interface Props {
     placeholder: string;
     onChangeText: (text: string) => void;
     blurOnSubmit: boolean;
+    
 }
 
 
@@ -48,7 +49,8 @@ const styles = StyleSheet.create({
             width: width/1.1,
             borderRadius:20,
             textAlign:"center",
-            transform: [{ scaleX: 1}, { scaleY: 1 }]  
+            transform: [{ scaleX: 1}, { scaleY: 1 }],
+            color: 'white',
         },
 
 });
