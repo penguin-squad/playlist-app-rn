@@ -266,12 +266,16 @@ const SongsScreen =(props) => {
       <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>gotoPlayLists()} />
       </View>
-      
-      <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
-        
-      <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
+
+      <View style={styles.header}>
+       <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
+      </View>
+
+      <View style ={styles.list}> 
+      <FlatList style={{ marginVertical: 10, display: showSearchResults == false ? "flex" : "none"}}
         data={props.currPlaylist.Songs}
         keyExtractor={(item)=>item.title}
+        showsVerticalScrollIndicator={true}
         renderItem={({item})=> (
       
       <Components.SongHolder
@@ -283,8 +287,11 @@ const SongsScreen =(props) => {
         isPlaying={item.isPlaying}
         thumbnail={item.thumbnail}
         />
-      )} />
-             
+      )} 
+      showsVerticalScrollIndicator={true}
+      />
+       </View>
+
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
       </View>
@@ -312,14 +319,20 @@ export default SongsScreen;
 
 const styles = StyleSheet.create({
     container: {
-     // flexDirection: "column", 
       flex: 1,
-      //justifyContent: "center",
       paddingVertical: 10,
       alignItems: "center",
       backgroundColor: 'rgb(34, 39, 63)' 
-
     },
+    header: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/70, 
+    },
+    list: {
+      height:height/1.9,
+    },
+
     backBtn: {
       width: width /1,
       height: 50,
@@ -335,10 +348,5 @@ const styles = StyleSheet.create({
     buttonText: {
       color: '#FFF',
     },
-    // header: {
-    //   width: width /1,
-    //   height: 100,
-    //   marginTop: height/30, 
-    // },
 
 });

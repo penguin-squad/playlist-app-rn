@@ -5,7 +5,7 @@ import Playlist from '../models/Playlist';
 
 const { width, height } = Dimensions.get('screen');
 
-const OneListItem: FC<any>=(props) =>{
+const OneListItem: FC<any>=(props) =>{ 
     console.log(props)
     return (
    
