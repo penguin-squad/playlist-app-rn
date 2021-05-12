@@ -24,7 +24,13 @@ const SearchResultsItem = (props: Props) => {
     props.addSongToPlaylist(Song,props.playlistID)
     props.setShowResults(false);
 
-  }
+  } 
+  // const deleteSongFromPlaylist: = () => {
+//    const Song: Song = props;
+//     props.deleteSongFromPlaylist(Song, props.playlistID)
+//     props.setShowResults(false);
+
+//   } 
 
   return (
   <TouchableOpacity style = {styles.container} onPress = {addToPlaylist}>

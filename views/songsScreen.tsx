@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect,useRef} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions, Alert} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/actionTypes";
@@ -11,9 +11,16 @@ import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
 import BackButton from "../components/BackButton";
-
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const { width, height } = Dimensions.get('screen');
+
+// interface Props{
+
+//   deleteSongFromPlaylist: (Song: Song, playlistID: string) => void;
+//   playlistID: string;
+ 
+// }
 
 
 const fakedata = {
@@ -209,20 +216,13 @@ const SongsScreen =(props) => {
   
   const goToPlayer = () => {
     props.navigation.navigate("player"); };
-
-  //const[songs, setSongs]= useState<[]| null> (null);  //TODO: define type of songs : Song
+  
   const firstRender = useRef(true);
   
   //Gets data from APi
   const [newSongSearch, setNewSongSearch]= useState <string>(""); 
   const [searchResults, setSearchResults] = useState<SongSearchResult[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<Boolean>(false);
-  // old code 
-  //const [name, setName] =useState("");    
-  const handleInput = async () => {
-    //props.addAlbum(newSongSearch); //unpdates title with name
-    props.navigation.navigate("player");
-  }; 
 
   useEffect(() => {
     if(firstRender.current == true){
@@ -281,15 +281,17 @@ const SongsScreen =(props) => {
       <Components.SongHolder
         title={item.title}
         duration={item.duration}
-        onOptionPress={item.onOptionPress}
+       // onOptionPress={item.onOptionPress}
         onAudioPress={item.onAudioPress}
         activeSong={item.activeSong}
         isPlaying={item.isPlaying}
         thumbnail={item.thumbnail}
+        videoid={item.videoid}
+        playlistId={props.currPlaylist.name}
+
+      
         />
-      )} 
-      showsVerticalScrollIndicator={true}
-      />
+      )} />
        </View>
 
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
