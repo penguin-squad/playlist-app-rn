@@ -24,15 +24,14 @@ const choseIcon = (isPlaying: boolean)=>{
 
 //const Songs =(props:Props) => { 
 const SongHolder =(props: any) => {     
-const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPlaying   } = props;
+const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPlaying, isOwner  } = props;
 
 
  return (
 <>
 <View style={styles.container}>
 {/* <TouchableWithoutFeedback onPress={()=>onAudioPress}>     */}
-<TouchableWithoutFeedback key={title}  onPress={()=>{console.log("Audio is pushed, take me to the player") //TODO: go to player + set me to false
-                        onAudioPress===true}}>                      
+<TouchableWithoutFeedback key={title}  onPress={onAudioPress}>                      
 <View style={styles.leftContainer}>
   <View style={[ styles.smallPic, {
       backgroundColor: activeSong ? "rgba(81,135,200,1)" : "black", //color.ACTIVE_BG && color.FONT_LIGHT 
@@ -58,7 +57,8 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPla
 
 <View style={styles.rightContainer}>
 
-    <Entypo
+ {isOwner() ? 
+ <Entypo
         // onPress={props.song.onOptionPress}
         //onPress={onOptionPress}
         onPress={()=>{console.log("on Options Push"),
@@ -67,7 +67,8 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPla
         size={20}
         color={"white"}
         style={{ padding: 10 }}
-    />
+    /> : null
+}
 </View>
 </View>
 <View style={styles.separator}> 

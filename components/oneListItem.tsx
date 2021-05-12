@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions,TouchableOpacity } from 'react-native';
 import Playlist from '../models/Playlist';
 //import {Album} from "../store/album";
-
+import Clipboard from '@react-native-clipboard/clipboard';
 const { width, height } = Dimensions.get('screen');
 
 const OneListItem: FC<any>=(props) =>{
+    
     console.log(props)
     return (
    
@@ -15,7 +16,9 @@ const OneListItem: FC<any>=(props) =>{
         </View>
 
         <View style={{ ...styles.listItem, alignItems: "flex-end"}}>           
-            <Text style={styles.buttonText}>{props.id}</Text>
+        <TouchableOpacity onPress={() => Clipboard.setString(props.id)}>
+            <Text>Share Playlist</Text>
+        </TouchableOpacity>
         </View>
     </View>    
     );

@@ -1,14 +1,15 @@
 import React, {FC, useState, useEffect} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
 import BackButton from "../components/BackButton";
+
 
 const { width, height } = Dimensions.get('screen');
 
 
 const PlayListsCollectionScreen =(props: any) => { 
-
+  const [loading, setLoading] = useState(false);
 const goToPlayer = () => {
   props.navigation.navigate("player"); 
 };  
@@ -31,14 +32,16 @@ const handleAddPlaylist =()=> {
   if(newPlaylistName !== "") props.addPlaylist(p);
   setInputShown(false);
   setNewPlaylistName("");
-   
-  // clean input field 
+     
+  // clean input field  
 
-};
+};  
 
 useEffect(() => {
+  setLoading(true);
   props.getPlaylists(props.user.uid);
-  setPlaylists(props.playlists)
+  setPlaylists(props.playlists);
+  setLoading(false);
 },[]);
 
    
@@ -66,7 +69,9 @@ useEffect(() => {
       </View>
 
       <View style={styles.list}>  
-        <FlatList style={{ marginVertical: 10}}
+      {loading ? (<ActivityIndicator size="large" color="#0000ff"/>):(
+          <>
+          <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
             keyExtractor={(item) => item.id}
             renderItem={({item})=> {
@@ -81,6 +86,8 @@ useEffect(() => {
                    </TouchableOpacity>
             }
             } /> 
+            </>
+            )}
                   
       </View>
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet,ImageBackground } from 'react-native';
+import { StyleSheet,ImageBackground, ActivityIndicator } from 'react-native';
 import { Text, View, TextInput,TouchableOpacity} from '../components/Themed';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types';
@@ -18,15 +18,17 @@ const LoginView = (props: any) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     
-    const handleSign= async () => {
+    const [loading, setLoading] = useState(false);
+
+    const handleSign = async () => {
+      setLoading(true);
       try{
         await props.Login(username,password);
-        props.navigation.navigate('playlists')
-      
+        props.navigation.navigate('playlists');
+        setLoading(false);
       }catch(e){
-
+        setLoading(false);
         console.log(e);
-
       }
       
 
@@ -42,7 +44,9 @@ const LoginView = (props: any) =>{
       {/* <ImageBackground source={image} style={styles.image}> 
 
       </ImageBackground> */}
-
+        {loading? (
+            <ActivityIndicator size="large" color="#ffffffff"/>):(
+            <>
             <View>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
@@ -71,6 +75,8 @@ const LoginView = (props: any) =>{
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("playlists")}>
               <Text style={styles.buttonText}>Loggin As Test</Text>
             </TouchableOpacity>
+            </>
+            )}
         </View>
   );
 }
