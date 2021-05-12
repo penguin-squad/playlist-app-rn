@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React, {FC, useRef} from "react";
 import { View, Text, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
 import {connect} from "react-redux";
 //import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import * as ActionTypes from "../store/actionTypes";
-import YoutubePlayer from "react-native-youtube-iframe";
+import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
@@ -17,7 +17,8 @@ const { width } = Dimensions.get('window');
 const PlayerScreen = (props) => {
   
 
-  const [currentSong, setCurrentSong] = useState<Song>();
+
+  //const [currentSong, setCurrentSong] = useState<Song>();
   const [isLoadingVideo,setIsLoadingVideo] = useState<boolean>(false);
   const gotoSongList = () => {
     props.navigation.navigate("songList"); };
@@ -31,8 +32,7 @@ const PlayerScreen = (props) => {
     }, []);
 
     
-  
- 
+
   /* Functionality: when audio files exist
 
   const context = useContext(AudioContext);
@@ -40,12 +40,7 @@ const PlayerScreen = (props) => {
  
 
   // slider moves
-  const calculateSeebBar = () => {
-    if (playbackPosition !== null && playbackDuration !== null) {
-      return playbackPosition / playbackDuration;
-    }
-    return 0;
-  };
+
 
 
   // previous audio
@@ -79,6 +74,13 @@ const PlayerScreen = (props) => {
  
  
  */
+
+   useEffect(() =>{
+     if(props.currSong === {}) props.setCurrSong(props.currPlaylist.Songs[0])
+    
+   },[]) 
+
+
    const onStateChange = useCallback((state) => {
     console.log(state)
     if (state === "ended") {
@@ -88,16 +90,12 @@ const PlayerScreen = (props) => {
   }, []);
 
 
-   useEffect(() => {
-     const playlist : Playlist = props.currPlaylist
-     setCurrentSong(playlist.Songs[0])
-
-   }, [])
 
    const nextSong = () => {
      const playlist: Playlist = props.currPlaylist
-     const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
-     setCurrentSong(playlist.Songs[SongIndex+1])
+     let SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === props.currSong?.videoid);
+     if(SongIndex === playlist.Songs.length-1) SongIndex = -1 
+     props.setCurrSong(playlist.Songs[SongIndex+1])
      setPlaying(false);
      setIsLoadingVideo(true);
      setTimeout(() => {
@@ -109,8 +107,9 @@ const PlayerScreen = (props) => {
    } 
    const prevSong = () => {
     const playlist: Playlist = props.currPlaylist;
-    const SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === currentSong?.videoid);
-    setCurrentSong(playlist.Songs[SongIndex-1])
+    let SongIndex: number = playlist.Songs.findIndex((Song: Song) => Song.videoid === props.currSong?.videoid);
+    if(SongIndex === 0) SongIndex = playlist.Songs.length;
+    props.setCurrSong(playlist.Songs[SongIndex-1])
     setPlaying(false);
     setIsLoadingVideo(true);
     setTimeout(() => {
@@ -121,16 +120,40 @@ const PlayerScreen = (props) => {
     //togglePlaying();
      
   }
+  const playerRef = useRef<YoutubeIframeRef | null>(null);
+  const [sliderValue,setSliderValue] = useState(0); 
+  const [time,setTime] = useState("00:00/00:00");
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const elapsed_sec = await playerRef.current?.getCurrentTime(); // this is a promise. dont forget to await
+      const duration = await playerRef.current?.getDuration();
+      // calculations
+      const elapsed_ms = Math.floor(elapsed_sec * 1000);
+      const min = Math.floor(elapsed_ms / 60000);
+      const seconds = Math.floor((elapsed_ms - min * 60000) / 1000);
+      const duration_ms = Math.floor(duration * 1000);
+      const durationMin = Math.floor(duration_ms / 60000);
+      const durationSeconds = Math.floor((duration_ms - durationMin * 60000) / 1000);
 
- 
+      setTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}/${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+      const v  = (elapsed_ms/duration_ms);
+      setSliderValue(Number.isNaN(v) || !Number.isFinite(v) ? 0: v);
+      //setSliderValue((v === NaN ? 0 : v))
+    }, 500); // 100 ms refresh. increase it if you don't require millisecond precision
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
     return (
  <View style={styles.container}>
    <View style = {styles.youtubeVideo}>
    <YoutubePlayer
-        height={1}
+        ref = {playerRef}
+        height={200}
         play={playing} 
         onChangeState = {onStateChange}
-        videoId={currentSong?.videoid === undefined ? "" : currentSong.videoid} //new video
+        videoId={props.currSong?.videoid === undefined ? "" : props.currSong.videoid} //new video
       />
     </View>
            <BackButton  onPress = {()=>gotoSongList()} />
@@ -143,16 +166,17 @@ const PlayerScreen = (props) => {
             size={300}
             color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} /> */}
             
-        <Image source = {{uri:currentSong?.thumbnail}}
+        <Image source = {{uri:props.currSong?.thumbnail}}
          style={styles.image} />   
 
-        <Text style={styles.audioTitle}> {currentSong?.title} </Text>
+        <Text style={styles.audioTitle}> {props.currSong?.title} </Text>
         {/* <Text numberOfLines={1} style={styles.audioTitle}>
         {context.currentAudio.filename} </Text>  */}
 
 </View> 
 <View style={styles.audioPlayer}>
-    
+  <Text style ={{justifyContent: "center"}}>{time}</Text>
+
         <Slider
             style={{ width: width, height: 40, }}
             thumbTintColor="rgb(241, 126, 58)"
@@ -160,7 +184,7 @@ const PlayerScreen = (props) => {
             minimumTrackTintColor="rgb(241, 126, 58)"
             minimumValue={0}
             maximumValue={1}
-           // value={calculateSeebBar()}
+           value={sliderValue}
            // minimumTrackTintColor={color.FONT_MEDIUM} 
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
@@ -168,7 +192,7 @@ const PlayerScreen = (props) => {
 <View style={styles.audioBtn}>
 
             <Components.PlayerBtn iconType='PREV' onPress={()=> prevSong()}  />
-            {isLoadingVideo ? <ActivityIndicator  size="large" color="#000000"/> :
+            {isLoadingVideo ? <ActivityIndicator style={{ marginHorizontal: 25 }} size="large" color="#ffffff"/> :
             <Components.PlayerBtn 
               //onPress={handlePlayPause}
               onPress={togglePlaying}
@@ -203,7 +227,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     audioPlayer:{
-        //
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     audioTitle: {
         //padding: 15,

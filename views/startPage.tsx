@@ -51,6 +51,13 @@ const startPage = (props) => {
             >
               <Text style={styles.textStyle}>Contribute</Text>
             </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: "white",
         borderRadius: 20,
-        height:150,
+        height:250,
         width: 300,
         justifyContent: "center",
         alignItems: "center",
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        height:40,
+        height:50,
         width: 150,
         margin: 15
       },
