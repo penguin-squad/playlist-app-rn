@@ -3,7 +3,7 @@ import  Playlist  from "../../models/Playlist";
 import firestore from '@react-native-firebase/firestore';
 import Song from "../../models/Song";
 import * as LOADING from "../Loading/actionTypes";
-let unsubscribe: () => void;
+let unsubscribe = () => {};
 
 export const createPlaylist = (Playlist: Playlist) => {
     return async (dispatch: any, getState: any) => {
@@ -20,7 +20,7 @@ export const createPlaylist = (Playlist: Playlist) => {
 
 export const changePlaylistID = (playlistID: string) => {
     return async (dispatch: any, getState: any) => { 
-        //if(unsubscribe !== null) unsubscribe()
+        unsubscribe();
         dispatch({type: LOADING.LOADING, payload: true})
         dispatch({type: PLAYLIST.UPDATE_PLAYLIST_ID, payload: playlistID })
         console.log("I Am ABLE TO GET HERE")
@@ -37,7 +37,7 @@ export const changePlaylistID = (playlistID: string) => {
             console.log("Clearly an Error: " ,e)
         dispatch({type: LOADING.LOADING, payload: false})
         }
-        unsubscribe();
+        //unsubscribe();
     }
  
 }
