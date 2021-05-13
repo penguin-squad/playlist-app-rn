@@ -15,14 +15,7 @@ const mapStateToProps = (state: any) => ({
 
   });
   
-  // const mapDispatchToProps = (dispatch: any) => ({
-  //     /*addAlbum: (albumname) => 
-  //       dispatch({
-  //           type: ActionTypes.ADD_PLAYLIST, 
-  //           payload: {
-  //           albumname,
-  //     }}),*/
-  // });
+
 
   const mapDispatchToProps = (dispatch: any) => ({
     deleteSongFromPlaylist: (PlaylistId: string, Song: Song) => dispatch(deleteSong(PlaylistId,Song))
@@ -31,8 +24,4 @@ const mapStateToProps = (state: any) => ({
   const connectComponent= connect (mapStateToProps, mapDispatchToProps);
 
   export default connectComponent(SongsScreen);
-  
-  // export default {
-  //   SongsScreen: connect (mapStateToProps, mapDispatchToProps)(SongsScreen),
-  //   SongHolder: connect (mapStateToProps, mapDispatchToProps)(SongHolder)
-  // };
+ 

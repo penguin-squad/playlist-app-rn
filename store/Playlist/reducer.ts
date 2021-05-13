@@ -32,22 +32,12 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
             })
         };
 
-       case ActionTypes.PLAYLIST.DELETE_SONG:
-           console.log("playlistReducer: delete song now");
-       //console.log(state, action.payload)
+        case ActionTypes.PLAYLIST.DELETE_PLAYLIST:
         return{
-            ...state, 
-            playlists: state.playlists.map((playlist: Playlist) => {
-                if(playlist.id  == action.payload.id){
-                    return {
-                        ...playlist,
-                        Songs: [...playlist.Songs.filter(x=> x.videoid != action.payloads.videoid)]
-                    }
-                }else {
-                    return playlist
-                }
-            })
+            ...state,
+           playlists: [...state.playlists.filter(y => y.id != action.payload)]
         };
+
 
         case ActionTypes.PLAYLIST.UPDATE_PLAYLIST_ID:
             console.log("actions", action.payload)

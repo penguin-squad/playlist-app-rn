@@ -23,12 +23,16 @@ const RightActions =({ progress, dragX, onPress}) => {
 
 };
 
-const deletePlaylist =()=> {
-    console.log("Delete Playlist");
-};
 
 const OneListItem: FC<any>=(props) => { 
-    console.log(props)
+    const deletePlaylist =()=> {
+        console.log("Delete Playlist");
+        console.log("holder playlistId: "+ props.id); 
+        props.deletePlaylist(props.id);  
+    
+    };
+ 
+ //   console.log(props)
     
 return (
 <>

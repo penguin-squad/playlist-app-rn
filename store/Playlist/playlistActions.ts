@@ -1,5 +1,5 @@
 import { PLAYLIST } from "./actionTypes";
-import  Playlist  from "../../models/Playlist";
+import  Playlist  from "../../models/Playlist"; 
 import firestore from '@react-native-firebase/firestore';
 import Song from "../../models/Song";
 
@@ -74,11 +74,8 @@ export const addSong = (playlistId: string, Song: Song) => {
         }
     }
 }
-// const delete = firebase.firestore.FieldValue.delete();
-export const deleteSong = (playlistId: "YzSxXKcIC5srysdgDE5Q", Song: Song) => {
-    console.log("playlistaction: deleteSong");
-    console.log("playlistId:"+ playlistId);
-    console.log("Song:" +Song);
+
+export const deleteSong = (playlistId: string, Song: Song) => {
     return async (dispatch: any, getState: any) => {
         try{
             firestore()
@@ -88,6 +85,23 @@ export const deleteSong = (playlistId: "YzSxXKcIC5srysdgDE5Q", Song: Song) => {
                 Songs: firestore.FieldValue.arrayRemove(Song)
          })
         }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export const deletePlaylist = (playlistId:string) => {
+    return async (dispatch: any, getState: any) => {
+        try{
+            firestore()
+            .collection('Playlists')
+            .doc(playlistId)
+            .delete()
+                .then(() => {
+                dispatch({type: PLAYLIST.DELETE_PLAYLIST, payload: playlistId}) 
+                console.log('Playlist deleted!');
+              });
+        }catch (e){
             console.log(e)
         }
     }

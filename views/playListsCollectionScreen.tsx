@@ -77,7 +77,7 @@ useEffect(() => {
                       props.navigation.navigate("songList")
                     }} >
             
-            <Components.OneListItem id={item.id} name={item.name} />
+            <Components.OneListItem id={item.id} name={item.name} deletePlaylist={props.deletePlaylist} />
                    </TouchableOpacity>
          )} /> 
                   

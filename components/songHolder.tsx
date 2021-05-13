@@ -40,22 +40,14 @@ interface Props{
   
   }
 
-// const deleteSongFromPlaylist = (playlistId: string, videoid:string,) => {
-//     console.log("songScreen: delete song");  
-//     deleteSong( playlistId, videoid); 
-//     console.log(" videoid: "+ videoid);  
-//     console.log("playlistId: "+playlistId);   
-//     }; 
-
+ 
 const SongHolder =(props: Props) => {    
 
 const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId, Song} = props;
-//const deleteSongFromPlaylist: (playlistId: string, Song: Song) => void;
 
-//deleteSongFromPlaylist: (Song: Song, PlaylistID: string)
 
 const deleteSong = () => {
-    //playlistId: string, song: Song
+
     
      console.log("songScreen: delete song");  
      props.deleteSongFromPlaylist(playlistId, Song); 
