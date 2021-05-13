@@ -15,8 +15,8 @@ const Search= (props: Props) => {
     <View  style={styles.container}>
 
        <View style={styles.holder}>
-        <Ionicons style={styles.icon} name={props.icon} size={height/50} color={"rgb(205, 206, 207)"}/>                 
-        <TextInput 
+        <Ionicons style={styles.icon} name={props.icon} size={height/35} color={"rgb(205, 206, 207)"}/>                 
+        <TextInput  style={styles.input}
           placeholder={props.placeholder}
           placeholderTextColor={'rgb(105,110,131)' }       
           onChangeText={props.onChangeText} />
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         borderRadius: 180,
-        paddingLeft: width/30,
-        paddingTop: height/160,
-        margin: 5,
+        paddingLeft: width/70,
+        paddingTop: height/70,
+        margin: 3,
         backgroundColor: 'rgb(48,56,87)',
         shadowColor: '#000',
         shadowOffset: {
@@ -52,8 +52,11 @@ const styles = StyleSheet.create({
     icon: {
         height: height/30,
         width: width/15,
-
-  }
+    },
+    input: {
+        color:"white",
+      
+    }
     
 });
 
