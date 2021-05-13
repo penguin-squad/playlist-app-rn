@@ -219,7 +219,7 @@ const PlayerScreen = (props) => {
            }}
            onSlidingComplete = {async () => {
              setIsLoadingVideo(true)
-             playerRef.current?.seekTo(seekToRef.current,true);
+             await playerRef.current?.seekTo(seekToRef.current,true);
              sliders.current=false;
 
            }}
