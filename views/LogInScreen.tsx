@@ -24,8 +24,8 @@ const LoginView = (props: any) =>{
       setLoading(true);
       try{
         await props.Login(username,password);
-        props.navigation.navigate('playlists');
         setLoading(false);
+        props.navigation.navigate('playlists');
       }catch(e){
         setLoading(false);
         console.log(e);

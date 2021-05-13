@@ -10,7 +10,8 @@ const { width, height } = Dimensions.get('screen');
 
 const PlayListsCollectionScreen =(props: any) => { 
   const [loading, setLoading] = useState(false);
-const goToPlayer = () => {
+
+  const goToPlayer = () => {
   props.navigation.navigate("player"); 
 };  
   
@@ -38,10 +39,14 @@ const handleAddPlaylist =()=> {
 };  
 
 useEffect(() => {
+  const f = async() => {
   setLoading(true);
-  props.getPlaylists(props.user.uid);
+  await props.getPlaylists(props.user.uid);
   setPlaylists(props.playlists);
   setLoading(false);
+  
+}
+  f()
 },[]);
 
    
@@ -68,8 +73,8 @@ useEffect(() => {
         {/* TODO: chnge to username */}
       </View>
 
-      <View style={styles.list}>  
-      {loading ? (<ActivityIndicator size="large" color="#0000ff"/>):(
+      <View style={styles.list}>   
+      {loading ? (<ActivityIndicator size="large" color="#ffffff" style={{alignSelf: "center", }}/>):(
           <>
           <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 

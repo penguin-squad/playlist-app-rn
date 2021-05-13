@@ -21,7 +21,8 @@ const SongScreenPresenter = (props:any) => {
 
   useEffect(() => {
     const Search = setTimeout(() => {
-      if(newSongSearch === "") return 
+      if(newSongSearch === "") return
+      props.setLoading(true);
       Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items
@@ -36,6 +37,7 @@ const SongScreenPresenter = (props:any) => {
         })
         setSearchResults(SearchResults);
         setShowSearchResults(true);
+        props.setLoading(false);
       })
       .catch(e => console.log(e))
       

@@ -21,16 +21,18 @@ const SignupView=(props: any) =>{
     const [confirmPassword, setConfrimPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
-    const confirmSignup=  async () => {
+    const confirmSignup =  async () => {
       setLoading(true);
         if (password !== confirmPassword){
           
             console.log('Keep password the same');
-            return;
             setLoading(false);
+            return;
+            
         }
         if (password === confirmPassword){
           await props.SignUpUser(username,password)
+          setLoading(false);
           props.navigation.navigate("Login"); // TOAST SHOULD BE AROUND HERE
           //return;
           /* upload firebase */

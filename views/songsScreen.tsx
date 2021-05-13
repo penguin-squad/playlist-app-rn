@@ -42,8 +42,11 @@ const SongsScreen =(props: any) => {
   const checkIfUserIsOwner : () => boolean = () => {
     return props.user.uid === props.currPlaylist.userId;
   } 
-  
 
+  const onPressItem = (val: boolean) =>{
+    setShowSearchResults(false);
+    setNewSongSearch("");
+  }
 
 
   return (
@@ -84,7 +87,7 @@ const SongsScreen =(props: any) => {
           setNewSongSearch("");
         }}/>
         </View>
-          <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
+          {props.loading ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
       </View>
 
       <Components.PlainInput 
