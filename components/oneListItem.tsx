@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions,TouchableOpacity } from 'react-native';
 import Playlist from '../models/Playlist';
 //import {Album} from "../store/album";
@@ -6,8 +6,13 @@ import Clipboard from '@react-native-clipboard/clipboard';
 const { width, height } = Dimensions.get('screen');
 
 const OneListItem: FC<any>=(props) =>{
-    
+    const [copied, setCopied] = useState<boolean>(false);
     console.log(props)
+    const copy = () =>{
+        setCopied(true);
+        Clipboard.setString(props.id);
+        setTimeout(()=> setCopied(false),1500)
+    }
     return (
    
    <View style={styles.container}> 
@@ -16,8 +21,8 @@ const OneListItem: FC<any>=(props) =>{
         </View>
 
         <View style={{ ...styles.listItem, alignItems: "flex-end"}}>           
-        <TouchableOpacity onPress={() => Clipboard.setString(props.id)}>
-            <Text>Share Playlist</Text>
+        <TouchableOpacity onPress={copy}>
+            <Text>{!copied ? "Share Playlist": "Copied"}</Text>
         </TouchableOpacity>
         </View>
     </View>    

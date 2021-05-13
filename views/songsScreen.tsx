@@ -1,7 +1,7 @@
 import React, {FC, useState, useEffect,useRef} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
-import {connect} from "react-redux";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import * as ActionTypes from "../store/actionTypes";
 import Youtube from '../util/YoutubeAPI/Youtube'
 import SearchResults from '../components/SearchResults';
@@ -32,7 +32,7 @@ const SongsScreen =(props: any) => {
   const firstRender = useRef(true);
   
   //Gets data from APi
-  // old code 
+  // old code Button
   //const [name, setName] =useState("");    
   const handleInput = async () => {
     //props.addAlbum(newSongSearch); //unpdates title with name
@@ -78,6 +78,12 @@ const SongsScreen =(props: any) => {
       )} />}
              
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
+        <View style = {{alignItems: "flex-end"}}>
+        <Icon name="cancel" size={30} color="#900" onPress = {() => {
+          setShowSearchResults(false);
+          setNewSongSearch("");
+        }}/>
+        </View>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
       </View>
 
