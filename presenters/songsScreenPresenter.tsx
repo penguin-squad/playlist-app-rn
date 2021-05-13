@@ -62,6 +62,7 @@ const SongScreenPresenter = (props:any) => {
   return <SongsScreen 
   searchResults={searchResults} 
   newSongSearch={newSongSearch}
+  setShowSearchResults={setShowSearchResults}
   setNewSongSearch={setNewSongSearch}
   showSearchResults={showSearchResults}
   {...props}

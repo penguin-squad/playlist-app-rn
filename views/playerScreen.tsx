@@ -76,7 +76,7 @@ const PlayerScreen = (props) => {
  */
 
    useEffect(() =>{
-     if(props.currSong === {}) props.setCurrSong(props.currPlaylist.Songs[0])
+     if(props.currSong && Object.keys(props.currSong).length === 0 && props.currSong.constructor === Object) props.setCurrSong(props.currPlaylist.Songs[0])
     
    },[]) 
 
