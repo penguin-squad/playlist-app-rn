@@ -22,7 +22,7 @@ const SongScreenPresenter = (props:any) => {
   useEffect(() => {
     const Search = setTimeout(() => {
       if(newSongSearch === "") return 
-      /*Youtube.searchYoutubeVideo(newSongSearch)
+      Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items
         .filter((item: any) => item.id.kind === "youtube#video")
@@ -37,10 +37,10 @@ const SongScreenPresenter = (props:any) => {
         setSearchResults(SearchResults);
         setShowSearchResults(true);
       })
-      .catch(e => console.log(e))*/
+      .catch(e => console.log(e))
       
       //setSearchResults(res)
-       const SearchResults: SongSearchResult[] = fakedata.items
+      /*const SearchResults: SongSearchResult[] = fakedata.items
        .filter((item: any) => item.id.kind === "youtube#video")
        .map((item: any) => {
         return {
@@ -51,7 +51,7 @@ const SongScreenPresenter = (props:any) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true);
+      setShowSearchResults(true);*/
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 

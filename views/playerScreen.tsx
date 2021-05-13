@@ -76,7 +76,9 @@ const PlayerScreen = (props) => {
  */
 
    useEffect(() =>{
-     if(props.currSong && Object.keys(props.currSong).length === 0 && props.currSong.constructor === Object) props.setCurrSong(props.currPlaylist.Songs[0])
+     if(props.currSong && 
+        Object.keys(props.currSong).length === 0 && 
+        props.currSong.constructor === Object) props.setCurrSong(props.currPlaylist.Songs[0])
     
    },[]) 
 
@@ -98,10 +100,10 @@ const PlayerScreen = (props) => {
      props.setCurrSong(playlist.Songs[SongIndex+1])
      setPlaying(false);
      setIsLoadingVideo(true);
-     setTimeout(() => {
+     /*setTimeout(() => {
        setPlaying(true);
        setIsLoadingVideo(false);
-     }, 1000)
+     }, 1000)*/
      //togglePlaying();
      //togglePlaying();
    } 
@@ -112,10 +114,10 @@ const PlayerScreen = (props) => {
     props.setCurrSong(playlist.Songs[SongIndex-1])
     setPlaying(false);
     setIsLoadingVideo(true);
-    setTimeout(() => {
+    /*setTimeout(() => {
       setPlaying(true);
       setIsLoadingVideo(false);
-    }, 1000)
+    }, 1000)*/
     //togglePlaying();
     //togglePlaying();
      
@@ -123,8 +125,14 @@ const PlayerScreen = (props) => {
   const playerRef = useRef<YoutubeIframeRef | null>(null);
   const [sliderValue,setSliderValue] = useState(0); 
   const [time,setTime] = useState("00:00/00:00");
+  const [sliderHold, setSliderHold] = useState<boolean>(false);
+  const sliders = useRef(false);
+  const seekToRef = useRef<number>(0);
   useEffect(() => {
+    
     const interval = setInterval(async () => {
+      if(sliders.current === true) return;
+      try{
       const elapsed_sec = await playerRef.current?.getCurrentTime(); // this is a promise. dont forget to await
       const duration = await playerRef.current?.getDuration();
       // calculations
@@ -134,10 +142,16 @@ const PlayerScreen = (props) => {
       const duration_ms = Math.floor(duration * 1000);
       const durationMin = Math.floor(duration_ms / 60000);
       const durationSeconds = Math.floor((duration_ms - durationMin * 60000) / 1000);
+      if(elapsed_ms === 0) setPlaying(true);
+      if(elapsed_ms > 1000) setIsLoadingVideo(false);
 
       setTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}/${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
       const v  = (elapsed_ms/duration_ms);
+      
       setSliderValue(Number.isNaN(v) || !Number.isFinite(v) ? 0: v);
+    } catch (e){
+      console.log(e)
+    }
       //setSliderValue((v === NaN ? 0 : v))
     }, 500); // 100 ms refresh. increase it if you don't require millisecond precision
 
@@ -145,6 +159,8 @@ const PlayerScreen = (props) => {
       clearInterval(interval);
     };
   }, []);
+
+
     return (
  <View style={styles.container}>
    <View style = {styles.youtubeVideo}>
@@ -185,6 +201,28 @@ const PlayerScreen = (props) => {
             minimumValue={0}
             maximumValue={1}
            value={sliderValue}
+           onValueChange={async (value)=>{
+            sliders.current=true;
+             try{
+             const duration = await playerRef.current?.getDuration();
+             const durationMin = Math.floor(duration / 60);
+             const durationSeconds = Math.floor((duration % 60));
+             const seek = duration*value;
+             const min = Math.floor(seek/ 60);
+             const seconds = Math.floor(seek % 60);
+             seekToRef.current=Math.floor(seek)
+             setTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}/${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+            }catch (e){
+              console.log(e)
+            }
+
+           }}
+           onSlidingComplete = {async () => {
+             setIsLoadingVideo(true)
+             playerRef.current?.seekTo(seekToRef.current,true);
+             sliders.current=false;
+
+           }}
            // minimumTrackTintColor={color.FONT_MEDIUM} 
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
