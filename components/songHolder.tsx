@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Image, An
 import  Entypo  from 'react-native-vector-icons/Entypo';
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import  { deleteSong }  from "../store/Playlist/playlistActions";
+import Song from '../models/Song' 
 
 const { width } = Dimensions.get('window'); 
 
@@ -24,12 +25,20 @@ const RightActions = ({progress, dragX, onPress})=>{
     );
 };
 
-// interface Props{
-//     songid:
-//     //deleteSongFromPlaylist: ( videoid: string, playlistID: string) => void;
-//     playlistId: string;
-
-// }
+interface Props{
+    Song: Song;
+   //setShowResults: (value: boolean) => void;
+    deleteSongFromPlaylist: (PlaylistId: string, Song: Song) => void;
+    playlistId: string;
+    title: string;
+    onAudioPress: boolean;
+    activeSong: boolean;
+    thumbnail: string;
+    isPlaying: boolean; 
+    videoid: string;
+    duration: string;
+  
+  }
 
 // const deleteSongFromPlaylist = (playlistId: string, videoid:string,) => {
 //     console.log("songScreen: delete song");  
@@ -38,22 +47,27 @@ const RightActions = ({progress, dragX, onPress})=>{
 //     console.log("playlistId: "+playlistId);   
 //     }; 
 
-const SongHolder =(props: any) => {    
+const SongHolder =(props: Props) => {    
 
-const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId} = props;
+const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId, Song} = props;
+//const deleteSongFromPlaylist: (playlistId: string, Song: Song) => void;
 
-const deleteSongFromPlaylist = () => {
-    // console.log("songScreen: delete song");  
-    // deleteSong( playlistId, videoid); 
-    // console.log(" videoid: "+ videoid);  
-    // console.log("playlistId: "+playlistId);   
+//deleteSongFromPlaylist: (Song: Song, PlaylistID: string)
+
+const deleteSong = () => {
+    //playlistId: string, song: Song
+    
+     console.log("songScreen: delete song");  
+     props.deleteSongFromPlaylist(playlistId, Song); 
+     console.log("holder playlistId: "+ playlistId);  
+     console.log(" holder song: "+Song);   
     }; 
 
  return (
 <>
 <Swipeable
     renderRightActions={(progress, dragX) => (
-    <RightActions progress={progress} dragX={dragX} onPress={deleteSongFromPlaylist()} />
+    <RightActions progress={progress} dragX={dragX} onPress={deleteSong} />
     )} >
 
 <View style={styles.container}>
@@ -151,11 +165,6 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 50
       },
-     leftAction:{
-        backgroundColor: "#388e3c",
-        justifyContent: "center",
-        flex: 1,
-     },
      actionText:{
         color:"#fff",
         fontWeight:"600",

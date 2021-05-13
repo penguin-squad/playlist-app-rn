@@ -75,19 +75,18 @@ export const addSong = (playlistId: string, Song: Song) => {
     }
 }
 // const delete = firebase.firestore.FieldValue.delete();
-export const deleteSong = (playlistId: string,  videoid: string) => {
+export const deleteSong = (playlistId: "YzSxXKcIC5srysdgDE5Q", Song: Song) => {
     console.log("playlistaction: deleteSong");
+    console.log("playlistId:"+ playlistId);
+    console.log("Song:" +Song);
     return async (dispatch: any, getState: any) => {
         try{
             firestore()
             .collection('Playlists')
-            .doc(playlistId[0])
-           // .delete()
-          //  .update({
-               // Song: firestore.FieldValue.delete()
-              // Songs: firestore.FieldValue.arrayUnion(Song)
-           // })
-
+            .doc(playlistId)
+            .update({
+                Songs: firestore.FieldValue.arrayRemove(Song)
+         })
         }catch(e){
             console.log(e)
         }

@@ -21,6 +21,7 @@ const SearchResultsItem = (props: Props) => {
 
   const addToPlaylist = () => {
     const Song: Song = {title,thumbnail,duration,videoid}
+    console.log("add song:song, playlist" +Song + props.playlistID);
     props.addSongToPlaylist(Song,props.playlistID)
     props.setShowResults(false);
 
