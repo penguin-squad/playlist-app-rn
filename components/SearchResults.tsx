@@ -20,7 +20,8 @@ console.log(Songs)
       <FlatList
       data = {Songs} 
       keyExtractor = {(Song => Song.videoid)}
-      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>} />
+      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>}
+       />
 
   </View>
     );

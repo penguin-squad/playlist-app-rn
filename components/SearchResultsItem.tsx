@@ -21,10 +21,17 @@ const SearchResultsItem = (props: Props) => {
 
   const addToPlaylist = () => {
     const Song: Song = {title,thumbnail,duration,videoid}
+    console.log("add song:song, playlist" +Song + props.playlistID);
     props.addSongToPlaylist(Song,props.playlistID)
     props.setShowResults(false);
 
-  }
+  } 
+  // const deleteSongFromPlaylist: = () => {
+//    const Song: Song = props;
+//     props.deleteSongFromPlaylist(Song, props.playlistID)
+//     props.setShowResults(false);
+
+//   } 
 
   return (
   <TouchableOpacity style = {styles.container} onPress = {addToPlaylist}>

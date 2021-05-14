@@ -49,9 +49,9 @@ useEffect(() => {
     
     <View style={styles.container}>
 
-      <View style ={styles.backBtn}>
+      {/* <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>""} />
-      </View>
+      </View> */}
 
       <View style ={styles.search}>
         <Components.Search
@@ -68,14 +68,16 @@ useEffect(() => {
       <View style={styles.list}>  
         <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
+            keyExtractor={(item)=>item.id}
+            showsVerticalScrollIndicator={true}
             renderItem={({item})=> (
-                <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
+                <TouchableOpacity  key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
                     }} >
             
-            <Components.OneListItem id={item.id} name={item.name} />
+            <Components.OneListItem id={item.id} name={item.name} deletePlaylist={props.deletePlaylist} />
                    </TouchableOpacity>
          )} /> 
                   
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
         width: width / 1.2,
         marginTop: height/50,
         marginBottom : height/60,
+    
     },    
     backBtn: {
       width: width /1,
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
     search:{
       width: width /1,
       height: height/14,
+      marginTop: height/30, 
     },
     button: {
       width: '50%',
@@ -178,7 +182,4 @@ const styles = StyleSheet.create({
     buttonText: {
       color: '#FFF',
     },
-    listItem:{
-  //    borderRadius: 15,
-    }
   });

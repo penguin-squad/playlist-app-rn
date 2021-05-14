@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect,useRef} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions, Alert} from "react-native";
 import * as Components from '../components/index';
 import {connect} from "react-redux";
 import * as ActionTypes from "../store/actionTypes";
@@ -11,9 +11,16 @@ import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
 import BackButton from "../components/BackButton";
-
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const { width, height } = Dimensions.get('screen');
+
+// interface Props{
+
+//   deleteSongFromPlaylist: (Song: Song, playlistID: string) => void;
+//   playlistID: string;
+ 
+// }
 
 
 const fakedata = {
@@ -209,20 +216,13 @@ const SongsScreen =(props) => {
   
   const goToPlayer = () => {
     props.navigation.navigate("player"); };
-
-  //const[songs, setSongs]= useState<[]| null> (null);  //TODO: define type of songs : Song
+  
   const firstRender = useRef(true);
   
   //Gets data from APi
   const [newSongSearch, setNewSongSearch]= useState <string>(""); 
   const [searchResults, setSearchResults] = useState<SongSearchResult[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<Boolean>(false);
-  // old code 
-  //const [name, setName] =useState("");    
-  const handleInput = async () => {
-    //props.addAlbum(newSongSearch); //unpdates title with name
-    props.navigation.navigate("player");
-  }; 
 
   useEffect(() => {
     if(firstRender.current == true){
@@ -231,21 +231,21 @@ const SongsScreen =(props) => {
     }
     
     const Search = setTimeout(() => {
-      Youtube.searchYoutubeVideo(newSongSearch)
-      .then(data => {
-        const SearchResults: Song[] = data.items.map((item: any) => {
-        return {
-          videoid: item.id.videoId,
-          title: item.snippet.title, 
-          duration: item.snippet.duration,
-          thumbnail: item.snippet.thumbnails.default.url 
-          }
-        })
-        setSearchResults(SearchResults)
-        setShowSearchResults(true);
-      })
-      .catch(e => console.log(e))
-      /*setSearchResults(res)
+      // Youtube.searchYoutubeVideo(newSongSearch)
+      // .then(data => {
+      //   const SearchResults: Song[] = data.items.map((item: any) => {
+      //   return {
+      //     videoid: item.id.videoId,
+      //     title: item.snippet.title, 
+      //     duration: item.snippet.duration,
+      //     thumbnail: item.snippet.thumbnails.default.url 
+      //     }
+      //   })
+      //   setSearchResults(SearchResults)
+      //   setShowSearchResults(true);
+      // })
+      // .catch(e => console.log(e))
+      // setSearchResults(res)
        const SearchResults: SongSearchResult[] = fakedata.items.map((item: any) => {
         return {
           videoid: item.id.videoId,
@@ -255,75 +255,95 @@ const SongsScreen =(props) => {
           }
       })
       setSearchResults(SearchResults)
-      setShowSearchResults(true);*/
+      setShowSearchResults(true);
     }, 1000)
     return () => clearTimeout(Search)
   },[newSongSearch]) 
 
 
   return (
+    <>
     <View style={styles.container}>
       <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>gotoPlayLists()} />
       </View>
-      
-      <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
-        
-      <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
+
+      <View style={styles.header}>
+       <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
+      </View>
+
+      <View>
+       <Components.PlainInput 
+        onChangeText={(text) => setNewSongSearch(text)} 
+        placeholder="Search for new song to add"/> 
+      </View>  
+
+      <View style ={styles.list}> 
+      <FlatList style={{ marginVertical: 10, display: showSearchResults == false ? "flex" : "none"}}
         data={props.currPlaylist.Songs}
+        keyExtractor={(item)=>item.title}
+        showsVerticalScrollIndicator={true}
         renderItem={({item})=> (
       
       <Components.SongHolder
-        key={item.title} 
         title={item.title}
         duration={item.duration}
-        onOptionPress={item.onOptionPress}
+       // onOptionPress={item.onOptionPress}
         onAudioPress={item.onAudioPress}
         activeSong={item.activeSong}
         isPlaying={item.isPlaying}
         thumbnail={item.thumbnail}
+        videoid={item.videoid}
+        playlistId={props.playlistID}
+        Song={item}
+        deleteSongFromPlaylist={props.deleteSongFromPlaylist}
+
+      
         />
       )} />
-             
+       </View>
+
+<View>
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
           <SearchResults Songs = {searchResults} setShowResults = {setShowSearchResults}/>
       </View>
 
-      <Components.PlainInput 
-        onChangeText={(text) => setNewSongSearch(text)} 
-        placeholder="Add new song here"/>  
-            
-            
-            {/* <Components.ButtonFullScreen
-              title="Enter" 
-              onPress={()=>handleInput()}/> */}
-      <Components.ButtonFullScreen
-        title="Player" 
-        onPress={()=>goToPlayer()}/>
-   </View> 
-
+ </View>       
+   </View>
+   
+  <View style={styles.player}>
+    <Components.ButtonFullScreen
+          title="Player" 
+          onPress={()=>goToPlayer()}/>
+  </View> 
+</>
     );
 };
 
-// Redux code starts
 export default SongsScreen;
-// Redux code ends
+
 
 
 const styles = StyleSheet.create({
     container: {
-     // flexDirection: "column", 
-      flex: 1,
-      //justifyContent: "center",
+      flex: 0.9,
       paddingVertical: 10,
       alignItems: "center",
       backgroundColor: 'rgb(34, 39, 63)' 
-
+    },
+    header: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/70, 
+    },
+    list: {
+      //height:height/1.5,
     },
     backBtn: {
       width: width /1,
       height: 50,
       marginTop: height/30, 
+     // position: 'absolute',
     },
     button: {
       width: '50%',
@@ -331,14 +351,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginBottom: 15,
       backgroundColor:'rgb(241, 126, 58)',
+      //position: 'absolute',
     },
     buttonText: {
       color: '#FFF',
     },
-    // header: {
-    //   width: width /1,
-    //   height: 100,
-    //   marginTop: height/30, 
-    // },
+    player: {
+    flex: 0.1,
+    backgroundColor: 'rgb(34, 39, 63)' ,
+    alignItems: "center", 
+    paddingVertical: 10,
+    justifyContent: "center",
+    //position: 'absolute',
+    
+    }
 
 });
