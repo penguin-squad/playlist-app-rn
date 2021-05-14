@@ -2,9 +2,10 @@ import React, { FC , useState } from "react";
 import {View, StyleSheet, Dimensions, FlatList } from "react-native";
 import Song from '../models/Song';
 import '../components/SearchResultsItem'
-import SearchResultsItem from "../components/SearchResultsItem";
 import SongSearchResult from "../models/SongSearchResult";
-const { width } = Dimensions.get("screen");
+import SearchResultsItemPresenter from "../presenters/SearchResultsItemPresenter";
+
+const { width, height } = Dimensions.get('screen');
 
 interface Props{
     Songs: SongSearchResult[];
@@ -15,10 +16,11 @@ interface Props{
 const SearchResults = ({Songs, setShowResults}: Props) => {
 console.log(Songs)
  return (
-  <View>
-      <FlatList data = {Songs} 
+  <View style={styles.list}>
+      <FlatList
+      data = {Songs} 
       keyExtractor = {(Song => Song.videoid)}
-      renderItem = {({item}) => <SearchResultsItem Song = {item} setShowResults = {setShowResults}/>} />
+      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>} />
 
   </View>
     );
@@ -26,5 +28,10 @@ console.log(Songs)
 
 export default SearchResults;
 
-const styles = StyleSheet.create({});
-
+const styles = StyleSheet.create({
+    list: {
+         backgroundColor: 'rgb(48,56,87)',
+         height:height/2.3,
+         
+    },  
+});    

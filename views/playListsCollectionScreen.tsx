@@ -1,102 +1,113 @@
 import React, {FC, useState, useEffect} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
-import {connect} from "react-redux";
-import * as ActionTypes from "../store/Playlist/actionTypes";
-import Playlist from '../models/Playlist'
-import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
-const { width } = Dimensions.get('screen');
+import Playlist from '../models/Playlist';
+import BackButton from "../components/BackButton";
+
+const { width, height } = Dimensions.get('screen');
 
 
-const PlayListsCollectionScreen =(props) => { 
+const PlayListsCollectionScreen =(props: any) => { 
+  const [loading, setLoading] = useState(false);
 
-//TODO   
-//   const [name, setName] =useState("");
-//   const [id, setID] =useState("");
-// const [searchquery, setSearchQuery] = useState <string>(""); 
-
-const goToPlayer = () => {
+  const goToPlayer = () => {
   props.navigation.navigate("player"); 
 };  
   
-console.log(props)
-const [inputShown, setInputShown] = useState<boolean>(false);
-const [newPlaylist, setNewPlaylist] = useState<Playlist | null>(null);
-const [Playlists, setPlaylists] = useState<Playlist[] | null>(null);
+console.log("Playlist Collections:", props)
+const [ inputShown, setInputShown ] = useState<boolean>(false);
+const [ newPlaylistName, setNewPlaylistName ] = useState<string>("");
+const [search, setSearch] = useState<string>("");
+const [ Playlists, setPlaylists ] = useState<Playlist[]>([]);
 
-const handleSearch = (text: string) => { //instead of handle input
+/*const handleSearch = (text: string) => { //instead of handle input
    const playlists: Playlist[] = props.playlists.filter((playlist: Playlist)=> playlist.name.includes(text) ); 
    setPlaylists(playlists); 
   }; 
-    
+*/    
 
 const handleAddPlaylist =()=> {
-    if (newPlaylist !==null && Playlists!==null)
-    {
-        props.addPlaylist(newPlaylist); 
-    }
-    else if(newPlaylist !==null && Playlists == null) {
-        props.addPlaylist(newPlaylist); 
-     }
+  const p :Playlist = {name: newPlaylistName, userId: props.user.uid, Songs:[]}
+  if(newPlaylistName !== "") props.addPlaylist(p);
+  setInputShown(false);
+  setNewPlaylistName("");
+     
+  // clean input field  
 
-};
+};  
 
+useEffect(() => {
+  const f = async() => {
+  setLoading(true);
+  await props.getPlaylists(props.user.uid);
+  setPlaylists(props.playlists);
+  setLoading(false);
+  
+}
+  f()
+},[]);
 
-useEffect(()=> {
-    (()=>{
-      setPlaylists(
-        props.playlists.sort((a: Playlist, b: Playlist) =>{   
-           return a.name > b.name ? 1 : b.name > a.name? -1 :0;
-              }));
-          }) ();
-        }, []);
-    
-    useEffect(() => {
-      props.getPlaylists(props.user.uid);
-    },[]) 
-
+   
 
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
-  return (
+  
+    return (
+    
     <View style={styles.container}>
 
-        {/* <Components.PlainInput 
-           onChangeText={(text) => setName(text)} 
-            placeholder="Enter name for your Playlist"/>  */}
 
+
+      <View style ={styles.search}>
         <Components.Search
             icon="md-search" 
             placeholder="Search" 
-            onChangeText={(text) => handleSearch(text)}/>   
+            onChangeText={setSearch}/>  
+      </View>
 
-        <Components.Header title= {"Playlists Collection: "+ props.firstPlaylist.name}/> 
+      <View style ={styles.header}>
+        <Components.Header title= {"Playlists for "+ props.user.email}/> 
+        {/* TODO: chnge to username */}
+      </View>
 
-        
-        <FlatList style={{ marginVertical: 10}}
+      <View style={styles.list}>   
+      {loading ? (<ActivityIndicator size="large" color="#ffffff" style={{alignSelf: "center", }}/>):(
+          <>
+          <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
-            renderItem={({item})=> (
-                <TouchableOpacity key={item.id} onLongPress={() => console.log("onLongPress")}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={true}
+            renderItem={({item})=> {
+            if(!item.name.includes(search)) return null;
+            return <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
-                    }}
-                    style={styles.listItem}>
+                    }} >
             
-            <Components.OneListItem id={item.id} name={item.name} />
+            <Components.OneListItem id={item.id} name={item.name} deletePlaylist={props.deletePlaylist}/>
+                   </TouchableOpacity>
+            }
+            } /> 
+            </>
+            )}
                   
-                    </TouchableOpacity>
+      </View>
 
-
-         )} /> 
-                  
-
-        <View  style={{display: inputShown == false ? "flex" : "none"}}>    
-        <Components.Button onPress={()=>setInputShown(true)} title="Add"/> 
-        </View> 
+      <View style={{display: inputShown == false ? "flex" : "none"}}>    
+        <Components.Button onPress={()=>setInputShown(true)} title="New album"/> 
+      </View> 
     
-        <View  style={{display: inputShown == true ? "flex" : "none"}}>    
-        <View style={{flexDirection:"row", borderBottomWidth: 1}}>
-            
+      <View style={{display: inputShown == true ? "flex" : "none"}}>
+      
+              <Components.PlainInput 
+           onChangeText={setNewPlaylistName}
+            placeholder={""}
+            blurOnSubmit={true}
+            value = {newPlaylistName}
+            /> 
+      
+      {/* <View style={{flexDirection:"row", borderBottomWidth: 1}}>
+       <View>    
         <Components.Iteminput icon="ios-add-circle-outline" placeholder="Album Name" 
             onChangeText={(text)=>{
               if(newPlaylist !== null){
@@ -104,16 +115,19 @@ useEffect(()=> {
               } else{
                 setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
               }
-            }}/>
+            }}
+            value = {newPlaylist?.name}/>
         </View>
-        
-        <Components.Button onPress={()=>handleAddPlaylist()} title="Add New Album"/>
-
-        </View>     
+        </View>  */}
+        <View >
+          <Components.Button onPress={()=>handleAddPlaylist()} title="Add"/>
+        </View>
+      </View>     
             
             
- {/* for future Player*/}
-            <Components.ButtonFullScreen
+ {/* only visible if current song is not null*/}
+          
+            {/* <Components.ButtonFullScreen
               title="Player" 
               onPress={()=>{
                 if(props.playlists === undefined || props.playlists.length === 0){
@@ -122,44 +136,56 @@ useEffect(()=> {
                   goToPlayer()
                 }
                 
-                }}/>
+                }}/> */}
+
             </View> 
 
     );
 };
 
-// Redux code 
-const mapStateToProps = (state) => ({ 
-  firstPlaylist: state.reducer.firstPlaylist,
-  playlists: state.playlistReducer.playlists,
-  pl: state.reducer.playlist,
-  playlistID: state.playlistReducer.playlistID,
-  user: state.userReducer.user
 
-});
-
-const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
-    addPlaylist: (playlist: Playlist) => dispatch(createPlaylist(playlist)),
-    changePlaylistID: (playlistID: string) => dispatch(changePlaylistID(playlistID)),
-    getPlaylists: (userId: string) => dispatch(getPlaylists(userId))
-    });
-const connectComponent = connect (mapStateToProps, mapDispatchToProps);
-export default connectComponent(PlayListsCollectionScreen);
+export default PlayListsCollectionScreen;
 
 
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      //justifyContent: "center",
       paddingVertical: 10,
-      alignItems: "center",
+      alignItems: "center",   
+      backgroundColor: 'rgb(34, 39, 63)'
     },
-
-    listItem: {
+    list: {
         padding: 5,
-        backgroundColor: 'rgb(230, 230, 250)',
+        backgroundColor: 'rgb(48,56,87)',
         width: width / 1.2,
-        marginVertical: 2 
+        marginTop: height/50,
+        marginBottom : height/60,
+    
+    },    
+    backBtn: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/30, 
     },
+    header: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/90, 
+    },
+    search:{
+      width: width /1,
+      height: height/14,
+      marginTop: height/30, 
+    },
+    button: {
+      width: '50%',
+      height: 50,
+      alignItems: 'center',
+      marginBottom: 15,
+      backgroundColor:'rgb(241, 126, 58)',
+    },
+    buttonText: {
+      color: '#FFF',
+    }
   });

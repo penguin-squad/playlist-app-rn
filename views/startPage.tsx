@@ -1,10 +1,8 @@
 import React, { FC , useState } from "react";
-import { Pressable } from "react-native";
-import { StyleSheet } from "react-native";
-import {View, Button, Modal } from "react-native";
+import { Pressable, StyleSheet, View, Modal, ImageBackground  } from "react-native";
+import * as Components from '../components/index';
+
 import { Text, TextInput } from "../components/Themed";
-
-
 
 
 const startPage = (props) => {
@@ -15,16 +13,26 @@ const startPage = (props) => {
         props.changePlaylistID(playlistId);
         props.navigation.navigate("songList");
     }
+    
+   // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
+
  return (
   <View style = {styles.container}>
+
       <Text>Playlist App</Text>
+      {/* <ImageBackground source={image} style={styles.image}> */}
+     
       <Text>
           An Application for People Share and Contribute Playlist from multiple Source. 
           Currently We Support Youtube and SoundCloud
         </Text>
-        <Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
-        <Button onPress = {()=>""} title = "Search For Playlist"/>
-        <Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
+
+      {/* </ImageBackground> */}
+ 
+        <Components.Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
+        <Components.Button onPress = {()=>""} title = "Search For Playlist"/>
+        <Components.Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
+        
         <Modal
         animationType="slide"
         transparent={true}
@@ -42,6 +50,13 @@ const startPage = (props) => {
               onPress={handleInputPlaylistId}
             >
               <Text style={styles.textStyle}>Contribute</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
             </Pressable>
           </View>
         </View>
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: "white",
         borderRadius: 20,
-        height:150,
+        height:250,
         width: 300,
         justifyContent: "center",
         alignItems: "center",
@@ -96,7 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        height:40,
+        height:50,
         width: 150,
         margin: 15
       },
@@ -109,6 +124,11 @@ const styles = StyleSheet.create({
           height: 40,
           borderWidth: 2,
           borderRadius: 15
-      }
+      },
+      image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
+      },
 });
 

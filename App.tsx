@@ -1,36 +1,28 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import {SongsScreen, PlayListsCollectionScreen, PlayerScreen} from "./views/index";
-
+import PlaylistCollectionScreenPresenter from './presenters/playListsCollectionScreenPresenter';
+import PlayerScreenPresenter from './presenters/PlayScreenPresenter';
+import SongsScreenPresenter from './presenters/songsScreenPresenter';
 import {createStackNavigator} from "@react-navigation/stack"; //native
 import {NavigationContainer} from "@react-navigation/native";
 import {Provider, RootStateOrAny, useSelector} from "react-redux";
 import store from "./store/store";
-import {  Text } from "react-native";
-import LoginView from './views/LogInScreen';
-import SignupView from './views/SignUpScreen';
 import {useDispatch} from 'react-redux';
-import {USER_CHANGE} from './store/User/actionTypes';
 import {useEffect} from 'react';
-import auth from '@react-native-firebase/auth';
-import startPage from './presenters/startPagePresenter';
+import startPagePresenter from './presenters/startPagePresenter';
+import LoginScreenPresenter from './presenters/LoginScreenPresenter';
+import { ChangeInUser } from './store/User/UserActions';
+import SignUpScreenPresenter from './presenters/SignUpScreenPresenter';
 const {Screen, Navigator} = createStackNavigator();
 
 
 
 
 const App =() =>{
-  
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStateOrAny) => state.user)
-
   useEffect(() => {
-    auth().onAuthStateChanged(userState => {
-      console.log(userState);
-      dispatch({type: USER_CHANGE,payload: userState});
-      console.log(user)
-    });
+      dispatch(ChangeInUser());
   }, []);
 
 
@@ -38,19 +30,21 @@ const App =() =>{
     <NavigationContainer>
       <Navigator screenOptions={{
         headerShown: false,
+         
         
       }}>
-        <Screen name="Home" component={startPage}></Screen>
-        <Screen name="Login" component={LoginView}></Screen>
-        <Screen name="Signup" component={SignupView}></Screen>
-        <Screen name= "playlists" component={PlayListsCollectionScreen}/>
-        <Screen name= "songList" component={SongsScreen}/>
-        <Screen  name= "player" component={PlayerScreen}/>
+        <Screen name="Home" component={startPagePresenter}></Screen>
+        <Screen name="Login" component={LoginScreenPresenter}></Screen>
+        <Screen name="Signup" component={SignUpScreenPresenter}></Screen>
+        <Screen name= "playlists" component={PlaylistCollectionScreenPresenter}/>
+        <Screen name= "songList" component={SongsScreenPresenter}/>
+        <Screen  name= "player" component={PlayerScreenPresenter}/>
 
       </Navigator>
     </NavigationContainer> 
  )
 }
+
 
 const WrapperApp = () => {
   return (
@@ -76,26 +70,4 @@ const styles = StyleSheet.create({
 },
 });
 
-//  export default function App() {
-//   const isLoadingComplete = useCachedResources();
-//   const colorScheme = useColorScheme();
 
-//   if (!isLoadingComplete) {
-//     return null;
-//   } else {
-//     return (
-//       <SafeAreaProvider>
-//         <Navigation colorScheme={colorScheme} />
-//         <StatusBar />
-//       </SafeAreaProvider>
-//     );
-//   }
-// }
-
-/*   {<Screen name="txt" component={Hello}/>
-   
-   /* <Screen name= "playLists" component={PlayListsCollectionScreen}/>
-   <Screen name= "songList" component={SongsScreen}/>
-   <Screen name= "player" component={Screens.PlayerScreen}/> 
-
-   */

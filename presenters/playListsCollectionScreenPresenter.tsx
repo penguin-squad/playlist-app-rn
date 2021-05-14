@@ -1,41 +1,22 @@
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
 import {connect} from "react-redux";
 import Playlist from '../models/Playlist'
-import {createPlaylist, changePlaylistID, getPlaylists} from '../store/Playlist/playlistActions'
-const { width } = Dimensions.get('screen');
+import {createPlaylist, changePlaylistID, getPlaylists,deletePlaylist} from '../store/Playlist/playlistActions'
+import { PlayListsCollectionScreen } from "../views";
 
 
-const mapStateToProps = (state) => ({ 
-    firstPlaylist: state.reducer.firstPlaylist,
+const mapStateToProps = (state: any) => ({ 
     playlists: state.playlistReducer.playlists,
-    pl: state.reducer.playlist,
     playlistID: state.playlistReducer.playlistID,
     user: state.userReducer.user
-  
   });
   
-  const mapDispatchToProps = (dispatch) => ({ //TODO: ADD TO LISTS
+  const mapDispatchToProps = (dispatch: any) => ({
       addPlaylist: (playlist: Playlist) => dispatch(createPlaylist(playlist)),
       changePlaylistID: (playlistID: string) => dispatch(changePlaylistID(playlistID)),
-      getPlaylists: (userId: string) => dispatch(getPlaylists(userId))
+      getPlaylists: (userId: string) => dispatch(getPlaylists(userId)),
+      deletePlaylist: (PlaylistId: string) => dispatch(deletePlaylist(PlaylistId))
       });
+      
   const connectComponent = connect (mapStateToProps, mapDispatchToProps);
   export default connectComponent(PlayListsCollectionScreen);
   
-  
-  
-  const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        //justifyContent: "center",
-        paddingVertical: 10,
-        alignItems: "center",
-      },
-  
-      listItem: {
-          padding: 5,
-          backgroundColor: 'rgb(230, 230, 250)',
-          width: width / 1.2,
-          marginVertical: 2 
-      },
-    });

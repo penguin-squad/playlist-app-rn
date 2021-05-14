@@ -1,12 +1,12 @@
 // Updates Store
 import * as ActionTypes from "./actionTypes";
-import IAppState from '../IAppState'
 import Playlist from "../../models/Playlist";
 
 const INTIAL_STATE = {
     playlists: [],
     playlistID: "1",
-    currPlaylist: []
+    currPlaylist: [],
+    currSong:{}
 }
 
 const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
@@ -31,6 +31,14 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
                 }
             })
         };
+
+        case ActionTypes.PLAYLIST.DELETE_PLAYLIST:
+        return{
+            ...state,
+           playlists: [...state.playlists.filter(y => y.id != action.payload)]
+        };
+
+
         case ActionTypes.PLAYLIST.UPDATE_PLAYLIST_ID:
             console.log("actions", action.payload)
             return {
@@ -48,7 +56,12 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
                 ...state,
                 playlists: action.payload
             }
-
+        
+        case ActionTypes.PLAYLIST.SET_CURR_SONG:
+            return {
+                ...state,
+                currSong: action.payload
+            }
 
 
         default:
