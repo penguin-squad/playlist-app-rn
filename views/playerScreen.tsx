@@ -85,7 +85,6 @@ const PlayerScreen = (props) => {
     console.log(state)
     if (state === "ended") {
       nextSong()
-      Alert.alert("video has finished playing!");
     }
   }, []);
 

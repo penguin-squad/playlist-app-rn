@@ -59,8 +59,9 @@ const SongsScreen =(props: any) => {
       <View>
        <Components.PlainInput 
         onChangeText={(text) => {
-          setLoadingSearch(true)
-          setNewSongSearch(text)
+          setShowSearchResults(true);
+          setLoadingSearch(true);
+          setNewSongSearch(text);
         }} 
         placeholder="Search for new song to add"
         value={newSongSearch}/> 
@@ -104,7 +105,7 @@ const SongsScreen =(props: any) => {
           setNewSongSearch("");
         }}/>
         </View>
-          {loadingSearch ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
+          {loadingSearch ? (<ActivityIndicator size="large" color="#ffffffff"/>):(<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> )}
       </View>
             
             

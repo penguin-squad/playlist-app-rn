@@ -13,6 +13,11 @@ const startPage = (props) => {
         props.changePlaylistID(playlistId);
         props.navigation.navigate("songList");
     }
+
+    const setPlaylistIDWithFilter = (value: string) => {
+      setPlaylistId(value.replace(/\s/g,''));
+
+    }
     
    // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
 
@@ -44,7 +49,7 @@ const startPage = (props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
               <Text>Playlist ID:</Text>
-            <TextInput style ={styles.playlistIdInput} onChangeText = {setPlaylistId} value={playlistId}/>
+            <TextInput style ={styles.playlistIdInput} onChangeText = {setPlaylistIDWithFilter} value={playlistId} />
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={handleInputPlaylistId}
