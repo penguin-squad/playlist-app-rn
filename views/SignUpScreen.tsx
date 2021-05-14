@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet,ActivityIndicator} from 'react-native';
 import { Text, View, TextInput,TouchableOpacity} from '../components/Themed';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types';
@@ -19,15 +19,24 @@ const SignupView=(props: any) =>{
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfrimPassword] = useState<string>("");
-    const confirmSignup=() =>{
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const confirmSignup =  async () => {
+      setLoading(true);
         if (password !== confirmPassword){
+          
             console.log('Keep password the same');
+            setLoading(false);
             return;
+            
         }
-          if (password === confirmPassword){
-          props.navigation.navigate("Login");
+        if (password === confirmPassword){
+          await props.SignUpUser(username,password)
+          setLoading(false);
+          props.navigation.navigate("Login"); // TOAST SHOULD BE AROUND HERE
           //return;
           /* upload firebase */
+          setLoading(false);
         } 
     }
 
@@ -35,6 +44,9 @@ const SignupView=(props: any) =>{
 
   return (
         <View style={styles.container}>
+          {loading? (
+            <ActivityIndicator size="large" color="#ffffff"/>):(
+            <>
             <View>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
@@ -70,6 +82,8 @@ const SignupView=(props: any) =>{
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate('Login')}>
               <Text style={styles.buttonText}>Back</Text>
             </TouchableOpacity>
+            </>
+            )}
         </View>
   );
 }

@@ -26,7 +26,9 @@ const PlayerBtn =(props) => {
       case 'PREV':
         return 'banckward';
       case 'BACK':
-        return 'left';  
+        return 'left';
+      case 'LOADING':
+        return 'loading'
     }
   };
 

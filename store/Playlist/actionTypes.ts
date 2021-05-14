@@ -3,6 +3,7 @@ export enum PLAYLIST{
     DELETE,
     UPDATE,
     ADD_SONG,
+    SET_CURR_SONG,
     DELETE_SONG,
     DELETE_PLAYLIST,
     GET,

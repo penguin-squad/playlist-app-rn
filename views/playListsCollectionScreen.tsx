@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
 import BackButton from "../components/BackButton";
@@ -8,39 +8,45 @@ const { width, height } = Dimensions.get('screen');
 
 
 const PlayListsCollectionScreen =(props: any) => { 
+  const [loading, setLoading] = useState(false);
 
-const goToPlayer = () => {
+  const goToPlayer = () => {
   props.navigation.navigate("player"); 
 };  
   
 console.log("Playlist Collections:", props)
 const [ inputShown, setInputShown ] = useState<boolean>(false);
-const [ newPlaylist, setNewPlaylist ] = useState<Playlist | null>(null);
-const [ Playlists, setPlaylists ] = useState<Playlist[] | null>(null);
-const [ addAlbumInput, setAddAlbumInput ] =useState<string>("Enter name for new Playlist");
+const [ newPlaylistName, setNewPlaylistName ] = useState<string>("");
+const [search, setSearch] = useState<string>("");
+const [ Playlists, setPlaylists ] = useState<Playlist[]>([]);
 
-const handleSearch = (text: string) => { //instead of handle input
+/*const handleSearch = (text: string) => { //instead of handle input
    const playlists: Playlist[] = props.playlists.filter((playlist: Playlist)=> playlist.name.includes(text) ); 
    setPlaylists(playlists); 
   }; 
-    
+*/    
 
 const handleAddPlaylist =()=> {
-    if (newPlaylist !==null && Playlists!==null)
-    props.addPlaylist(newPlaylist); 
-    else if(newPlaylist !==null && Playlists == null) 
-        props.addPlaylist(newPlaylist); 
-  
+  const p :Playlist = {name: newPlaylistName, userId: props.user.uid, Songs:[]}
+  if(newPlaylistName !== "") props.addPlaylist(p);
+  setInputShown(false);
+  setNewPlaylistName("");
+     
+  // clean input field  
 
-   setInputShown(false); 
-   
-  // clean input field 
-
-};
+};  
 
 useEffect(() => {
-  props.getPlaylists(props.user.uid);
+  const f = async() => {
+  setLoading(true);
+  await props.getPlaylists(props.user.uid);
+  setPlaylists(props.playlists);
+  setLoading(false);
+  
+}
+  f()
 },[]);
+
    
 
     const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
@@ -49,15 +55,13 @@ useEffect(() => {
     
     <View style={styles.container}>
 
-      {/* <View style ={styles.backBtn}>
-        <BackButton  onPress = {()=>""} />
-      </View> */}
+
 
       <View style ={styles.search}>
         <Components.Search
             icon="md-search" 
             placeholder="Search" 
-            onChangeText={(text) => handleSearch(text)}/>  
+            onChangeText={setSearch}/>  
       </View>
 
       <View style ={styles.header}>
@@ -65,21 +69,27 @@ useEffect(() => {
         {/* TODO: chnge to username */}
       </View>
 
-      <View style={styles.list}>  
-        <FlatList style={{ marginVertical: 10}}
+      <View style={styles.list}>   
+      {loading ? (<ActivityIndicator size="large" color="#ffffff" style={{alignSelf: "center", }}/>):(
+          <>
+          <FlatList style={{ marginVertical: 10}}
             data={props.playlists} 
-            keyExtractor={(item)=>item.id}
+            keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={true}
-            renderItem={({item})=> (
-                <TouchableOpacity  key={item.id} onLongPress={() => console.log("onLongPress")}
+            renderItem={({item})=> {
+            if(!item.name.includes(search)) return null;
+            return <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
                     }} >
             
-            <Components.OneListItem id={item.id} name={item.name} deletePlaylist={props.deletePlaylist} />
+            <Components.OneListItem id={item.id} name={item.name} deletePlaylist={props.deletePlaylist}/>
                    </TouchableOpacity>
-         )} /> 
+            }
+            } /> 
+            </>
+            )}
                   
       </View>
 
@@ -90,15 +100,10 @@ useEffect(() => {
       <View style={{display: inputShown == true ? "flex" : "none"}}>
       
               <Components.PlainInput 
-           onChangeText={(text) => {
-            if(newPlaylist !== null){
-              setNewPlaylist({...newPlaylist, name: text})
-            } else{
-              setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
-            }
-          }}
-            placeholder={addAlbumInput}
+           onChangeText={setNewPlaylistName}
+            placeholder={""}
             blurOnSubmit={true}
+            value = {newPlaylistName}
             /> 
       
       {/* <View style={{flexDirection:"row", borderBottomWidth: 1}}>
@@ -110,7 +115,8 @@ useEffect(() => {
               } else{
                 setNewPlaylist({name: text, Songs:[], userId: props.user.uid}); 
               }
-            }}/>
+            }}
+            value = {newPlaylist?.name}/>
         </View>
         </View>  */}
         <View >
@@ -181,5 +187,5 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: '#FFF',
-    },
+    }
   });
