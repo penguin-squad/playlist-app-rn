@@ -9,7 +9,7 @@ import * as LOADING from "../store/Loading/actionTypes";
 import React, {useState, useEffect} from "react";
 import Youtube from "../util/YoutubeAPI/Youtube";
 const { width } = Dimensions.get('screen');
-
+import { deleteSong } from "../store/Playlist/playlistActions";
 
 
 
@@ -89,7 +89,8 @@ const mapStateToProps = (state: any) => ({
     dispatch({
       type: LOADING.LOADING,
       payload: loading
-    })
+    }),
+    deleteSongFromPlaylist: (PlaylistId: string, Song: Song) => dispatch(deleteSong(PlaylistId,Song))
 
   });
   const connectComponent= connect (mapStateToProps, mapDispatchToProps);

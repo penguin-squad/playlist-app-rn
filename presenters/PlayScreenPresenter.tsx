@@ -3,6 +3,7 @@ import Song from "../models/Song";
 import PlayerScreen  from "../views/playerScreen";
 import * as ActionTypes from '../store/Playlist/actionTypes'
 
+
 const mapStateToProps = (state: any) => ({ 
     playlists: state.playlistReducer.playlists,
     playlistID: state.playlistReducer.playlistID,

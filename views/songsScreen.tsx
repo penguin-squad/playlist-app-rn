@@ -11,12 +11,9 @@ import { PLAYLIST } from '../store/Playlist/actionTypes'
 import Playlist from "../models/Playlist";
 import { addSong } from "../store/Playlist/playlistActions";
 import BackButton from "../components/BackButton";
-
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const { width, height } = Dimensions.get('screen');
-
-
-
 
 
 const SongsScreen =(props: any) => {
@@ -50,17 +47,28 @@ const SongsScreen =(props: any) => {
 
 
   return (
+    <>
     <View style={styles.container}>
       <View style ={styles.backBtn}>
         <BackButton  onPress = {()=>gotoPlayLists()} />
       </View>
-      
+      <View style={styles.header}>
       <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
-        
+      </View>
+
+      <View>
+       <Components.PlainInput 
+        onChangeText={(text) => setNewSongSearch(text)} 
+        placeholder="Search for new song to add"
+        value={newSongSearch}/> 
+      </View>  
+
       {props.loading ? (<ActivityIndicator size="large" color="#ffffffff"/>):
-            <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
+            <View style ={styles.list}>
+              <FlatList style={{ marginVertical: 10,display: showSearchResults == false ? "flex" : "none"}}
         data={props.currPlaylist.Songs}
         keyExtractor = {(item) => item.videoid} 
+        showsVerticalScrollIndicator={true}
         renderItem={({item})=> (
       
       <Components.SongHolder
@@ -68,6 +76,7 @@ const SongsScreen =(props: any) => {
         title={item.title}
         duration={item.duration}
         onOptionPress={item.onOptionPress}
+        
         onAudioPress={() => {
           props.setCurrSong(item);
           props.navigation.navigate("player");
@@ -76,9 +85,14 @@ const SongsScreen =(props: any) => {
         activeSong={item.activeSong}
         isPlaying={item.isPlaying}
         thumbnail={item.thumbnail}
+        videoid={item.videoid}
+        playlistId={props.playlistID}
+        Song={item}
+        deleteSongFromPlaylist={props.deleteSongFromPlaylist}
         isOwner = {() => checkIfUserIsOwner() }
         />
-      )} />}
+      )} />
+      </View>}
              
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
         <View style = {{alignItems: "flex-end"}}>
@@ -89,43 +103,47 @@ const SongsScreen =(props: any) => {
         </View>
           {props.loading ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
       </View>
-
-      <Components.PlainInput 
-        onChangeText={(text) => setNewSongSearch(text)} 
-        placeholder="Add new song here"
-        value={newSongSearch}/>  
             
             
             {/* <Components.ButtonFullScreen
               title="Enter" 
               onPress={()=>handleInput()}/> */}
-      {checkIfUserIsOwner() ? <Components.ButtonFullScreen
-        title="Player" 
-        onPress={()=>goToPlayer()}/> : null}
+      
    </View> 
-
+   <View style={styles.player}>
+      <Components.ButtonFullScreen
+        title="Player" 
+        onPress={()=>goToPlayer()}/>
+    </View>
+</>
     );
 };
 
-// Redux code starts
+
 export default SongsScreen;
-// Redux code ends
+
 
 
 const styles = StyleSheet.create({
     container: {
-     // flexDirection: "column", 
-      flex: 1,
-      //justifyContent: "center",
+      flex: 0.9,
       paddingVertical: 10,
       alignItems: "center",
       backgroundColor: 'rgb(34, 39, 63)' 
-
+    },
+    header: {
+      width: width /1,
+      height: height/14,
+      marginTop: height/70, 
+    },
+    list: {
+      //height:height/1.5,
     },
     backBtn: {
       width: width /1,
       height: 50,
       marginTop: height/30, 
+     // position: 'absolute',
     },
     button: {
       width: '50%',
@@ -133,18 +151,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginBottom: 15,
       backgroundColor:'rgb(241, 126, 58)',
+      //position: 'absolute',
     },
     buttonText: {
       color: '#FFF',
     },
-    // header: {
-    //   width: width /1,
-    //   height: 100,
-    //   marginTop: height/30, 
-    // },
+    player: {
+    flex: 0.1,
+    backgroundColor: 'rgb(34, 39, 63)' ,
+    alignItems: "center", 
+    paddingVertical: 10,
+    justifyContent: "center",
+    //position: 'absolute',
+    
+    }
 
 });
-
-
-
-

@@ -3,6 +3,7 @@ import  Playlist  from "../../models/Playlist";
 import firestore from '@react-native-firebase/firestore';
 import Song from "../../models/Song";
 import * as LOADING from "../Loading/actionTypes";
+
 let unsubscribe = () => {};
 
 export const createPlaylist = (Playlist: Playlist) => {
@@ -43,7 +44,7 @@ export const changePlaylistID = (playlistID: string) => {
 }
 
 export const getPlaylists = (userId: string) => {
-    return async (dispatch: any, getState: any) => { //TODO: If playlist does not exist send a toast r something
+    return async (dispatch: any, getState: any) => {
         try{  
             const playlistsForAUser = await firestore()
             .collection('Playlists')
@@ -79,3 +80,34 @@ export const addSong = (playlistId: string, Song: Song) => {
     }
 }
 
+export const deleteSong = (playlistId: string, Song: Song) => {
+    return async (dispatch: any, getState: any) => {
+        try{
+            firestore()
+            .collection('Playlists')
+            .doc(playlistId)
+            .update({
+                Songs: firestore.FieldValue.arrayRemove(Song)
+         })
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export const deletePlaylist = (playlistId:string) => {
+    return async (dispatch: any, getState: any) => {
+        try{
+            firestore()
+            .collection('Playlists')
+            .doc(playlistId)
+            .delete()
+                .then(() => {
+                dispatch({type: PLAYLIST.DELETE_PLAYLIST, payload: playlistId}) 
+                console.log('Playlist deleted!');
+              });
+        }catch (e){
+            console.log(e)
+        }
+    }
+}

@@ -1,34 +1,62 @@
 import React, {FC} from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Image } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Image, Animated,TouchableOpacity } from "react-native";
 import  Entypo  from 'react-native-vector-icons/Entypo';
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import  { deleteSong }  from "../store/Playlist/playlistActions";
+import Song from '../models/Song' 
 
 const { width } = Dimensions.get('window'); 
 
+const RightActions = ({progress, dragX, onPress})=>{
+    const scale= dragX.interpolate({
+        inputRange: [-100, 0],
+        outputRange: [1,0],
+        extrapolate: 'clamp',
+    });
 
-const choseIcon = (isPlaying: boolean)=>{
-    if(isPlaying)
-        return (<Entypo name="controller-paus" size={24} color="black"/>); //color.ACTIVE_FONT
-    return <Entypo name="controller-play" size={24} color="black"/> //color.ACTIVE_FONT  
+    return (
+     <TouchableOpacity onPress={onPress}>
+       <View style={styles.rightAction} >
+            <Animated.Text style={[styles.actionText, {transform : [{scale}] }]}> 
+                Delete 
+            </Animated.Text>
+        </View>
+        </TouchableOpacity>  
+    );
 };
 
+interface Props{
+    Song: Song;
+   //setShowResults: (value: boolean) => void;
+    deleteSongFromPlaylist: (PlaylistId: string, Song: Song) => void;
+    playlistId: string;
+    title: string;
+    onAudioPress: boolean;
+    activeSong: boolean;
+    thumbnail: string;
+    isPlaying: boolean; 
+    videoid: string;
+    duration: string;
+    isOwner: () => boolean;
+  
+  }
 
-// interface Props{
-//     title: string;
-//     duration?: 3.0;
-//     onOptionPress?: false; 
-//     onSongPress?: false; 
-//     activeSong?:false ;
-//     isPlaying?: false;
+ 
+const SongHolder =(props: Props) => {    
 
-// }
+const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId, Song, isOwner} = props;
 
-//const Songs =(props:Props) => { 
-const SongHolder =(props: any) => {     
-const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPlaying, isOwner  } = props;
-
+const deleteSong = () => {
+     props.deleteSongFromPlaylist(playlistId, Song); 
+    }; 
 
  return (
 <>
+<Swipeable
+    renderRightActions={(progress, dragX) => (
+    <RightActions progress={progress} dragX={dragX} onPress={deleteSong} />
+    )} >
+
 <View style={styles.container}>
 {/* <TouchableWithoutFeedback onPress={()=>onAudioPress}>     */}
 <TouchableWithoutFeedback key={title}  onPress={onAudioPress}>                      
@@ -38,41 +66,25 @@ const { title, duration, onOptionPress, onAudioPress, activeSong,thumbnail,isPla
    
     }, ]} >
 
-    {/* <Text style={styles.smallPicText}>
-    {activeSong ? choseIcon(isPlaying) : (title.[0])} 
-    </Text> */}
-
-    <Image source = {{uri: thumbnail}}
-      style={styles.image}
-      />
-
- </View>  
+  <Image source = {{uri: thumbnail}}
+      style={styles.image} />
+  </View>  
 
 <View style={styles.titleContainer}>
 <Text numberOfLines={1} style={styles.titleText}>  {title}  </Text>
-<Text style={styles.timeText}> {duration} </Text>
 </View>
 </View>
 </TouchableWithoutFeedback>
 
 <View style={styles.rightContainer}>
 
- {isOwner() ? 
- <Entypo
-        // onPress={props.song.onOptionPress}
-        //onPress={onOptionPress}
-        onPress={()=>{console.log("on Options Push"),
-            onOptionPress===true;}} //samething is to be done + set on press to false
-        name='dots-three-vertical'
-        size={20}
-        color={"white"}
-        style={{ padding: 10 }}
-    /> : null
-}
+    <Text style={{ padding: 10, color: "white"}}> {"3.3"} </Text> 
+    {/* TODO: duration use */}
 </View>
 </View>
 <View style={styles.separator}> 
 </View>
+</Swipeable>
 </>
     );
 };
@@ -139,4 +151,15 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 50
       },
+     actionText:{
+        color:"#fff",
+        fontWeight:"600",
+        padding: 20,
+     }, 
+     rightAction:{
+        backgroundColor: "#dd2c00",
+        justifyContent: "center",
+        flex: 1,
+       // alignItems:"flex-end",
+     }, 
 });

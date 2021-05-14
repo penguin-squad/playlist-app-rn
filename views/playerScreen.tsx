@@ -12,7 +12,7 @@ import Song from "../models/Song";
 import { Alert } from "react-native";
 import BackButton from "../components/BackButton";
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const PlayerScreen = (props) => {
   
@@ -21,18 +21,16 @@ const PlayerScreen = (props) => {
   //const [currentSong, setCurrentSong] = useState<Song>();
   const [isLoadingVideo,setIsLoadingVideo] = useState<boolean>(false);
   const gotoSongList = () => {
-    props.navigation.navigate("songList"); };
-
-    const [playingButton, setPlayingButton] = useState(true);
+    props.navigation.navigate("songList"); 
+  };
     const [playing, setPlaying] = useState(true);
+    
     const togglePlaying = useCallback(() => {
-      setPlayingButton((prev) => !prev);
       setPlaying((prev) => !prev)
 
     }, []);
 
     
-
   /* Functionality: when audio files exist
 
   const context = useContext(AudioContext);
@@ -125,7 +123,6 @@ const PlayerScreen = (props) => {
   const playerRef = useRef<YoutubeIframeRef | null>(null);
   const [sliderValue,setSliderValue] = useState(0); 
   const [time,setTime] = useState("00:00/00:00");
-  const [sliderHold, setSliderHold] = useState<boolean>(false);
   const sliders = useRef(false);
   const seekToRef = useRef<number>(0);
   useEffect(() => {
@@ -163,17 +160,18 @@ const PlayerScreen = (props) => {
 
     return (
  <View style={styles.container}>
-   <View style = {styles.youtubeVideo}>
+    <View style={styles.backBtn}>       
+    <BackButton  onPress = {()=>gotoSongList()} />
+    </View>
+    <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         ref = {playerRef}
-        height={200}
+        height={300}
         play={playing} 
         onChangeState = {onStateChange}
         videoId={props.currSong?.videoid === undefined ? "" : props.currSong.videoid} //new video
       />
     </View>
-           <BackButton  onPress = {()=>gotoSongList()} />
-
 <View style={styles.midContainer}>
 
             
@@ -226,7 +224,6 @@ const PlayerScreen = (props) => {
            // minimumTrackTintColor={color.FONT_MEDIUM} 
            // maximumTrackTintColor={color.ACTIVE_BG}
           />
- <ActivityIndicator /> 
 <View style={styles.audioBtn}>
 
             <Components.PlayerBtn iconType='PREV' onPress={()=> prevSong()}  />
@@ -235,7 +232,7 @@ const PlayerScreen = (props) => {
               //onPress={handlePlayPause}
               onPress={togglePlaying}
               style={{ marginHorizontal: 25 }}
-              iconType={playingButton ? 'PLAY' : 'PAUSE'}
+              iconType={playing ? 'PLAY' : 'PAUSE'}
             />}
             <Components.PlayerBtn  iconType='NEXT' onPress={()=> nextSong()} />
 
@@ -265,9 +262,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     audioPlayer:{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      //flex: 1,
+      //justifyContent: 'center',
+      //alignItems: 'center',
     },
     audioTitle: {
         //padding: 15,
@@ -291,5 +288,10 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 200,
       borderRadius: 10
+    },
+    backBtn: {
+      width: width /1,
+      height: 50,
+      marginTop: height/30, 
     },
 });
