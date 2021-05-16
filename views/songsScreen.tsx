@@ -80,7 +80,7 @@ const SongsScreen =(props: any) => {
              
       <View style={{display: showSearchResults == true ? "flex": "none"}}>
         <View style = {{alignItems: "flex-end"}}>
-        <Icon name="cancel" size={30} color="#900" onPress = {() => {
+        <Icon name="cancel" size={30} color="#FFF" onPress = {() => {
           setShowSearchResults(false);
           setNewSongSearch("");
         }}/>
