@@ -84,7 +84,7 @@ Currently there only exists an android version for the application. You will nee
 9. Then click open and it should work.
 
 ## Contribution
-Please send issues and pull requests with your ideas or bugs 
+Please send issues and pull requests with your ideas.
 
 ## Issues
 
