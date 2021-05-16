@@ -11,7 +11,7 @@
 ## Short description  
 The application will be a playlist application where you will be able to share a playlist that you have made with people and they will be able to contribute to that playlist. The application will be able to integrate multiple sources such as Spotify, Youtube, and SoundCloud into a singular unified platform. The playlist will have modes one is Controlled and One is Free. In the controlled mode, people can share a playlist and add songs to a playlist but only the owner will have complete control over which songs will be accepted to the playlist and which will not be accepted. This will be perfect in for example Event-based scenarios where there might be multiple people who might request songs constantly, for example, a house party. In the free mode, all people are able to add and manipulate the playlist and also play the playlist on their own 
 
-## App Features(completed features are marked with ✓)
+## App Features
 - Log in page ✓
 - Sign up page ✓
 - Firebase auth integration ✓
@@ -20,14 +20,14 @@ The application will be a playlist application where you will be able to share a
 - First API integration ✓ 
 - Search the songs from API ✓
 - Redux ✓ 
-- Add song/ playlist with the link
-- 2nd API integration
-- Add songs/ remove songs
-- Create playlist/remove playlist
-- UX Design
-- Connect our own playlist from different platforms
-- Different levels of authentications: owner, guest
-- Playlist sharing
+- Add song/ playlist with the link✓
+- 2nd API integration✓
+- Add songs/ remove songs✓
+- Create playlist/remove playlist✓
+- UX Design✓
+- Connect our own playlist from different platforms✓
+- Different levels of authentications: owner, guest✓
+- Playlist sharing✓
  
 
 
@@ -36,21 +36,24 @@ The application will be a playlist application where you will be able to share a
 ## Install
 
 ```
-code here
+npm install
 ```
+npm start
+...
+npx react-native run-android
 
 ## Project Structure
-Currently, the project is a bit disorganized and we hope to improve it. The main idea is that we leverage Model-View-Presenter strucutre with an added components folder where you can find individual components and where the views represent multiple components to fill out a screen.
+The project is a bit disorganized and we hope to improve it. The main idea is that we leverage Model-View-Presenter strucutre with an added components folder where you can find individual components and where the views represent multiple components to fill out a screen.
 
 In the view folder you can see the Views for our application.
+
+In the presenters folder you can see the Presenter for our application.
 
 In the components you can see smaller components which are used to build up a view
 
 In the model folder you can see some Typescript typing used to define some objects that we use. 
 
 In the store we describe our current redux store which contains mock data and how we leverage redux in our application.
-
-We also have a presenter folder which is currently not utilized.
 
 We also have a util folder that describes our api connection. 
 
