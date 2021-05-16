@@ -1,18 +1,8 @@
 import * as React from 'react';
 import { StyleSheet,ImageBackground, ActivityIndicator } from 'react-native';
 import { Text, View, TextInput,TouchableOpacity} from '../components/Themed';
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from '../types';
 import {useState} from 'react';
-import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
-import { color } from 'react-native-reanimated';
-
-//Toast.show('This is a toast.')
-
-
-
-/* sign button for firebase auth*/
 
 
 
@@ -23,15 +13,26 @@ const LoginView = (props: any) =>{
     const [loading, setLoading] = useState(false);
 
     const handleSign = async () => {
-      setLoading(true);
-      try{
-        await props.Login(username,password);
-        setLoading(false);
-        props.navigation.navigate('playlists');
-      }catch(e){
-        setLoading(false);
-        console.log(e);
+    
+      if(username!=="" && password!==""){
+        setLoading(true);
+        try{
+          await props.Login(username,password);
+          setLoading(false);
+          props.navigation.navigate('playlists');
+        }catch(e){
+          setLoading(false);
+          console.log(e);
+        }
+      }else if(username=="" && password!==""){
+        Toast.show("Email can´t be empty");
+      }else if(username!=="" && password==""){
+        Toast.show("Password can´t be empty");
+      }else if(username=="" && password==""){
+        Toast.show("Email and Password can´t be empty");
       }
+    
+
       
 
 

@@ -1,7 +1,5 @@
 import React, { FC, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions,TouchableOpacity } from 'react-native';
-import Playlist from '../models/Playlist';
-//import {Album} from "../store/album";
 import Clipboard from '@react-native-clipboard/clipboard';
 const { width, height } = Dimensions.get('screen');
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         backgroundColor:'rgb(34, 39, 63)',
         padding: 8,
-        borderRadius: 180,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -103,7 +100,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#dd2c00",
         flex : 1,
         justifyContent: "center",
-        // alignItems:"flex-end",
     },
     actionText : {
         color:"#fff",

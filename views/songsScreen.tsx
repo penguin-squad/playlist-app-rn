@@ -1,20 +1,13 @@
-import React, {FC, useState, useEffect,useRef} from "react";
-import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions, ActivityIndicator} from "react-native";
+import React, {useRef} from "react";
+import { View, StyleSheet, FlatList, Dimensions, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Icon from "react-native-vector-icons/MaterialIcons";
-import * as ActionTypes from "../store/actionTypes";
-import Youtube from '../util/YoutubeAPI/Youtube'
 import SearchResults from '../components/SearchResults';
-import Song from '../models/Song'
-import SongSearchResult from "../models/SongSearchResult";
-import { PLAYLIST } from '../store/Playlist/actionTypes'
-import Playlist from "../models/Playlist";
-import { addSong } from "../store/Playlist/playlistActions";
 import BackButton from "../components/BackButton";
-import Swipeable from "react-native-gesture-handler/Swipeable";
+
+import Toast from 'react-native-simple-toast';
 
 const { width, height } = Dimensions.get('screen');
-
 
 const SongsScreen =(props: any) => {
   console.log("Songs Screen",props)
@@ -25,17 +18,8 @@ const SongsScreen =(props: any) => {
   const goToPlayer = () => {
     props.navigation.navigate("player"); };
 
-  //const[songs, setSongs]= useState<[]| null> (null);  //TODO: define type of songs : Song
   const firstRender = useRef(true);
-  
-  //Gets data from APi
-  // old code Button
-  //const [name, setName] =useState("");    
-  const handleInput = async () => {
-    //props.addAlbum(newSongSearch); //unpdates title with name
-    props.navigation.navigate("player");
-  };
-
+ 
   const checkIfUserIsOwner : () => boolean = () => {
     return props.user.uid === props.currPlaylist.userId;
   } 
@@ -103,17 +87,16 @@ const SongsScreen =(props: any) => {
         </View>
           {props.loading ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
       </View>
-            
-            
-            {/* <Components.ButtonFullScreen
-              title="Enter" 
-              onPress={()=>handleInput()}/> */}
+
       
    </View> 
    <View style={styles.player}>
       <Components.ButtonFullScreen
         title="Player" 
-        onPress={()=>goToPlayer()}/>
+        onPress={()=> (props.currPlaylist.Songs.length===0 && props.currSong!==null) ? Toast.show("Add song first"): goToPlayer()}
+        // onPress={()=>goToPlayer()}
+        />
+
     </View>
 </>
     );

@@ -75,7 +75,8 @@ const mapStateToProps = (state: any) => ({
     playlists: state.playlistReducer.playlists,
     currPlaylist: state.playlistReducer.currPlaylist,
     user: state.userReducer.user,
-    loading: state.loadingReducer.loading
+    loading: state.loadingReducer.loading,
+    currSong: state.playlistReducer.currSong
   });
   
   const mapDispatchToProps = (dispatch: any) => ({

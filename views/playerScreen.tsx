@@ -1,16 +1,13 @@
 import React, {FC, useRef} from "react";
 import { View, Text, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
-import {connect} from "react-redux";
-//import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
-import * as ActionTypes from "../store/actionTypes";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
-import { Alert } from "react-native";
 import BackButton from "../components/BackButton";
+import Toast from 'react-native-simple-toast';
 
 const { width, height } = Dimensions.get('window');
 
@@ -85,7 +82,7 @@ const PlayerScreen = (props) => {
     console.log(state)
     if (state === "ended") {
       nextSong()
-      Alert.alert("video has finished playing!");
+      Toast.show("Song has finished playing!");
     }
   }, []);
 
@@ -166,7 +163,7 @@ const PlayerScreen = (props) => {
     <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         ref = {playerRef}
-        height={300}
+        height={1}
         play={playing} 
         onChangeState = {onStateChange}
         videoId={props.currSong?.videoid === undefined ? "" : props.currSong.videoid} //new video
@@ -189,7 +186,7 @@ const PlayerScreen = (props) => {
 
 </View> 
 <View style={styles.audioPlayer}>
-  <Text style ={{justifyContent: "center"}}>{time}</Text>
+  <Text style ={styles.audioTime}>{time}</Text>
 
         <Slider
             style={{ width: width, height: 40, }}
@@ -271,7 +268,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFF'
-      }, 
+      },
+      audioTime: {
+        padding: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+        justifyContent: "center"
+      },   
     audioBtn: {
         width:width,
         flexDirection: 'row',
