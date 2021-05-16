@@ -61,7 +61,7 @@ In the android folder is the actual android project which is built and used for 
 In the IOS folder is the actual IOS project which is built and used for testing
 
 ## Screenshots
-
+![day2](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/screenshots/screenshot/day2.gif)
 ## Usage
 ### DISCLAIMER: THIS APP ONLY WORKS ON ANDROID (since some of the dev team do not have macBooks and cant run virtual machine of iOS)
 #### If you have a previous version uninstall it first 
