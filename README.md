@@ -61,7 +61,7 @@ In the android folder is the actual android project which is built and used for 
 In the IOS folder is the actual IOS project which is built and used for testing
 
 ## Screenshots
-![](https://raw.githubusercontent.com/penguin-squad/playlist-app-rn/home/araman/Hämtningar/ezgif.com-gif-maker(1).gif)
+![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/42935270/118402599-df0ea680-b66a-11eb-87fe-0144476c58b3.gif)
 
 
 ## Usage
