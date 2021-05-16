@@ -37,11 +37,9 @@ The application will be a playlist application where you will be able to share a
 
 ```
 npm install
-...```
 npm start
-`..```
 npx react-native run-android
-`
+```
 
 ## Project Structure
 The project is a bit disorganized and we hope to improve it. The main idea is that we leverage Model-View-Presenter strucutre with an added components folder where you can find individual components and where the views represent multiple components to fill out a screen.
