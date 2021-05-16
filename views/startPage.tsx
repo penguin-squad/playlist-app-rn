@@ -1,8 +1,9 @@
 import React, { FC , useState } from "react";
-import { Pressable, StyleSheet, View, Modal, ImageBackground  } from "react-native";
+import { Pressable, StyleSheet, View, Modal, ImageBackground } from "react-native";
 import * as Components from '../components/index';
 
 import { Text, TextInput } from "../components/Themed";
+import Toast from 'react-native-simple-toast';
 
 
 const startPage = (props) => {
@@ -30,7 +31,7 @@ const startPage = (props) => {
       {/* </ImageBackground> */}
  
         <Components.Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
-        <Components.Button onPress = {()=>""} title = "Search For Playlist"/>
+        <Components.Button onPress = {()=> ""} title = "Search For Playlist"/>
         <Components.Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
         
         <Modal
@@ -130,5 +131,11 @@ const styles = StyleSheet.create({
         resizeMode: "cover",
         justifyContent: "center"
       },
+      alert: {
+        flex: 1,
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: "black"
+      }
 });
 

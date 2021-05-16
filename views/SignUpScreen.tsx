@@ -47,7 +47,7 @@ const SignupView=(props: any) =>{
           {loading? (
             <ActivityIndicator size="large" color="#ffffff"/>):(
             <>
-            <View>
+            <View style={styles.middle}>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
                     style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
@@ -55,6 +55,7 @@ const SignupView=(props: any) =>{
                     placeholder="Enter Email"
                     value = {username}
                     onChangeText={setUsername}
+                    color={"white"}
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
@@ -64,6 +65,7 @@ const SignupView=(props: any) =>{
                     placeholder="Enter Password"
                     value={password}
                     onChangeText={setPassword}
+                    color={"white"}
                 />
                 <Text style={styles.title}> Confirm Password:</Text>
                 <TextInput
@@ -73,6 +75,7 @@ const SignupView=(props: any) =>{
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChangeText={setConfrimPassword}
+                    color={"white"}
 
                 />
             </View>
@@ -96,6 +99,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor:'rgb(34, 39, 63)',
+    },
+    middle:{
+      justifyContent: 'center',
+      backgroundColor:'rgb(34, 39, 63)',
+      width: '43%',
     },
     title: {
       fontSize: 17,

@@ -5,8 +5,10 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types';
 import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
+import Toast from 'react-native-simple-toast';
+import { color } from 'react-native-reanimated';
 
-
+//Toast.show('This is a toast.')
 
 
 
@@ -35,7 +37,7 @@ const LoginView = (props: any) =>{
 
     }
   
-  const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
+ // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
    
 
   return (
@@ -47,14 +49,15 @@ const LoginView = (props: any) =>{
         {loading? (
             <ActivityIndicator size="large" color="#ffffffff"/>):(
             <>
-            <View>
+            <View style={styles.middle}> 
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
                     style={{ height: 60, fontSize:20,  backgroundColor:'rgb(34, 39, 63)'}}
                     placeholder="Enter Email"
                     value={username}
                     onChangeText={setUsername}
-                    placeholderTextColor={'rgb(205, 206, 207)' }
+                    placeholderTextColor={'rgb(205, 206, 207)'}
+                    color={'white'} 
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
@@ -64,6 +67,7 @@ const LoginView = (props: any) =>{
                     value={password}
                     onChangeText={setPassword}
                     placeholderTextColor={'rgb(205, 206, 207)' }
+                    color={'white'} 
                 />
             </View>
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>handleSign()} >
@@ -89,6 +93,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor:'rgb(34, 39, 63)',
+    },
+    middle:{
+      justifyContent: 'center',
+      backgroundColor:'rgb(34, 39, 63)',
+      width: '43%',
     },
     title: {
       fontSize: 17,
