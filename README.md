@@ -38,9 +38,6 @@ The application will be a playlist application where you will be able to share a
 ```
 npm install
 ```
-
-
-
 npm start
 ```
 
