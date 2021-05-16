@@ -1,9 +1,8 @@
 import React, { FC , useState } from "react";
 import { Pressable, StyleSheet, View, Modal, ImageBackground } from "react-native";
 import * as Components from '../components/index';
-
 import { Text, TextInput } from "../components/Themed";
-import Toast from 'react-native-simple-toast';
+
 
 
 const startPage = (props) => {

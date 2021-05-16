@@ -58,6 +58,7 @@ const LoginView = (props: any) =>{
                     onChangeText={setUsername}
                     placeholderTextColor={'rgb(205, 206, 207)'}
                     color={'white'} 
+                    fontSize={15} 
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
@@ -68,6 +69,7 @@ const LoginView = (props: any) =>{
                     onChangeText={setPassword}
                     placeholderTextColor={'rgb(205, 206, 207)' }
                     color={'white'} 
+                    fontSize={15} 
                 />
             </View>
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>handleSign()} >

@@ -78,7 +78,7 @@ useEffect(() => {
             showsVerticalScrollIndicator={true}
             renderItem={({item})=> {
             if(!item.name.includes(search)) return null;
-            return <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
+            return <TouchableOpacity style={styles.listItem} key={item.id}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")

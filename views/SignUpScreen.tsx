@@ -56,6 +56,7 @@ const SignupView=(props: any) =>{
                     value = {username}
                     onChangeText={setUsername}
                     color={"white"}
+                    fontSize={15} 
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
@@ -66,6 +67,7 @@ const SignupView=(props: any) =>{
                     value={password}
                     onChangeText={setPassword}
                     color={"white"}
+                    fontSize={15} 
                 />
                 <Text style={styles.title}> Confirm Password:</Text>
                 <TextInput
@@ -76,6 +78,7 @@ const SignupView=(props: any) =>{
                     value={confirmPassword}
                     onChangeText={setConfrimPassword}
                     color={"white"}
+                    fontSize={15} 
 
                 />
             </View>

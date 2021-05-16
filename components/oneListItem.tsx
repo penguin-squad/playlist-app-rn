@@ -31,7 +31,7 @@ const OneListItem: FC<any>=(props) => {
     
     };
     const [copied, setCopied] = useState<boolean>(false);
-    console.log(props)
+    //console.log(props);
     const copy = () =>{
         setCopied(true);
         Clipboard.setString(props.id);
@@ -53,7 +53,7 @@ return (
 
         <View style={{ ...styles.listItem, alignItems: "flex-end"}}>           
         <TouchableOpacity onPress={copy}>
-            <Text>{!copied ? "Share PlaylistID": "Copied"}</Text>
+            <Text style={styles.copy}>{!copied ? "Share PlaylistID": "Copied"}</Text>
         </TouchableOpacity>
         </View>
     </View> 
@@ -69,7 +69,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 1,
         padding: 10,
-        height: height/ 15,        
+        height: height/ 14,        
+    },
+    copy:{
+        color: '#FFF',
+        backgroundColor:'rgb(34, 39, 63)',
+        padding: 8,
+        borderRadius: 180,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 3,
+        fontSize: 12 
     },
     listItem: {
         flex: 0.5,
@@ -82,6 +97,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFF',
+        fontSize: 16
       },
     rightAction: {
         backgroundColor: "#dd2c00",
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
     actionText : {
         color:"#fff",
         fontWeight:"600",
-        padding: 20,
+        padding: 15,
     }  
 
 });
