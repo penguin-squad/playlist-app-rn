@@ -120,6 +120,8 @@ const PlayerScreen = (props) => {
   const playerRef = useRef<YoutubeIframeRef | null>(null);
   const [sliderValue,setSliderValue] = useState(0); 
   const [time,setTime] = useState("00:00/00:00");
+  const [startTime,setStartTime] = useState("00:00");
+  const [finnishTime,setFinnishTime] = useState("00:00");
   const sliders = useRef(false);
   const seekToRef = useRef<number>(0);
   useEffect(() => {
@@ -140,6 +142,11 @@ const PlayerScreen = (props) => {
       if(elapsed_ms > 1000) setIsLoadingVideo(false);
 
       setTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}/${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+
+      setStartTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`)
+      setFinnishTime(`${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+
+
       const v  = (elapsed_ms/duration_ms);
       
       setSliderValue(Number.isNaN(v) || !Number.isFinite(v) ? 0: v);
@@ -186,7 +193,10 @@ const PlayerScreen = (props) => {
 
 </View> 
 <View style={styles.audioPlayer}>
-  <Text style ={styles.audioTime}>{time}</Text>
+  <View style={styles.audioDuration}>
+    <Text style ={styles.audioStart}>{startTime}</Text>
+    <Text style ={styles.audioFinish}>{finnishTime}</Text>
+  </View>   
 
         <Slider
             style={{ width: width, height: 40, }}
@@ -259,15 +269,30 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     audioPlayer:{
-      //flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
+  
     },
     audioTitle: {
         //padding: 15,
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFF'
+      },
+      audioDuration:{
+        flexDirection: 'row',
+        padding: 10,
+      }, 
+      audioStart: {
+       paddingLeft: 12,
+       fontSize: 18,
+       fontWeight: 'bold',
+       color: '#FFF',
+      }, 
+      audioFinish: {
+      paddingLeft: width/1.6,
+       fontSize: 18,
+       fontWeight: 'bold',
+       color: '#FFF',
+
       },
       audioTime: {
         padding: 10,
@@ -285,7 +310,7 @@ const styles = StyleSheet.create({
     },
     youtubeVideo: {
       height:0,
-      opacity: 0.99
+      opacity: 0.01
     },
     image: {
       margin: 15,

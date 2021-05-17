@@ -25,10 +25,13 @@ const LoginView = (props: any) =>{
           console.log(e);
         }
       }else if(username=="" && password!==""){
+        setLoading(false);
         Toast.show("Email can´t be empty");
       }else if(username!=="" && password==""){
+        setLoading(false);
         Toast.show("Password can´t be empty");
       }else if(username=="" && password==""){
+        setLoading(false);
         Toast.show("Email and Password can´t be empty");
       }
     
