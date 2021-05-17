@@ -53,8 +53,11 @@ const SongsScreen =(props: any) => {
           <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
 
-      <View style ={styles.backBtn}>
-          <BackButton onPress = {()=>gotoPlayLists()} />      
+      <View style ={styles.backBtn} >
+      {/* <View style ={[styles.backBtn, {display: checkIfUserIsOwner() == true ? "flex" : "none"}]} > */}
+          {/* <BackButton  onPress = {()=>gotoPlayLists()} />  */}
+
+          <BackButton  onPress = {()=>checkIfUserIsOwner() == true ? gotoPlayLists(): props.navigation.navigate("Home")} />       
       </View>
 
 
@@ -152,6 +155,7 @@ const styles = StyleSheet.create({
     backBtn: {
       width: width /1,
       height: 50,
+      
 
     },
     button: {
