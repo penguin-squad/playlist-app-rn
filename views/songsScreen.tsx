@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
 
     },
     button: {
-      width: '25%',
-      height: 50,
+      width: '20%',
+      height: 45,
       alignItems: 'center',
       marginTop: height/30, 
-      backgroundColor:'rgb(241, 126, 58)',
+      backgroundColor:'rgb(48,56,87)',
       marginLeft: width/1.5, 
       //position: 'absolute',
     },

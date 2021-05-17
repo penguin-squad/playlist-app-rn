@@ -1,5 +1,5 @@
 import React, {FC, useRef} from "react";
-import { View, Text, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
+import { View, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
@@ -8,6 +8,8 @@ import Playlist from "../models/Playlist";
 import Song from "../models/Song";
 import BackButton from "../components/BackButton";
 import Toast from 'react-native-simple-toast';
+import { Text, TouchableOpacity } from "../components/Themed";
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -164,9 +166,17 @@ const PlayerScreen = (props) => {
 
     return (
  <View style={styles.container}>
+
+
+    <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Home")} >
+          <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
+
+
     <View style={styles.backBtn}>       
-    <BackButton  onPress = {()=>gotoSongList()} />
+      <BackButton  onPress = {()=>gotoSongList()} />
     </View>
+
     <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         ref = {playerRef}
@@ -261,6 +271,7 @@ export default PlayerScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingVertical: 10,
         backgroundColor: 'rgb(34, 39, 63)',
     },
     midContainer: {
@@ -321,6 +332,17 @@ const styles = StyleSheet.create({
     backBtn: {
       width: width /1,
       height: 50,
-      marginTop: height/30, 
     },
+    button: {
+    width: '20%',
+    height: 45,
+    alignItems: 'center',
+    marginTop: height/30, 
+    backgroundColor:'rgb(48,56,87)',
+    marginLeft: width/1.34, 
+    },
+    buttonText: {
+      color: '#FFF',
+    },   
+
 });
