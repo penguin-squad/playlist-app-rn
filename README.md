@@ -70,6 +70,28 @@ In the android folder is the actual android project which is built and used for 
 
 In the IOS folder is the actual IOS project which is built and used for testing
 
+### Navigation
+
+We leverage [React Native Navigation](https://github.com/wix/react-native-navigation) for the navigation. You will see that in [App.tsx](https://github.com/penguin-squad/playlist-app-rn/blob/master/App.tsx) in here you will see different <Screen> components and they link to specific Views. In the code you will see the use of  **props.navigation.navigate("Home")** which helps us navigate throughout the code.
+
+
+# Web APIs
+We used a single source which was the [Youtube Search API](https://developers.google.com/youtube/v3/docs/search/list). We used it to help people search for songs and add them to the playlist. 
+
+We also leverage Firabase Auth and Firestore. We also leverage the Real-time activity you can have in firestore.
+
+We have a loader which should pop up whenever we do login, register, search song, get playlists and loading of the next Song in the playlist(since we use a youtube iframe for playing the song)
+
+We store the data in firestore which makes it persist and we are also able to share playlist between devices and they are able to add songs aswell and only delete songs if they are the owner.
+
+# Group cooperation
+Tanveer has worked with Youtubr Search API, (Youtube, SoundCloud (issues), Spotify (issues)), application testing for the entire workflow to discover bugs, intergrated thirdparty component for playing a song from Youtube within React Native.
+
+Taqui worked on the Redux logic for User and Playlist with Redux Thunk, Firebase Auth with Login and SignUp, Firestore setup the intial database structure for Playlists and integrated with Redux Thunk, worked on the Player Logic (play, pause, next and get current for a song), Integrated Youtube API into the platform with Search and Displayed the Search Results, fixed bugs regarding logic of the application, implemented some of the Loading Logic.
+
+Jiatong worked on build the basic views of sign in and sign up. Explore the toasts, loading, menu and contributor view. Fix small bugs to make the whole app run smoother.
+
+
 ## Screenshots
 ![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/42935270/118402599-df0ea680-b66a-11eb-87fe-0144476c58b3.gif)
 
