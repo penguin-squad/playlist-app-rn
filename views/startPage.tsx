@@ -1,8 +1,9 @@
 import React, { FC , useState } from "react";
-import { Pressable, StyleSheet, View, Modal, ImageBackground } from "react-native";
+import { Pressable, StyleSheet, View, Modal, ImageBackground, Dimensions } from "react-native";
 import * as Components from '../components/index';
-import { Text, TextInput } from "../components/Themed";
+import { Text, TextInput, TouchableOpacity } from "../components/Themed";
 
+const { width, height } = Dimensions.get('screen');
 
 
 const startPage = (props) => {
@@ -13,13 +14,21 @@ const startPage = (props) => {
         props.changePlaylistID(playlistId);
         props.navigation.navigate("songList");
     }
+
+    const setPlaylistIDWithFilter = (value: string) => {
+      setPlaylistId(value.replace(/\s/g,''));
+
+    }
     
    // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
 
  return (
   <View style = {styles.container}>
 
-      <Text>Playlist App</Text>
+    <View style={styles.header}>
+      <Components.Header title= {"Share Playlist"}/> 
+    </View>
+
       {/* <ImageBackground source={image} style={styles.image}> */}
      
       <Text>
@@ -28,11 +37,14 @@ const startPage = (props) => {
         </Text>
 
       {/* </ImageBackground> */}
- 
-        <Components.Button onPress={() => props.navigation.navigate("Login")} title = "Login To Access your Playlists"/>
-        <Components.Button onPress = {()=> ""} title = "Search For Playlist"/>
-        <Components.Button title = "Contribute to Playlist with ID" onPress = {() => setModalVisible(true)}/>
-        
+      <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Login")} >
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>setModalVisible(true)} >
+        <Text style={styles.buttonText}>Contribute to Playlist</Text>
+      </TouchableOpacity>
+
         <Modal
         animationType="slide"
         transparent={true}
@@ -41,22 +53,29 @@ const startPage = (props) => {
           setModalVisible(!modalVisible);
         }}
       >
+        
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-              <Text>Playlist ID:</Text>
-            <TextInput style ={styles.playlistIdInput} onChangeText = {setPlaylistId} value={playlistId}/>
+
+          <View>
+            <Text style={styles.modalTitle}>Playlist ID:</Text>
+          </View>
+              
+            <TextInput  style ={styles.playlistIdInput} onChangeText = {setPlaylistIDWithFilter} value={playlistId}/>
+           
+           
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={styles.buttonModal}
               onPress={handleInputPlaylistId}
             >
-              <Text style={styles.textStyle}>Contribute</Text>
+              <Text style={styles.buttonText}>Contribute</Text>
             </Pressable>
 
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={styles.buttonModal}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.textStyle}>Cancel</Text>
+              <Text style={styles.buttonText}>Cancel</Text>
             </Pressable>
           </View>
         </View>
@@ -72,16 +91,30 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgb(34, 39, 63)' 
+      },
+      header: {
+        width: width /1,
+        height: height/14,
+        marginTop: height/70, 
+      },
+      modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'rgb(205, 206, 207)', 
+        //backgroundColor:'rgb(34, 39, 63)',
       },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 22,
+        backgroundColor:'rgb(34, 39, 63)',
       },
     modalView: {
         margin: 10,
-        backgroundColor: "white",
+        //backgroundColor: "white",
+        backgroundColor: 'rgb(48,56,87)',
         borderRadius: 20,
         height:250,
         width: 300,
@@ -108,12 +141,29 @@ const styles = StyleSheet.create({
         fontSize: 15
       },
       button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-        height:50,
-        width: 150,
-        margin: 15
+        // borderRadius: 20,
+        // padding: 10,
+        // elevation: 2,
+        // height:50,
+        // width: 150,
+        // margin: 15
+        width: '50%',
+        height: 50,
+        alignItems: 'center',
+        marginBottom: 15,
+        backgroundColor:'rgb(241, 126, 58)',
+      },
+      buttonModal:{
+        padding: 12,
+        marginTop: 15,
+        width: '50%',
+        height: 50,
+        alignItems: 'center',
+        marginBottom: 15,
+        backgroundColor:'rgb(241, 126, 58)',
+      },
+      buttonText: {
+        color: '#FFF',
       },
       buttonClose: {
         backgroundColor: "#2196F3",
@@ -123,7 +173,9 @@ const styles = StyleSheet.create({
           width: 200,
           height: 40,
           borderWidth: 2,
-          borderRadius: 15
+          borderRadius: 15,
+          backgroundColor:'rgb(34, 39, 63)'
+          
       },
       image: {
         flex: 1,
