@@ -59,7 +59,7 @@ const startPage = (props) => {
             <Text style={styles.modalTitle}>Playlist ID:</Text>
           </View>
               
-            <TextInput  style ={styles.playlistIdInput} onChangeText = {setPlaylistIDWithFilter} value={playlistId}/>
+            <TextInput style ={styles.playlistIdInput} onChangeText = {setPlaylistIDWithFilter} value={playlistId}/>
            
            
             <Pressable
@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
           height: 40,
           borderWidth: 2,
           borderRadius: 15,
-          backgroundColor:'rgb(34, 39, 63)'
+          backgroundColor:'rgb(34, 39, 63)',
+          color:'rgb(205, 206, 207)',        
           
       },
       image: {

@@ -14,30 +14,36 @@ const LoginView = (props: any) =>{
 
     const handleSign = async () => {
     
-      if(username!=="" && password!==""){
-        setLoading(true);
+    if(username=="" && password!==""){
+      setLoading(false);
+      Toast.show("Email can´t be empty");
+    }else if(username!=="" && password==""){
+      setLoading(false);
+      Toast.show("Password can´t be empty");
+    }else if(username=="" && password==""){
+      setLoading(false);
+      Toast.show("Email and Password can´t be empty");
+    }
+      else if(username!=="" && password!==""){
+        // setLoading(true);
+        // await props.Login(username,password)
+        // props.navigation.navigate('playlists');
+        // setLoading(false);
+
         try{
-          await props.Login(username,password);
-          setLoading(false);
-          props.navigation.navigate('playlists');
+
+        setLoading(true);
+        await props.Login(username,password)
+        setLoading(false);
+        props.navigation.navigate('playlists');
+
         }catch(e){
           setLoading(false);
           console.log(e);
-        }
-      }else if(username=="" && password!==""){
-        setLoading(false);
-        Toast.show("Email can´t be empty");
-      }else if(username!=="" && password==""){
-        setLoading(false);
-        Toast.show("Password can´t be empty");
-      }else if(username=="" && password==""){
-        setLoading(false);
-        Toast.show("Email and Password can´t be empty");
-      }
+       }
     
-
       
-
+      }
 
     }
   

@@ -154,7 +154,7 @@ const PlayerScreen = (props) => {
       console.log(e)
     }
       //setSliderValue((v === NaN ? 0 : v))
-    }, 500); // 100 ms refresh. increase it if you don't require millisecond precision
+    }, 300); // 100 ms refresh. increase it if you don't require millisecond precision
 
     return () => {
       clearInterval(interval);

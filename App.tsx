@@ -14,6 +14,30 @@ import startPagePresenter from './presenters/startPagePresenter';
 import LoginScreenPresenter from './presenters/LoginScreenPresenter';
 import { ChangeInUser } from './store/User/UserActions';
 import SignUpScreenPresenter from './presenters/SignUpScreenPresenter';
+//import { createDrawerNavigator } from 'react-native-drawer';
+
+//const Drawer = createDrawerNavigator();
+
+// function MyDrawer() {
+//   return (
+//     <Drawer.Navigator>
+      
+//       <Drawer.Screen name="Logout" component={startPagePresenter} />
+//       <Drawer.Screen name="Contribute" component={startPagePresenter} />
+//       <Drawer.Screen name="Playlist" component={PlaylistCollectionScreenPresenter} />
+
+//     </Drawer.Navigator>
+//   );
+// }
+
+function Home() {
+  return (
+    <Navigator>
+      <Screen name="Start" component={startPagePresenter} />
+      <Screen name="Playlist" component={PlaylistCollectionScreenPresenter} />
+    </Navigator>
+  );
+}
 const {Screen, Navigator} = createStackNavigator();
 
 
@@ -30,15 +54,17 @@ const App =() =>{
     <NavigationContainer>
       <Navigator screenOptions={{
         headerShown: false,
-         
+        
         
       }}>
+{/* 
+    <MyDrawer /> */}
         <Screen name="Home" component={startPagePresenter}></Screen>
         <Screen name="Login" component={LoginScreenPresenter}></Screen>
         <Screen name="Signup" component={SignUpScreenPresenter}></Screen>
-        <Screen name= "playlists" component={PlaylistCollectionScreenPresenter}/>
-        <Screen name= "songList" component={SongsScreenPresenter}/>
-        <Screen  name= "player" component={PlayerScreenPresenter}/>
+        <Screen name="playlists" component={PlaylistCollectionScreenPresenter}/>
+        <Screen name="songList" component={SongsScreenPresenter}/>
+        <Screen name="player" component={PlayerScreenPresenter}/> 
 
       </Navigator>
     </NavigationContainer> 

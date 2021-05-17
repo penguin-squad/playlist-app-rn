@@ -28,7 +28,7 @@ const SignupView=(props: any) =>{
               setLoading(false);         
           } else if (password === confirmPassword){
               await props.SignUpUser(username,password)
-              setLoading(false);
+              //setLoading(false);
               props.navigation.navigate("Login");
               /* upload firebase */
               setLoading(false);

@@ -6,7 +6,7 @@ import Toast from 'react-native-simple-toast';
 export const LoginUser = (username: string, password: string) => {
     return async (dispatch: any, getState: any) => {
         try{
-            const response = await auth()
+         await auth()
             .signInWithEmailAndPassword(username, password)
         }catch(e){
             console.log(e);
