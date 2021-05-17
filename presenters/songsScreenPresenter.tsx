@@ -98,7 +98,7 @@ const mapStateToProps = (state: any) => ({
 
   
   export default connectComponent(SongScreenPresenter);
- 
+  
 
   const fakedata = {
     "kind": "youtube#searchListResponse",
