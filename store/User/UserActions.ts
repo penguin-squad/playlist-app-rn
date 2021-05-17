@@ -23,19 +23,10 @@ export const ChangeInUser = () => {
 
 export const SignUpUser = (username: string, password: string) => {
     return async (dispatch: any, getState: any) => {
-        try {
-        await auth()
-        .createUserWithEmailAndPassword(username, password)
-    }catch(e){
-        if (e.code === 'auth/email-already-in-use') {
-            Toast.show('That email address is already in use!');
-          }
-          if (e.code === 'auth/invalid-email') {
-            Toast.show('That email address is invalid!');
-          }
-          console.error(e);
 
-    }
+        return await auth()
+        .createUserWithEmailAndPassword(username, password)
+        
     }
 }
 

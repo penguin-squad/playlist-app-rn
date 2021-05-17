@@ -27,11 +27,27 @@ const SignupView=(props: any) =>{
             Toast.show("Passwords don´t match");
               setLoading(false);         
           } else if (password === confirmPassword){
+            try{
               await props.SignUpUser(username,password)
               //setLoading(false);
               props.navigation.navigate("Login");
               /* upload firebase */
               setLoading(false);
+            }catch(e){
+              if (e.code === 'auth/email-already-in-use') {
+                Toast.show('That email address is already in use!');
+              }
+              if (e.code === 'auth/invalid-email') {
+                Toast.show('That email address is invalid!');
+              }
+              if(e.code === 'auth/weak-password'){
+                Toast.show("Weak Password need atleast 6 chars");
+              }
+
+              setLoading(false);
+              console.error(e);
+              
+            }
           }
 
         } 
