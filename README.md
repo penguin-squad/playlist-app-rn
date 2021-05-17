@@ -123,7 +123,13 @@ Araman worked on making sure we leverage MVP in the application, worked on the i
 
 
 ## Screenshots
-![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/42935270/118402599-df0ea680-b66a-11eb-87fe-0144476c58b3.gif)
+## Android version
+![Android](https://user-images.githubusercontent.com/42935270/118562096-5c6e1000-b76c-11eb-8eb5-1ab9d6833f26.gif)
+
+
+
+## IOS version
+![IOS](https://user-images.githubusercontent.com/42935270/118562101-5f690080-b76c-11eb-95a1-d3fdf48461f1.gif)
 
 
 ## Usage
