@@ -40,7 +40,6 @@ const logOutUser=() =>{
   props.logOut();
   Toast.show("You have logged out");
   props.navigation.navigate("Home");
-
 };
 
 useEffect(() => {
