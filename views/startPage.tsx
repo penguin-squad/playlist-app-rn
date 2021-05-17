@@ -151,6 +151,9 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         backgroundColor:'rgb(241, 126, 58)',
       },
+      buttonText: {
+        color: '#FFF',
+      },
       buttonModal:{
         padding: 12,
         marginTop: 15,
@@ -159,9 +162,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15,
         backgroundColor:'rgb(241, 126, 58)',
-      },
-      buttonText: {
-        color: '#FFF',
       },
       buttonClose: {
         backgroundColor: "#2196F3",

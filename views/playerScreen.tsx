@@ -13,9 +13,15 @@ import { Text, TouchableOpacity } from "../components/Themed";
 
 const { width, height } = Dimensions.get('window');
 
+
+
 const PlayerScreen = (props) => {
   
-
+  const logOutUser=() =>{
+    props.logOut();
+    Toast.show("You have logged out");
+    props.navigation.navigate("Home");
+  };
 
   //const [currentSong, setCurrentSong] = useState<Song>();
   const [isLoadingVideo,setIsLoadingVideo] = useState<boolean>(false);
@@ -29,48 +35,6 @@ const PlayerScreen = (props) => {
 
     }, []);
 
-    
-  /* Functionality: when audio files exist
-
-  const context = useContext(AudioContext);
-  const { playbackPosition, playbackDuration } = context; 
- 
-
-  // slider moves
-
-
-
-  // previous audio
-    useEffect(() => {
-    context.loadPreviousAudio();
-    }, []);
-
-  // play / pause functionality
-
-    const handlePlayPause = async () => {
-    // play
-    if (context.soundObj === null) {
-      const audio = context.currentAudio;
-      const status = await play(context.playbackObj, audio.uri);
-      return context.updateState(context, {
-        soundObj: status,
-        currentAudio: audio,
-        isPlaying: true,
-        currlaylist.Songs[0]ndObj: status,
-        isPlaying: falplaying
-    if (context.soundObj && !context.soundObj.isPlaying) {
-      const status = await resume(context.playbackObj);
-      return context.updateState(context, {
-        soundObj: status,
-        isPlaying: true,
-      });
-    }
-  };
-    
-   if (!context.currentAudio) return null;
- 
- 
- */
 
    useEffect(() =>{
      if(props.currSong && 
@@ -168,7 +132,7 @@ const PlayerScreen = (props) => {
  <View style={styles.container}>
 
 
-    <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Home")} >
+    <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>logOutUser()} >
           <Text style={styles.buttonText}>Logout</Text>
     </TouchableOpacity>
 
