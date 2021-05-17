@@ -11,8 +11,9 @@ const startPage = (props) => {
     const [playlistId, setPlaylistId] = useState<string>("");
 
     const handleInputPlaylistId = () => {
-        props.changePlaylistID(playlistId);
+      props.changePlaylistID(playlistId);
         props.navigation.navigate("songList");
+        setModalVisible(false); 
     }
 
     const setPlaylistIDWithFilter = (value: string) => {
