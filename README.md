@@ -84,12 +84,18 @@ We have a loader which should pop up whenever we do login, register, search song
 
 We store the data in firestore which makes it persist and we are also able to share playlist between devices and they are able to add songs aswell and only delete songs if they are the owner.
 
+# Usability/User experience/ improve usability
+The Target group for this application is anyone that enjoys music. It also works really well for people in home parties where you are able to add songs to a shared playlist.
+
+The user feedback should be clear with loading and toast to guide them to understand what actions are possible or not. 
+
 # Group cooperation
 Tanveer has worked with Youtubr Search API, (Youtube, SoundCloud (issues), Spotify (issues)), application testing for the entire workflow to discover bugs, intergrated thirdparty component for playing a song from Youtube within React Native.
 
 Taqui worked on the Redux logic for User and Playlist with Redux Thunk, Firebase Auth with Login and SignUp, Firestore setup the intial database structure for Playlists and integrated with Redux Thunk, worked on the Player Logic (play, pause, next and get current for a song), Integrated Youtube API into the platform with Search and Displayed the Search Results, fixed bugs regarding logic of the application, implemented some of the Loading Logic.
 
 Jiatong worked on build the views of sign in and sign up. Explore the toasts, loading, menu and contributor view, worked with Modals for Contributer View, worked on making StartPage cleaner,  Fix small bugs to make the whole app run smoother. Implemented Loading in SignUp and Login.
+
 
 
 ## Screenshots
