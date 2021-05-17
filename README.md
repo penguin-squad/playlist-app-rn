@@ -89,7 +89,7 @@ Tanveer has worked with Youtubr Search API, (Youtube, SoundCloud (issues), Spoti
 
 Taqui worked on the Redux logic for User and Playlist with Redux Thunk, Firebase Auth with Login and SignUp, Firestore setup the intial database structure for Playlists and integrated with Redux Thunk, worked on the Player Logic (play, pause, next and get current for a song), Integrated Youtube API into the platform with Search and Displayed the Search Results, fixed bugs regarding logic of the application, implemented some of the Loading Logic.
 
-Jiatong worked on build the basic views of sign in and sign up. Explore the toasts, loading, menu and contributor view. Fix small bugs to make the whole app run smoother.
+Jiatong worked on build the views of sign in and sign up. Explore the toasts, loading, menu and contributor view, worked with Modals for Contributer View, worked on making StartPage cleaner,  Fix small bugs to make the whole app run smoother. Implemented Loading in SignUp and Login.
 
 
 ## Screenshots
