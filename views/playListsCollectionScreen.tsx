@@ -2,6 +2,7 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
+import Toast from 'react-native-simple-toast';
 
 
 //import { TouchableOpacity } from "../components/Themed";
@@ -12,10 +13,7 @@ const { width, height } = Dimensions.get('screen');
 const PlayListsCollectionScreen =(props: any) => { 
   const [loading, setLoading] = useState(false);
 
-  const goToPlayer = () => {
-  props.navigation.navigate("player"); 
-};  
-  
+
 console.log("Playlist Collections:", props)
 const [ inputShown, setInputShown ] = useState<boolean>(false);
 const [ newPlaylistName, setNewPlaylistName ] = useState<string>("");
@@ -36,7 +34,14 @@ const handleAddPlaylist =()=> {
      
   // clean input field  
 
-};  
+}; 
+
+const logOutUser=() =>{
+  props.logOut();
+  Toast.show("You have logged out");
+  props.navigation.navigate("Home");
+
+};
 
 useEffect(() => {
   const f = async() => {
@@ -50,14 +55,11 @@ useEffect(() => {
 },[]);
 
    
-
-    const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
-  
     return (
     
     <View style={styles.container}>
 
-    <TouchableOpacity btnType="primary" style={styles.buttonLogout} onPress={()=>props.navigation.navigate("Home")} >
+    <TouchableOpacity style={styles.buttonLogout} onPress={()=>logOutUser()} >
           <Text style={styles.buttonText}>Logout</Text>
     </TouchableOpacity>
 
@@ -69,7 +71,7 @@ useEffect(() => {
       </View>
 
       <View style ={styles.header}>
-        <Components.Header title= {"Playlists for "+ props.user.email}/> 
+        <Components.Header title= {"Playlists"}/> 
         {/* TODO: chnge to username */}
       </View>
 

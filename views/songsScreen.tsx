@@ -24,7 +24,11 @@ const SongsScreen =(props: any) => {
   const firstRender = useRef(true);
  
   const checkIfUserIsOwner : () => boolean = () => {
-    return props.user.uid === props.currPlaylist.userId;
+    if(props.user !== null && props.user.uid === props.currPlaylist.userId){
+        return true;
+    } else{
+      return false;
+    }
   } 
 
   const onPressItem = (val: boolean) =>{
@@ -32,13 +36,20 @@ const SongsScreen =(props: any) => {
     setNewSongSearch("");
   }
 
+  const logOutUser=() =>{
+    //props.logOut();
+    Toast.show("You have logged out");
+    props.navigation.navigate("Home");
+    props.logOut();
+  };
+
 
   return (
     <>
     <View style={styles.container}>
     
     
-      <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Home")} >
+      <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>logOutUser()} >
           <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
 

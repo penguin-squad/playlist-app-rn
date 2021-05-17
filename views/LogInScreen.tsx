@@ -25,10 +25,6 @@ const LoginView = (props: any) =>{
       Toast.show("Email and Password can´t be empty");
     }
       else if(username!=="" && password!==""){
-        // setLoading(true);
-        // await props.Login(username,password)
-        // props.navigation.navigate('playlists');
-        // setLoading(false);
 
         try{
 
@@ -46,16 +42,11 @@ const LoginView = (props: any) =>{
       }
 
     }
-  
- // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
-   
+    
 
   return (
     <View style={styles.container}>
 
-      {/* <ImageBackground source={image} style={styles.image}> 
-
-      </ImageBackground> */}
         {loading? (
             <ActivityIndicator size="large" color="#ffffffff"/>):(
             <>
@@ -88,9 +79,7 @@ const LoginView = (props: any) =>{
             <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate('Signup')}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("playlists")}>
-              <Text style={styles.buttonText}>Loggin As Test</Text>
-            </TouchableOpacity>
+
             </>
             )}
         </View>

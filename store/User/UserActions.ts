@@ -52,3 +52,16 @@ export const SignUpUser = (username: string, password: string) => {
     }
     }
 }
+
+export const LogOut = () => {
+    return async (dispatch: any, getState: any) => {
+        try {
+        await auth()
+         .signOut()
+         .then(() => console.log('!!!!!!User signed out!'));
+         } catch(e) {
+          console.error(e);
+
+    }
+    }
+}
