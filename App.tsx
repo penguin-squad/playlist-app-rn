@@ -1,47 +1,25 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
+
 import PlaylistCollectionScreenPresenter from './presenters/playListsCollectionScreenPresenter';
 import PlayerScreenPresenter from './presenters/PlayScreenPresenter';
 import SongsScreenPresenter from './presenters/songsScreenPresenter';
+import startPagePresenter from './presenters/startPagePresenter';
+import LoginScreenPresenter from './presenters/LoginScreenPresenter';
+import SignUpScreenPresenter from './presenters/SignUpScreenPresenter';
+
 import {createStackNavigator} from "@react-navigation/stack"; //native
 import {NavigationContainer} from "@react-navigation/native";
 import {Provider, RootStateOrAny, useSelector} from "react-redux";
 import store from "./store/store";
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
-import startPagePresenter from './presenters/startPagePresenter';
-import LoginScreenPresenter from './presenters/LoginScreenPresenter';
+
 import { ChangeInUser } from './store/User/UserActions';
-import SignUpScreenPresenter from './presenters/SignUpScreenPresenter';
-//import { createDrawerNavigator } from 'react-native-drawer';
 
-//const Drawer = createDrawerNavigator();
 
-// function MyDrawer() {
-//   return (
-//     <Drawer.Navigator>
-      
-//       <Drawer.Screen name="Logout" component={startPagePresenter} />
-//       <Drawer.Screen name="Contribute" component={startPagePresenter} />
-//       <Drawer.Screen name="Playlist" component={PlaylistCollectionScreenPresenter} />
-
-//     </Drawer.Navigator>
-//   );
-// }
-
-function Home() {
-  return (
-    <Navigator>
-      <Screen name="Start" component={startPagePresenter} />
-      <Screen name="Playlist" component={PlaylistCollectionScreenPresenter} />
-    </Navigator>
-  );
-}
 const {Screen, Navigator} = createStackNavigator();
-
-
-
 
 const App =() =>{
   const dispatch = useDispatch();
@@ -53,12 +31,9 @@ const App =() =>{
   return(  
     <NavigationContainer>
       <Navigator screenOptions={{
-        headerShown: false,
-        
-        
+        headerShown: false,              
       }}>
-{/* 
-    <MyDrawer /> */}
+
         <Screen name="Home" component={startPagePresenter}></Screen>
         <Screen name="Login" component={LoginScreenPresenter}></Screen>
         <Screen name="Signup" component={SignUpScreenPresenter}></Screen>

@@ -5,6 +5,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import SearchResults from '../components/SearchResults';
 import BackButton from "../components/BackButton";
 
+import { Text, TextInput, TouchableOpacity } from "../components/Themed";
+
 import Toast from 'react-native-simple-toast';
 
 const { width, height } = Dimensions.get('screen');
@@ -34,9 +36,17 @@ const SongsScreen =(props: any) => {
   return (
     <>
     <View style={styles.container}>
+    
+    
+      <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Home")} >
+          <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
+
       <View style ={styles.backBtn}>
-        <BackButton  onPress = {()=>gotoPlayLists()} />
+          <BackButton onPress = {()=>gotoPlayLists()} />      
       </View>
+
+
       <View style={styles.header}>
       <Components.Header title= {"Playlist: "+ props.currPlaylist.name}/> 
       </View>
@@ -131,20 +141,27 @@ const styles = StyleSheet.create({
     backBtn: {
       width: width /1,
       height: 50,
-      marginTop: height/30, 
-     // position: 'absolute',
+
     },
     button: {
-      width: '50%',
+      width: '25%',
       height: 50,
       alignItems: 'center',
-      marginBottom: 15,
+      marginTop: height/30, 
       backgroundColor:'rgb(241, 126, 58)',
+      marginLeft: width/1.5, 
       //position: 'absolute',
     },
     buttonText: {
       color: '#FFF',
-    },
+    },    
+    audioBtn: {
+      width:width,
+      flexDirection: 'row',
+      //justifyContent: 'center',
+    //  paddingBottom: 20,
+      marginTop: height/30, 
+  },
     player: {
     flex: 0.1,
     backgroundColor: 'rgb(34, 39, 63)' ,
@@ -152,7 +169,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: "center",
     //position: 'absolute',
+    },
     
-    }
 
 });
