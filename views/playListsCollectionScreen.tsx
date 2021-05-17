@@ -2,7 +2,9 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
-import BackButton from "../components/BackButton";
+
+
+//import { TouchableOpacity } from "../components/Themed";
 
 const { width, height } = Dimensions.get('screen');
 
@@ -55,7 +57,9 @@ useEffect(() => {
     
     <View style={styles.container}>
 
-
+    <TouchableOpacity btnType="primary" style={styles.buttonLogout} onPress={()=>props.navigation.navigate("Home")} >
+          <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
 
       <View style ={styles.search}>
         <Components.Search
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
     search:{
       width: width /1,
       height: height/14,
-      marginTop: height/30, 
+      marginTop: 10, 
     },
     button: {
       width: '50%',
@@ -187,5 +191,17 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: '#FFF',
-    }
+    },
+    buttonLogout: {
+      width: '20%',
+      height: 45,
+      padding:  height/70,
+     // paddingTop:  height/70,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginTop: height/30, 
+      backgroundColor:'rgb(48,56,87)',
+      marginLeft: width/1.5, 
+      //position: 'absolute',
+    },
   });
