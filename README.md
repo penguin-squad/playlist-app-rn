@@ -8,7 +8,9 @@
 -   🌀  Two modes availible: Contributer / Owner 
 
 ## Short description  
-The application will be a playlist application where you will be able to share a playlist that you have made with people and they will be able to contribute to that playlist. The application currently only intgrates youtube into the platform platform. The playlist will have modes one is Contributer and One is Owner. When you are an owner you are in Owner mode and you are able to add and delete songs to your own playlist. When you do not own the playlist you are in Contributer mode where you are allowed to add songs to a playlist.
+The application is a music application. Create your playlist. Share it with your friends. Contribute to each others playlists. The application integrates resources from Youtube. 
+
+Two modes are availible: Contributer and Owner. Owner mode allows you to add and delete songs. Contributer mode only allows user to add songs to a spesific playlist. Playlist can be found throught Playlist Id.
 
 <!-- In the Owner mode, people can share a playlist and add songs to a playlist but only the owner will have complete control over which songs will be accepted to the playlist and which will not be accepted. This will be perfect in for example Event-based scenarios where there might be multiple people who might request songs constantly, for example, a house party. In the Contributer mode, all people are able to add and manipulate the playlist and also play the playlist on their own -->
 
@@ -25,34 +27,41 @@ The application will be a playlist application where you will be able to share a
 ## App Features
 - Log in ✓
 - Sign up ✓
-- Player for playing the Song and Scrolling Within a Song ✓
-- Playlists (list interface) ✓
+- Sign out ✓
+- Player for playing and controlling Songs ✓
+- Slider for Scrolling within a Song ✓
+- Add and remove Playlists ✓
 - Share Playlists ✓
-- Song List View ✓
-- Be able to play the songs ✓
+- Songs List View ✓
 - Youtube API integration ✓ 
 - Add song using Youtube Search API ✓
-- Add songs/remove songs ✓
+- Remove songs from firebase and UI✓
 - Contributer able to Add Song ✓
-- Create playlist/remove playlist ✓
-- UX Design ✓
 - Different levels of authentications: owner, contributer✓
-- Playlist sharing with Contributers✓
+- Playlist sharing with Contributers ✓
+- UX Design suitable for both Android and IOS ✓
  
 
 
                    
 
 ## Install
-
+### Android
 ```
 npm install
 npm start
 npx react-native run-android
 ```
 
+### IOS (XCode needed)
+```
+cd ios && pod install
+npx react-native start
+npx react-native run-ios
+```
+
 ## Architecture/code
-The main idea is that we leverage Model-View-Presenter strucutre with an added components folder. Views represent entire Screens while Components represent a small Component in that screen. Therefore you will only see 5 Views which represent each Screen and around 10+ components which represent smaller components within those screens. Since we are using Redux this is essentially our model. We do have a model folder but it is only used for Typescript definition that we might use. Presenters are where we connect Redux with our components and views, they also contain our some API calls.
+The main idea is that we leverage Model-View-Presenter strucutre with an added components folder. Views represent entire Screens while Components represent a small reusable Component in that screen. Therefore you will only see 5 Views which represent each Screen and around 10+ components which represent smaller components within those screens. Since we are using Redux this is essentially our model. We do have a model folder but it is only used for Typescript definition that we might use. Presenters are where we connect Redux with our components and views, they also contain our some API calls.
 
 In the view folder you can see the Views for our application.
 
@@ -84,11 +93,6 @@ We have a loader which should pop up whenever we do login, register, search song
 
 We store the data in firestore which makes it persist and we are also able to share playlist between devices and they are able to add songs aswell and only delete songs if they are the owner.
 
-# Usability/User experience/ improve usability
-The Target group for this application is anyone that enjoys music. It also works really well for people in home parties where you are able to add songs to a shared playlist.
-
-The user feedback should be clear with loading and toast to guide them to understand what actions are possible or not. 
-
 # Group cooperation
 Tanveer has worked with Youtubr Search API, (Youtube, SoundCloud (issues), Spotify (issues)), application testing for the entire workflow to discover bugs, intergrated thirdparty component for playing a song from Youtube within React Native.
 
@@ -96,6 +100,7 @@ Taqui worked on the Redux logic for User and Playlist with Redux Thunk, Firebase
 
 Jiatong worked on build the views of sign in and sign up. Explore the toasts, loading, menu and contributor view, worked with Modals for Contributer View, worked on making StartPage cleaner,  Fix small bugs to make the whole app run smoother. Implemented Loading in SignUp and Login.
 
+Anna implemented on functionality, looks, Firebase and Redux/Thunk logic of Playlists, Songs, Player Views. Firebase and redux logic for deleting playlists, Songs, Logout auth. Playlist app for IOS. UX and UI compliable with best practices for both Android and IOS. Migration to libraries that work on both Android and IOS
 
 
 ## Screenshots
@@ -103,11 +108,12 @@ Jiatong worked on build the views of sign in and sign up. Explore the toasts, lo
 
 
 ## Usage
-### DISCLAIMER: THIS APP ONLY WORKS ON ANDROID (since some of the dev team do not have macBooks and cant run virtual machine of iOS)
+
 #### If you have a previous version uninstall it first 
 You install the app by going to our dropbox link: https://www.dropbox.com/s/ld1sktshh0fs9eh/app-release.apk?dl=0
 
-Currently there only exists an android version for the application. You will need to change you android settings to allow unknown sources to install third party apps. You will then install the APK in the dropbox link. You can follow this tutorial for how to install it on Android https://www.youtube.com/watch?v=r9aikSC5rw8.
+### Android version
+You will need to change you android settings to allow unknown sources to install third party apps. You will then install the APK in the dropbox link. You can follow this tutorial for how to install it on Android https://www.youtube.com/watch?v=r9aikSC5rw8.
 
 
 
@@ -121,6 +127,10 @@ Currently there only exists an android version for the application. You will nee
 8. Click on it and press install
 9. Then click open and it should work.
 
+### IOS version
+
+
+****
 
 ## Creators
 - Internet-Person-IP
