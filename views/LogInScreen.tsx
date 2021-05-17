@@ -34,6 +34,15 @@ const LoginView = (props: any) =>{
         props.navigation.navigate('playlists');
 
         }catch(e){
+          if (e.code === 'auth/invalid-email') {
+            Toast.show("Your email is invalid!");
+          }
+          if(e.code === 'auth/wrong-password'){
+            Toast.show("Your password is wrong!")
+          }
+          if(e.code === 'auth/user-not-found'){
+            Toast.show("User not found!");
+          }
           setLoading(false);
           console.log(e);
        }
