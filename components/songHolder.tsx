@@ -52,7 +52,7 @@ const deleteSong = () => {
 
  return (
 <>
-<Swipeable
+<Swipeable enabled={isOwner()}
     renderRightActions={(progress, dragX) => (
     <RightActions progress={progress} dragX={dragX} onPress={deleteSong} />
     )} >

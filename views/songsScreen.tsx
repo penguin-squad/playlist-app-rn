@@ -11,7 +11,8 @@ const { width, height } = Dimensions.get('screen');
 
 const SongsScreen =(props: any) => {
   console.log("Songs Screen",props)
-  const {showSearchResults, setShowSearchResults,searchResults,newSongSearch,setNewSongSearch} = props;
+//  const {showSearchResults, setShowSearchResults,searchResults,newSongSearch,setNewSongSearch} = props;
+  const {showSearchResults, setShowSearchResults,searchResults,newSongSearch,setNewSongSearch, loadingSearch, setLoadingSearch} = props;
   const gotoPlayLists = () => {
     props.navigation.navigate("playlists"); };
   
@@ -42,7 +43,11 @@ const SongsScreen =(props: any) => {
 
       <View>
        <Components.PlainInput 
-        onChangeText={(text) => setNewSongSearch(text)} 
+        //onChangeText={(text) => setNewSongSearch(text)} 
+        onChangeText={(text) => {
+          setLoadingSearch(true)
+          setNewSongSearch(text)
+        }} 
         placeholder="Search for new song to add"
         value={newSongSearch}/> 
       </View>  
@@ -85,19 +90,19 @@ const SongsScreen =(props: any) => {
           setNewSongSearch("");
         }}/>
         </View>
-          {props.loading ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
+        {loadingSearch ? <ActivityIndicator size="large" color="#ffffffff"/>:<SearchResults Songs = {searchResults} setShowResults = {onPressItem}/> }
       </View>
 
       
    </View> 
-   <View style={styles.player}>
+  { <View style={styles.player}>
       <Components.ButtonFullScreen
         title="Player" 
         onPress={()=> (props.currPlaylist.Songs.length===0 && props.currSong!==null) ? Toast.show("Add song first"): goToPlayer()}
         // onPress={()=>goToPlayer()}
         />
 
-    </View>
+    </View>}
 </>
     );
 };

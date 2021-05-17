@@ -16,13 +16,14 @@ import { deleteSong } from "../store/Playlist/playlistActions";
 const SongScreenPresenter = (props:any) => {
   const [newSongSearch, setNewSongSearch]= useState <string>(""); 
   const [searchResults, setSearchResults] = useState<SongSearchResult[]>([]);
-  const [showSearchResults, setShowSearchResults] = useState<Boolean>(false);
+  const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
+  const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
 
 
   useEffect(() => {
     const Search = setTimeout(() => {
       if(newSongSearch === "") return
-      props.setLoading(true);
+    //  props.setLoading(true);
       Youtube.searchYoutubeVideo(newSongSearch)
       .then(data => {
         const SearchResults: Song[] = data.items
@@ -37,7 +38,8 @@ const SongScreenPresenter = (props:any) => {
         })
         setSearchResults(SearchResults);
         setShowSearchResults(true);
-        props.setLoading(false);
+        //props.setLoading(false);
+        setLoadingSearch(false);
       })
       .catch(e => console.log(e))
       
@@ -67,6 +69,8 @@ const SongScreenPresenter = (props:any) => {
   setShowSearchResults={setShowSearchResults}
   setNewSongSearch={setNewSongSearch}
   showSearchResults={showSearchResults}
+  loadingSearch={loadingSearch}
+  setLoadingSearch={setLoadingSearch}
   {...props}
   />
 }
