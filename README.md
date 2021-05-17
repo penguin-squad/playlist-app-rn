@@ -1,33 +1,43 @@
 # Collaborative Playlist Application 🎵 
-📦 🚀  React-Native application creates collaborative playlist by integrates songs from several platforms 
+📦 🚀  React-Native application creates collaborative playlist by integrates songs from youtube.
 
 ## Features
 
--   🔎 Integrate music from multiple platforms 
 -   ✨ Share your playlist with people 
 -   🐝 Let others contribute to your playlist
--   🌀  Two modes availible: Controled / Free 
+-   🌀  Two modes availible: Contributer / Owner 
 
 ## Short description  
-The application will be a playlist application where you will be able to share a playlist that you have made with people and they will be able to contribute to that playlist. The application will be able to integrate multiple sources such as Spotify, Youtube, and SoundCloud into a singular unified platform. The playlist will have modes one is Controlled and One is Free. In the controlled mode, people can share a playlist and add songs to a playlist but only the owner will have complete control over which songs will be accepted to the playlist and which will not be accepted. This will be perfect in for example Event-based scenarios where there might be multiple people who might request songs constantly, for example, a house party. In the free mode, all people are able to add and manipulate the playlist and also play the playlist on their own 
+The application will be a playlist application where you will be able to share a playlist that you have made with people and they will be able to contribute to that playlist. The application currently only intgrates youtube into the platform platform. The playlist will have modes one is Contributer and One is Owner. When you are an owner you are in Owner mode and you are able to add and delete songs to your own playlist. When you do not own the playlist you are in Contributer mode where you are allowed to add songs to a playlist.
+
+<!-- In the Owner mode, people can share a playlist and add songs to a playlist but only the owner will have complete control over which songs will be accepted to the playlist and which will not be accepted. This will be perfect in for example Event-based scenarios where there might be multiple people who might request songs constantly, for example, a house party. In the Contributer mode, all people are able to add and manipulate the playlist and also play the playlist on their own -->
+
+
+## Integrated Technologies
+- React Native
+- Firebase Auth
+- Firebase Firestore - Database Storage with Realtime Data Changes 
+- Redux - For Data 
+- Thirdparty Component called which can be found [here](https://www.npmjs.com/package/react-native-youtube-iframe)
+- Youtube API for Searching Song
+- Redux Thunk for Asynchronous API calls and adding to Redux
 
 ## App Features
-- Log in page ✓
-- Sign up page ✓
-- Firebase auth integration ✓
-- Playlist view (list interface) ✓
+- Log in ✓
+- Sign up ✓
+- Player for playing the Song and Scrolling Within a Song ✓
+- Playlists (list interface) ✓
+- Share Playlists ✓
+- Song List View ✓
 - Be able to play the songs ✓
-- First API integration ✓ 
-- Search the songs from API ✓
-- Redux ✓ 
-- Add song/ playlist with the link✓
-- 2nd API integration✓
-- Add songs/ remove songs✓
-- Create playlist/remove playlist✓
-- UX Design✓
-- Connect our own playlist from different platforms✓
-- Different levels of authentications: owner, guest✓
-- Playlist sharing✓
+- Youtube API integration ✓ 
+- Add song using Youtube Search API ✓
+- Add songs/remove songs ✓
+- Contributer able to Add Song ✓
+- Create playlist/remove playlist ✓
+- UX Design ✓
+- Different levels of authentications: owner, contributer✓
+- Playlist sharing with Contributers✓
  
 
 
@@ -41,20 +51,20 @@ npm start
 npx react-native run-android
 ```
 
-## Project Structure
-The project is a bit disorganized and we hope to improve it. The main idea is that we leverage Model-View-Presenter strucutre with an added components folder where you can find individual components and where the views represent multiple components to fill out a screen.
+## Architecture/code
+The main idea is that we leverage Model-View-Presenter strucutre with an added components folder. Views represent entire Screens while Components represent a small Component in that screen. Therefore you will only see 5 Views which represent each Screen and around 10+ components which represent smaller components within those screens. Since we are using Redux this is essentially our model. We do have a model folder but it is only used for Typescript definition that we might use. Presenters are where we connect Redux with our components and views, they also contain our some API calls.
 
 In the view folder you can see the Views for our application.
 
-In the presenters folder you can see the Presenter for our application.
+In the presenters folder you can see the Presenters for our application.
 
-In the components you can see smaller components which are used to build up a view
+In the components you can see smaller components which are used to build up a view.
 
 In the model folder you can see some Typescript typing used to define some objects that we use. 
 
-In the store we describe our current redux store which contains mock data and how we leverage redux in our application.
+In the store we describet redux store which is essentially our "model" in the MVP and how we leverage redux in our application.
 
-We also have a util folder that describes our api connection. 
+We also have a util folder that describes our API call. 
 
 In the android folder is the actual android project which is built and used for testing
 
@@ -82,77 +92,6 @@ Currently there only exists an android version for the application. You will nee
 7. Use My Files to traverse to the apk again.
 8. Click on it and press install
 9. Then click open and it should work.
-
-## Contribution
-Please send issues and pull requests with your ideas.
-
-## Issues
-
-Issues should be categorized using the existing labels (bug, documentation, enhancement, etc.).
-
-They should also immediately be linked to the DECIDE project board (specifically the backlog column, i.e. the one chosen by default), so that they are visible there as well.
-
-**IMPORTANT**: Assign yourself to an issue before you start working on it. This is to avoid having two or more people accidentally doing "double work". Make sure to coordinate with the assignee of an issue before starting to work on it yourself.
-
-## Commits
-
-Commit messages should always be written in an editor and not the terminal. This is to avoid the pitfall of short and non-descriptive commit messages.
-
-```
-git commit -m "Short message"       # bad
-git commit                          # good
-```
-
-Note that you can [change](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_editor) which editor git will open, in case you don't like the default one. To switch to *nano*, for example, use: `git config --global core.editor nano`.
-
-That said, if a short message suffices to explain the commit, that is perfectly fine.
-
-Commit messages should be linked to corresponding issues where applicable (this is done by referencing the issue number as `#<issue number>`). Note that commits should almost always be related to some issue (see grading criteria). If there's no related issue, one should probably be created before committing.
-
-Commit messages should follow a prefix-convention, with the following prefixes:
-* feat - for new features/functionality
-* fix - for bug fixes
-* doc - for documentation
-* refactor - for refactoring
-* format - for changing formatting such as newlines, indentation, etc.
-* test - for editing or adding new tests (to already existing features, see paragraph below)
-* misc - for anything not covered by prefixes above
-
-**Note** that each commit that adds new functionality must also contain corresponding tests for that functionality (in the same commit).
-
-**Examples:**
-
-```
-(feat) Implement LIC 7 along with corresponding unit tests, fixing #12
-```
-
-```
-(test) Add additional unit test for LIC 7
-
-This covers a previously untested edge case where X < 0. Related to #12.
-```
-
-## Branches
-
-Branches should be linked to issues through their names, as:  
-`issue-<issue number>-short-description-of-branch`
-
-**Example:** `issue-12-lic-7` if issue 12 is related to implementing LIC 7.
-
-(This naming convention adheres to [widely used community conventions](https://github.com/agis/git-style-guide#branches).)
-
-## Pull requests
-
-* Make sure to mention the issue that a pull request targets. This will close the issue automatically, when the branch is merged ([source](https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)).
-* At least two people have to code review before merging.
-* Merge into the `development` branch. 
-
-Example:
-```
-This PR implements LIC 0.
-
-Fixes: #6
-```
 
 
 ## Creators
