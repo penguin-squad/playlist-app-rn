@@ -93,6 +93,8 @@ We have a loader which should pop up whenever we do login, register, search song
 
 We store the data in firestore which makes it persist and we are also able to share playlist between devices and they are able to add songs aswell and only delete songs if they are the owner.
 
+# Usability/User experience/ improve usability
+
 # Group cooperation
 Tanveer has worked with Youtubr Search API, (Youtube, SoundCloud (issues), Spotify (issues)), application testing for the entire workflow to discover bugs, intergrated thirdparty component for playing a song from Youtube within React Native.
 
