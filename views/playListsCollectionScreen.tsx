@@ -2,7 +2,10 @@ import React, {FC, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList , TouchableOpacity, Dimensions,ScrollView, ToastAndroid, ActivityIndicator} from "react-native";
 import * as Components from '../components/index';
 import Playlist from '../models/Playlist';
-import BackButton from "../components/BackButton";
+import Toast from 'react-native-simple-toast';
+
+
+//import { TouchableOpacity } from "../components/Themed";
 
 const { width, height } = Dimensions.get('screen');
 
@@ -10,10 +13,7 @@ const { width, height } = Dimensions.get('screen');
 const PlayListsCollectionScreen =(props: any) => { 
   const [loading, setLoading] = useState(false);
 
-  const goToPlayer = () => {
-  props.navigation.navigate("player"); 
-};  
-  
+
 console.log("Playlist Collections:", props)
 const [ inputShown, setInputShown ] = useState<boolean>(false);
 const [ newPlaylistName, setNewPlaylistName ] = useState<string>("");
@@ -34,7 +34,13 @@ const handleAddPlaylist =()=> {
      
   // clean input field  
 
-};  
+}; 
+
+const logOutUser=() =>{
+  props.logOut();
+  Toast.show("You have logged out");
+  props.navigation.navigate("Home");
+};
 
 useEffect(() => {
   const f = async() => {
@@ -48,14 +54,13 @@ useEffect(() => {
 },[]);
 
    
-
-    const ShowToast = (msg: string) =>{ToastAndroid.show(msg, ToastAndroid.SHORT)}
-  
     return (
     
     <View style={styles.container}>
 
-
+    <TouchableOpacity style={styles.buttonLogout} onPress={()=>logOutUser()} >
+          <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
 
       <View style ={styles.search}>
         <Components.Search
@@ -65,7 +70,7 @@ useEffect(() => {
       </View>
 
       <View style ={styles.header}>
-        <Components.Header title= {"Playlists for "+ props.user.email}/> 
+        <Components.Header title= {"Playlists"}/> 
         {/* TODO: chnge to username */}
       </View>
 
@@ -78,7 +83,7 @@ useEffect(() => {
             showsVerticalScrollIndicator={true}
             renderItem={({item})=> {
             if(!item.name.includes(search)) return null;
-            return <TouchableOpacity style={styles.listItem} key={item.id} onLongPress={() => console.log("onLongPress")}
+            return <TouchableOpacity style={styles.listItem} key={item.id}
                     onPress={() => {
                       props.changePlaylistID(item.id)
                       props.navigation.navigate("songList")
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
     search:{
       width: width /1,
       height: height/14,
-      marginTop: height/30, 
+      marginTop: 10, 
     },
     button: {
       width: '50%',
@@ -187,5 +192,17 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: '#FFF',
-    }
+    },
+    buttonLogout: {
+      width: '20%',
+      height: 45,
+      padding:  height/70,
+     // paddingTop:  height/70,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginTop: height/30, 
+      backgroundColor:'rgb(48,56,87)',
+      marginLeft: width/1.5, 
+      //position: 'absolute',
+    },
   });

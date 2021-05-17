@@ -2,18 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import { StyleSheet,ActivityIndicator} from 'react-native';
 import { Text, View, TextInput,TouchableOpacity} from '../components/Themed';
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from '../types';
-import auth from '@react-native-firebase/auth';
-
-// import { NavigationHelpersContext } from '@react-navigation/core';
-//import Navigation from '../navigation';
-
-
-
-/* signup button upload to firebase*/
-
-
+import Toast from 'react-native-simple-toast';
 
 const SignupView=(props: any) =>{
     const [username, setUsername] = useState<string>("");
@@ -23,31 +12,38 @@ const SignupView=(props: any) =>{
 
     const confirmSignup =  async () => {
       setLoading(true);
-        if (password !== confirmPassword){
-          
-            console.log('Keep password the same');
-            setLoading(false);
-            return;
-            
+        if (password == "" || confirmPassword == ""){
+          Toast.show("Passwords can´t be empty");
+            setLoading(false);         
         }
-        if (password === confirmPassword){
-          await props.SignUpUser(username,password)
-          setLoading(false);
-          props.navigation.navigate("Login"); // TOAST SHOULD BE AROUND HERE
-          //return;
-          /* upload firebase */
-          setLoading(false);
+
+        else if (username == "" ){
+          Toast.show("Email can´t be empty");
+            setLoading(false);         
+        }
+
+        else { 
+          if (password !== confirmPassword){
+            Toast.show("Passwords don´t match");
+              setLoading(false);         
+          } else if (password === confirmPassword){
+              await props.SignUpUser(username,password)
+              //setLoading(false);
+              props.navigation.navigate("Login");
+              /* upload firebase */
+              setLoading(false);
+          }
+
         } 
-    }
-
-
+      }
+    
 
   return (
         <View style={styles.container}>
           {loading? (
             <ActivityIndicator size="large" color="#ffffff"/>):(
             <>
-            <View>
+            <View style={styles.middle}>
                 <Text style={styles.title}> Email:</Text>
                 <TextInput
                     style={{ height: 60 , fontSize:20, backgroundColor:'rgb(34, 39, 63)'}}
@@ -55,6 +51,8 @@ const SignupView=(props: any) =>{
                     placeholder="Enter Email"
                     value = {username}
                     onChangeText={setUsername}
+                    color={"white"}
+                    fontSize={15} 
                 />
                 <Text style={styles.title}> Password:</Text>
                 <TextInput
@@ -64,6 +62,8 @@ const SignupView=(props: any) =>{
                     placeholder="Enter Password"
                     value={password}
                     onChangeText={setPassword}
+                    color={"white"}
+                    fontSize={15} 
                 />
                 <Text style={styles.title}> Confirm Password:</Text>
                 <TextInput
@@ -73,6 +73,8 @@ const SignupView=(props: any) =>{
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChangeText={setConfrimPassword}
+                    color={"white"}
+                    fontSize={15} 
 
                 />
             </View>
@@ -96,6 +98,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor:'rgb(34, 39, 63)',
+    },
+    middle:{
+      justifyContent: 'center',
+      backgroundColor:'rgb(34, 39, 63)',
+      width: '43%',
     },
     title: {
       fontSize: 17,

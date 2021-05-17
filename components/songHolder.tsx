@@ -52,7 +52,7 @@ const deleteSong = () => {
 
  return (
 <>
-<Swipeable
+<Swipeable enabled={isOwner()}
     renderRightActions={(progress, dragX) => (
     <RightActions progress={progress} dragX={dragX} onPress={deleteSong} />
     )} >
@@ -78,7 +78,7 @@ const deleteSong = () => {
 
 <View style={styles.rightContainer}>
 
-    <Text style={{ padding: 10, color: "white"}}> {"3.3"} </Text> 
+    <Text style={{ padding: 10, color: "white"}}> {""} </Text> 
     {/* TODO: duration use */}
 </View>
 </View>

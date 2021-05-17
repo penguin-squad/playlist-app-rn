@@ -1,22 +1,27 @@
 import React, {FC, useRef} from "react";
-import { View, Text, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
-import {connect} from "react-redux";
-//import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, StyleSheet,Dimensions, ActivityIndicator, Image} from "react-native";
 import Slider from '@react-native-community/slider';
 import * as Components from '../components/index';
-import * as ActionTypes from "../store/actionTypes";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 import {useState, useCallback, useEffect} from 'react';
 import Playlist from "../models/Playlist";
 import Song from "../models/Song";
-import { Alert } from "react-native";
 import BackButton from "../components/BackButton";
+import Toast from 'react-native-simple-toast';
+import { Text, TouchableOpacity } from "../components/Themed";
+
 
 const { width, height } = Dimensions.get('window');
 
+
+
 const PlayerScreen = (props) => {
   
-
+  const logOutUser=() =>{
+    props.logOut();
+    Toast.show("You have logged out");
+    props.navigation.navigate("Home");
+  };
 
   //const [currentSong, setCurrentSong] = useState<Song>();
   const [isLoadingVideo,setIsLoadingVideo] = useState<boolean>(false);
@@ -30,48 +35,6 @@ const PlayerScreen = (props) => {
 
     }, []);
 
-    
-  /* Functionality: when audio files exist
-
-  const context = useContext(AudioContext);
-  const { playbackPosition, playbackDuration } = context; 
- 
-
-  // slider moves
-
-
-
-  // previous audio
-    useEffect(() => {
-    context.loadPreviousAudio();
-    }, []);
-
-  // play / pause functionality
-
-    const handlePlayPause = async () => {
-    // play
-    if (context.soundObj === null) {
-      const audio = context.currentAudio;
-      const status = await play(context.playbackObj, audio.uri);
-      return context.updateState(context, {
-        soundObj: status,
-        currentAudio: audio,
-        isPlaying: true,
-        currlaylist.Songs[0]ndObj: status,
-        isPlaying: falplaying
-    if (context.soundObj && !context.soundObj.isPlaying) {
-      const status = await resume(context.playbackObj);
-      return context.updateState(context, {
-        soundObj: status,
-        isPlaying: true,
-      });
-    }
-  };
-    
-   if (!context.currentAudio) return null;
- 
- 
- */
 
    useEffect(() =>{
      if(props.currSong && 
@@ -85,7 +48,7 @@ const PlayerScreen = (props) => {
     console.log(state)
     if (state === "ended") {
       nextSong()
-      Alert.alert("video has finished playing!");
+      Toast.show("Song has finished playing!");
     }
   }, []);
 
@@ -123,6 +86,8 @@ const PlayerScreen = (props) => {
   const playerRef = useRef<YoutubeIframeRef | null>(null);
   const [sliderValue,setSliderValue] = useState(0); 
   const [time,setTime] = useState("00:00/00:00");
+  const [startTime,setStartTime] = useState("00:00");
+  const [finnishTime,setFinnishTime] = useState("00:00");
   const sliders = useRef(false);
   const seekToRef = useRef<number>(0);
   useEffect(() => {
@@ -143,6 +108,11 @@ const PlayerScreen = (props) => {
       if(elapsed_ms > 1000) setIsLoadingVideo(false);
 
       setTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}/${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+
+      setStartTime(`${min.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`)
+      setFinnishTime(`${durationMin.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`)
+
+
       const v  = (elapsed_ms/duration_ms);
       
       setSliderValue(Number.isNaN(v) || !Number.isFinite(v) ? 0: v);
@@ -150,7 +120,7 @@ const PlayerScreen = (props) => {
       console.log(e)
     }
       //setSliderValue((v === NaN ? 0 : v))
-    }, 500); // 100 ms refresh. increase it if you don't require millisecond precision
+    }, 300); // 100 ms refresh. increase it if you don't require millisecond precision
 
     return () => {
       clearInterval(interval);
@@ -160,13 +130,21 @@ const PlayerScreen = (props) => {
 
     return (
  <View style={styles.container}>
+
+
+    <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>logOutUser()} >
+          <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
+
+
     <View style={styles.backBtn}>       
-    <BackButton  onPress = {()=>gotoSongList()} />
+      <BackButton  onPress = {()=>gotoSongList()} />
     </View>
+
     <View style = {styles.youtubeVideo}>
    <YoutubePlayer
         ref = {playerRef}
-        height={300}
+        height={1}
         play={playing} 
         onChangeState = {onStateChange}
         videoId={props.currSong?.videoid === undefined ? "" : props.currSong.videoid} //new video
@@ -189,7 +167,10 @@ const PlayerScreen = (props) => {
 
 </View> 
 <View style={styles.audioPlayer}>
-  <Text style ={{justifyContent: "center"}}>{time}</Text>
+  <View style={styles.audioDuration}>
+    <Text style ={styles.audioStart}>{startTime}</Text>
+    <Text style ={styles.audioFinish}>{finnishTime}</Text>
+  </View>   
 
         <Slider
             style={{ width: width, height: 40, }}
@@ -254,6 +235,7 @@ export default PlayerScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingVertical: 10,
         backgroundColor: 'rgb(34, 39, 63)',
     },
     midContainer: {
@@ -262,16 +244,38 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     audioPlayer:{
-      //flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
+  
     },
     audioTitle: {
         //padding: 15,
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFF'
+      },
+      audioDuration:{
+        flexDirection: 'row',
+        padding: 10,
       }, 
+      audioStart: {
+       paddingLeft: 12,
+       fontSize: 18,
+       fontWeight: 'bold',
+       color: '#FFF',
+      }, 
+      audioFinish: {
+      paddingLeft: width/1.6,
+       fontSize: 18,
+       fontWeight: 'bold',
+       color: '#FFF',
+
+      },
+      audioTime: {
+        padding: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+        justifyContent: "center"
+      },   
     audioBtn: {
         width:width,
         flexDirection: 'row',
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
     },
     youtubeVideo: {
       height:0,
-      opacity: 0.99
+      opacity: 0.01
     },
     image: {
       margin: 15,
@@ -292,6 +296,17 @@ const styles = StyleSheet.create({
     backBtn: {
       width: width /1,
       height: 50,
-      marginTop: height/30, 
     },
+    button: {
+    width: '20%',
+    height: 45,
+    alignItems: 'center',
+    marginTop: height/30, 
+    backgroundColor:'rgb(48,56,87)',
+    marginLeft: width/1.34, 
+    },
+    buttonText: {
+      color: '#FFF',
+    },   
+
 });
