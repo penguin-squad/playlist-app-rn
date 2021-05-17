@@ -20,7 +20,6 @@ const startPage = (props) => {
 
     }
     
-   // const image = { uri: "https://images.pexels.com/photos/5007442/pexels-photo-5007442.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" };
 
  return (
   <View style = {styles.container}>
@@ -29,14 +28,13 @@ const startPage = (props) => {
       <Components.Header title= {"Share Playlist"}/> 
     </View>
 
-      {/* <ImageBackground source={image} style={styles.image}> */}
+      <ImageBackground source={require('../assets/icons/logo.png')} style={styles.image}>
      
-      <Text>
-          An Application for People Share and Contribute Playlist from multiple Source. 
-          Currently We Support Youtube and SoundCloud
+      <Text style={{opacity: 0.01}}>
+          An Application for People Share and Contribute to Playlist
         </Text>
 
-      {/* </ImageBackground> */}
+      </ImageBackground>
       <TouchableOpacity btnType="primary" style={styles.button} onPress={()=>props.navigation.navigate("Login")} >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -187,6 +185,13 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         backgroundColor: "black"
-      }
+      },
+      image: {
+        flex: 0.75,
+        resizeMode: "cover",
+        justifyContent: "center",
+        //width: '50%',
+       // height: '50%'
+      },
 });
 
