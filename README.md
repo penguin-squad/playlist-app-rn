@@ -102,6 +102,8 @@ Jiatong worked on build the views of sign in and sign up. Explore the toasts, lo
 
 Anna implemented on functionality, looks, Firebase and Redux/Thunk logic of Playlists, Songs, Player Views. Firebase and redux logic for deleting playlists, Songs, Logout auth. Playlist app for IOS. UX and UI compliable with best practices for both Android and IOS. Migration to libraries that work on both Android and IOS
 
+Araman worked on making sure we leverage MVP in the applcation, worked on implementation of the user page in the application and fixed the readme file on the Github repo with animation which shows how the application works, worked on inital research of Redux, Changed the application to leverage React Native CLI from Expo CLI because we needed some Native Components.
+
 
 ## Screenshots
 ![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/42935270/118402599-df0ea680-b66a-11eb-87fe-0144476c58b3.gif)
