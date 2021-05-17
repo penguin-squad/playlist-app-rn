@@ -20,7 +20,7 @@ Two modes are available: Contributor and Owner. Owner mode allows you to add and
 - Firebase Auth
 - Firebase Firestore - Database Storage with Realtime Data Changes 
 - Redux - For Data 
-- Third-party Component called which can be found [here](https://www.npmjs.com/package/react-native-youtube-iframe)
+- Third-party Component called react-native-youtube-iframe which can be found [here](https://www.npmjs.com/package/react-native-youtube-iframe)
 - Youtube API for Searching Song
 - Redux Thunk for Asynchronous API calls and adding to Redux
 
