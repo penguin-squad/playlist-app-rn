@@ -20,8 +20,7 @@ console.log(Songs)
       <FlatList
       data = {Songs} 
       keyExtractor = {(Song => Song.videoid)}
-      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>}
-       />
+      renderItem = {({item}) => <SearchResultsItemPresenter Song = {item} setShowResults = {setShowResults}/>} />
 
   </View>
     );
@@ -29,14 +28,9 @@ console.log(Songs)
 
 export default SearchResults;
 
-//const styles = StyleSheet.create({});
-
 const styles = StyleSheet.create({
     list: {
-        // padding: 5,
          backgroundColor: 'rgb(48,56,87)',
-        // width: width / 1.2,
-        // marginBottom : height/60,
          height:height/2.3,
          
     },  

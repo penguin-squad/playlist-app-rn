@@ -7,7 +7,7 @@ interface Props {
     placeholder: string;
     onChangeText: (text: string) => void;
     blurOnSubmit: boolean;
-    
+    value: string;
 }
 
 
@@ -19,6 +19,7 @@ const PlainInput = (props: Props) => (
           placeholder={props.placeholder} 
           onChangeText={props.onChangeText}
           blurOnSubmit ={props.blurOnSubmit}
+          value={props.value}
           />
        </View>            
     );

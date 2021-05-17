@@ -5,7 +5,8 @@ import Playlist from "../../models/Playlist";
 const INTIAL_STATE = {
     playlists: [],
     playlistID: "1",
-    currPlaylist: []
+    currPlaylist: [],
+    currSong:{}
 }
 
 const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
@@ -15,7 +16,6 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
             ...state, 
             playlists: [...state.playlists, action.payload],
         };
-
         case ActionTypes.PLAYLIST.ADD_SONG: //test, delete later
         console.log(state, action.payload)
         return{
@@ -56,7 +56,12 @@ const playlistReducer = (state: any = INTIAL_STATE, action:any) => {
                 ...state,
                 playlists: action.payload
             }
-
+        
+        case ActionTypes.PLAYLIST.SET_CURR_SONG:
+            return {
+                ...state,
+                currSong: action.payload
+            }
 
 
         default:

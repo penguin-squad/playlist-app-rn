@@ -37,35 +37,29 @@ interface Props{
     isPlaying: boolean; 
     videoid: string;
     duration: string;
+    isOwner: () => boolean;
   
   }
 
  
 const SongHolder =(props: Props) => {    
 
-const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId, Song} = props;
-
+const { title, duration, onAudioPress, activeSong, thumbnail,isPlaying, videoid, playlistId, Song, isOwner} = props;
 
 const deleteSong = () => {
-
-    
-     console.log("songScreen: delete song");  
      props.deleteSongFromPlaylist(playlistId, Song); 
-     console.log("holder playlistId: "+ playlistId);  
-     console.log(" holder song: "+Song);   
     }; 
 
  return (
 <>
-<Swipeable
+<Swipeable enabled={isOwner()}
     renderRightActions={(progress, dragX) => (
     <RightActions progress={progress} dragX={dragX} onPress={deleteSong} />
     )} >
 
 <View style={styles.container}>
-    <TouchableWithoutFeedback key={title}  onPress={()=>{console.log("Audio is pushed, take me to the player") //TODO: go to player + set me to false + set current song
-                        onAudioPress===true}}>                      
-
+{/* <TouchableWithoutFeedback onPress={()=>onAudioPress}>     */}
+<TouchableWithoutFeedback key={title}  onPress={onAudioPress}>                      
 <View style={styles.leftContainer}>
   <View style={[ styles.smallPic, {
       backgroundColor: activeSong ? "rgba(81,135,200,1)" : "black", //color.ACTIVE_BG && color.FONT_LIGHT 
@@ -84,7 +78,7 @@ const deleteSong = () => {
 
 <View style={styles.rightContainer}>
 
-    <Text style={{ padding: 10, color: "white"}}> {"3.3"} </Text> 
+    <Text style={{ padding: 10, color: "white"}}> {""} </Text> 
     {/* TODO: duration use */}
 </View>
 </View>

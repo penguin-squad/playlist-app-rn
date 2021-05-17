@@ -7,6 +7,7 @@ interface Props{
     onPress:() =>void;
     background?: string;
     color?:string;
+    disabled?:boolean;
 }
 const { width } = Dimensions.get("screen");
 
@@ -23,11 +24,11 @@ const styles = StyleSheet.create({
     button: {      
         backgroundColor: 'rgb(241, 126, 58)',
         padding: 10,
+        marginLeft:"5%",
         borderWidth:0,
         width: width/1.1, //how much of the screen it takes
         borderRadius: 20,
         alignItems: "center",
-               
         transform: [{ scaleX: 1}, { scaleY: 1 }]   
     }, buttonText: {
         fontSize: 18,
