@@ -157,7 +157,16 @@ You will need to change your android settings to allow unknown sources to instal
 
 ### IOS version
 
+You will then install the .ipa from the dropbox link. You can follow this tutorial for how to install it on https://www.youtube.com/watch?v=xhRWuNr_Xoc .
 
+
+1. Download the .ipa file from the dropbox link provided above.
+2. Get appCake app (if you don´t have it already)
+3. Settings --> general --> Profiles and devise managers --> enterprise app--> appCake--> trust
+4. Click on the .ipa A window will pop up telling you that you are not allowed to install apps from unknown sources.
+5. Settings --> general --> Profiles and devise managers --> enterprise app--> playlistApp--> trust
+6. Got oappCake --> select you playlistApp --> press install
+7. Click to open
 ****
 
 ## Creators
