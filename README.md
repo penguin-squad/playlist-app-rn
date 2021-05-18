@@ -135,7 +135,10 @@ Araman worked on making sure we leverage MVP in the application, worked on the i
 ## Usage
 
 #### If you have a previous version uninstall it first 
-You install the app by going to our dropbox link: https://www.dropbox.com/s/ld1sktshh0fs9eh/app-release.apk?dl=0
+You install the app by going to our dropbox link: https://www.dropbox.com/sh/1nuyj9t6i3n6hcx/AAADj-RZDiVlB9yunuT02Mura?dl=0
+
+APK for the android version
+IPA for the IOS version
 
 ### Android version
 You will need to change your android settings to allow unknown sources to install third-party apps. You will then install the APK in the dropbox link. You can follow this tutorial for how to install it on Android https://www.youtube.com/watch?v=r9aikSC5rw8.
