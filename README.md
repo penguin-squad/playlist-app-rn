@@ -105,8 +105,8 @@ These are the user feedback we have acted upon:
 * Initially we had 3 dots which was an option button where you could delete the songs, we changed it so that you could swipe an element in a songlist to delete it. 
 * Text in Songlist was unclear changed from "search for songs" to + "search for new song to add"
 * Initially we could access the song player from playlist view and song view however it was changed so that only songlist had access to player
-* logout changed the design to not take away the from the main functionality. But always be available on all views. 
-* Changed to calmer design and added to Playlists, Songs, and player views
+* Changed to calmer design logout button to calmer design (to not take away focus from the main functionality). 
+* Made logout button available on all views: Playlists, Songs, and player views
 * Changed so that you cant click back to the login screen
 
 
