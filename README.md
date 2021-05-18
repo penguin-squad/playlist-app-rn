@@ -124,7 +124,8 @@ Araman worked on making sure we leverage MVP in the application, worked on the i
 
 ## Screenshots
 ## Android version
-![Android](https://user-images.githubusercontent.com/42935270/118562096-5c6e1000-b76c-11eb-8eb5-1ab9d6833f26.gif)
+![Android](https://user-images.githubusercontent.com/42935270/118625677-82c29880-b7ca-11eb-9c07-2b84a6d1d2c3.gif)
+
 
 
 
