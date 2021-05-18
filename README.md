@@ -158,8 +158,18 @@ You will need to change your android settings to allow unknown sources to instal
 
 ### IOS version
 
-You will then install the .ipa from the dropbox link. You can follow this tutorial for how to install it on https://www.youtube.com/watch?v=xhRWuNr_Xoc .
+You will then install the .ipa from the dropbox link. 
 
+#### If you have iTunes ( strongly RECOMENDED!)
+You can follow this tutorial for how to install https://youtu.be/69391Thxoeg?t=128
+
+1. Download .ipa from dropbox to you Mac
+2. Import it to iTunes (make sure you iPhoneis connected)
+3. Go to App section in iTunes --> find AppPlaylist--> push install --> apply
+
+#### Installation with appCake
+
+You can follow this tutorial for how to install it on https://www.youtube.com/watch?v=xhRWuNr_Xoc .
 
 1. Download the .ipa file from the dropbox link provided above.
 2. Get appCake app (if you don´t have it already)
